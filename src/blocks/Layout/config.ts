@@ -1,6 +1,6 @@
 import { Block } from 'payload'
 import { FeatureCards } from '../FeatureCards/config'
-import { EventCards } from '../EventCards/config'
+import { TournamentCards } from '../TournamentCards/config'
 import { NewTwoColumnLayout } from '../NewTwoColumnLayout/config'
 
 export const Layout: Block = {
@@ -15,7 +15,7 @@ export const Layout: Block = {
       name: 'blocks',
       type: 'blocks',
       maxRows: 2,
-      blocks: [NewTwoColumnLayout, FeatureCards, EventCards],
+      blocks: [NewTwoColumnLayout, FeatureCards, TournamentCards],
     },
   ],
 }

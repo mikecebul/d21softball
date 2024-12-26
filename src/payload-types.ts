@@ -26,6 +26,9 @@ export type LinkCards =
       title: string;
       description: string;
       imageUploadOption?: ('generate' | 'manual') | null;
+      /**
+       * Coma seperated words
+       */
       keywords?: string | null;
       image?: (string | null) | Media;
       href: string;
@@ -40,6 +43,7 @@ export interface Config {
   collections: {
     pages: Page;
     events: Event;
+    tournaments: Tournament;
     media: Media;
     users: User;
     forms: Form;
@@ -53,6 +57,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    tournaments: TournamentsSelect<false> | TournamentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -110,13 +115,13 @@ export interface Page {
   id: string;
   title: string;
   layout: (
-    | EventsBlock
+    | TournamentsBlock
     | RichTextBlock
     | LinksBlock
-    | EventsPageBlock
+    | TournamentsPageBlock
     | FormBlock
     | NewTwoColumnLayoutBlock
-    | EventCardsBlock
+    | TournamentCardsBlock
     | FeatureCardsBlock
     | LayoutBlock
   )[];
@@ -124,6 +129,9 @@ export interface Page {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
       title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
       image?: (string | null) | Media;
       description?: string | null;
     };
@@ -137,18 +145,21 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventsBlock".
+ * via the `definition` "TournamentsBlock".
  */
-export interface EventsBlock {
+export interface TournamentsBlock {
   direction?: ('ltr' | 'rtl') | null;
   title: string;
   description: string;
   links?: LinkGroup;
   image?: (string | null) | Media;
-  eventItems?: (string | Event)[] | null;
+  /**
+   * Select up to 3 tournaments to display
+   */
+  tournaments?: (string | Tournament)[] | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'events';
+  blockType: 'tournaments';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -168,6 +179,9 @@ export interface Link {
       } | null);
   url?: string | null;
   label: string;
+  /**
+   * Choose how the link should be rendered.
+   */
   appearance?: ('default' | 'outline') | null;
 }
 /**
@@ -176,6 +190,9 @@ export interface Link {
  */
 export interface Media {
   id: string;
+  /**
+   * Alternative text for SEO and accessibility
+   */
   alt: string;
   caption?: string | null;
   prefix?: string | null;
@@ -211,11 +228,15 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events".
+ * via the `definition` "tournaments".
  */
-export interface Event {
+export interface Tournament {
   id: string;
   title: string;
+  class: string;
+  location: string;
+  startDate: string;
+  endDate: string;
   description: {
     root: {
       type: string;
@@ -231,8 +252,7 @@ export interface Event {
     };
     [k: string]: unknown;
   };
-  date: string;
-  location: string;
+  price: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -277,11 +297,11 @@ export interface LinksBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventsPageBlock".
+ * via the `definition` "TournamentsPageBlock".
  */
-export interface EventsPageBlock {
+export interface TournamentsPageBlock {
   title?: string | null;
-  eventCards?: (string | Event)[] | null;
+  tournaments?: (string | Tournament)[] | null;
   announcements?:
     | {
         title: string;
@@ -305,7 +325,7 @@ export interface EventsPageBlock {
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'eventsPage';
+  blockType: 'tournamentsPage';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -524,6 +544,9 @@ export interface Form {
       )[]
     | null;
   submitButtonLabel?: string | null;
+  /**
+   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
+   */
   confirmationType?: ('message' | 'redirect') | null;
   confirmationMessage?: {
     root: {
@@ -543,6 +566,9 @@ export interface Form {
   redirect?: {
     url: string;
   };
+  /**
+   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
+   */
   emails?:
     | {
         emailTo?: string | null;
@@ -551,6 +577,9 @@ export interface Form {
         replyTo?: string | null;
         emailFrom?: string | null;
         subject: string;
+        /**
+         * Enter the message that should be sent in this email.
+         */
         message?: {
           root: {
             type: string;
@@ -577,7 +606,13 @@ export interface Form {
  * via the `definition` "NewTwoColumnLayoutBlock".
  */
 export interface NewTwoColumnLayoutBlock {
+  /**
+   * The direction of the layout
+   */
   direction?: ('ltr' | 'rtl') | null;
+  /**
+   * The breakpoint at which the layout switches to a two column layout
+   */
   breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
   columnOne?: {
     contentType?: ('cta' | 'richText') | null;
@@ -612,6 +647,9 @@ export interface NewTwoColumnLayoutBlock {
   columnTwo?: {
     contentType?: ('image' | 'form') | null;
     priority?: boolean | null;
+    /**
+     * Images will follow as user scrolls
+     */
     sticky?: boolean | null;
     images?: (string | Media)[] | null;
     form?: FormBlock[] | null;
@@ -622,13 +660,16 @@ export interface NewTwoColumnLayoutBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventCardsBlock".
+ * via the `definition` "TournamentCardsBlock".
  */
-export interface EventCardsBlock {
-  eventCards?: (string | Event)[] | null;
+export interface TournamentCardsBlock {
+  /**
+   * Select up to 3 Tournaments to display
+   */
+  tournaments?: (string | Tournament)[] | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'eventCards';
+  blockType: 'tournamentCards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -652,10 +693,37 @@ export interface FeatureCardsBlock {
  * via the `definition` "LayoutBlock".
  */
 export interface LayoutBlock {
-  blocks?: (NewTwoColumnLayoutBlock | FeatureCardsBlock | EventCardsBlock)[] | null;
+  blocks?: (NewTwoColumnLayoutBlock | FeatureCardsBlock | TournamentCardsBlock)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'layout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  title: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  date: string;
+  location: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -709,6 +777,9 @@ export interface FormSubmission {
  */
 export interface Redirect {
   id: string;
+  /**
+   * You will need to rebuild the website when changing this field.
+   */
   from: string;
   to?: {
     type?: ('reference' | 'custom') | null;
@@ -735,6 +806,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'tournaments';
+        value: string | Tournament;
       } | null)
     | ({
         relationTo: 'media';
@@ -807,13 +882,13 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        events?: T | EventsBlockSelect<T>;
+        tournaments?: T | TournamentsBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
-        eventsPage?: T | EventsPageBlockSelect<T>;
+        tournamentsPage?: T | TournamentsPageBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         newTwoColumnLayout?: T | NewTwoColumnLayoutBlockSelect<T>;
-        eventCards?: T | EventCardsBlockSelect<T>;
+        tournamentCards?: T | TournamentCardsBlockSelect<T>;
         featureCards?: T | FeatureCardsBlockSelect<T>;
         layout?: T | LayoutBlockSelect<T>;
       };
@@ -838,15 +913,15 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventsBlock_select".
+ * via the `definition` "TournamentsBlock_select".
  */
-export interface EventsBlockSelect<T extends boolean = true> {
+export interface TournamentsBlockSelect<T extends boolean = true> {
   direction?: T;
   title?: T;
   description?: T;
   links?: T | LinkGroupSelect<T>;
   image?: T;
-  eventItems?: T;
+  tournaments?: T;
   id?: T;
   blockName?: T;
 }
@@ -909,11 +984,11 @@ export interface LinkCardsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventsPageBlock_select".
+ * via the `definition` "TournamentsPageBlock_select".
  */
-export interface EventsPageBlockSelect<T extends boolean = true> {
+export interface TournamentsPageBlockSelect<T extends boolean = true> {
   title?: T;
-  eventCards?: T;
+  tournaments?: T;
   announcements?:
     | T
     | {
@@ -982,10 +1057,10 @@ export interface NewTwoColumnLayoutBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventCardsBlock_select".
+ * via the `definition` "TournamentCardsBlock_select".
  */
-export interface EventCardsBlockSelect<T extends boolean = true> {
-  eventCards?: T;
+export interface TournamentCardsBlockSelect<T extends boolean = true> {
+  tournaments?: T;
   id?: T;
   blockName?: T;
 }
@@ -1015,7 +1090,7 @@ export interface LayoutBlockSelect<T extends boolean = true> {
     | {
         newTwoColumnLayout?: T | NewTwoColumnLayoutBlockSelect<T>;
         featureCards?: T | FeatureCardsBlockSelect<T>;
-        eventCards?: T | EventCardsBlockSelect<T>;
+        tournamentCards?: T | TournamentCardsBlockSelect<T>;
       };
   id?: T;
   blockName?: T;
@@ -1029,6 +1104,21 @@ export interface EventsSelect<T extends boolean = true> {
   description?: T;
   date?: T;
   location?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tournaments_select".
+ */
+export interface TournamentsSelect<T extends boolean = true> {
+  title?: T;
+  class?: T;
+  location?: T;
+  startDate?: T;
+  endDate?: T;
+  description?: T;
+  price?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1421,6 +1511,8 @@ export interface CompanyInfo {
       street: string;
       cityStateZip: string;
       /**
+       * Select the exact location on Google Maps
+       *
        * @minItems 2
        * @maxItems 2
        */

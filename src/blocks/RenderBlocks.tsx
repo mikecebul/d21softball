@@ -3,12 +3,12 @@ import React, { Fragment } from 'react'
 import type { Page } from '@/payload-types'
 
 import { LinksBlock } from './Links/Component'
-import { EventsBlock } from './EventsBlock/Component'
+import { TournamentsBlock } from './TournamentsBlock/Component'
 import { RichTextBlock } from './RichText/Component'
-import { EventsPageBlock } from './EventsPage/Component'
+import { TournamentsPageBlock } from './TournamentsPage/Component'
 import { FormBlock } from './Form/Component'
 import { MediaBlock } from './MediaBlock/Component'
-import { EventCardsBlock } from './EventCards/Component'
+import { TournamentCardsBlock } from './TournamentCards/Component'
 import { FeatureCardsBlock } from './FeatureCards/Component'
 import { LayoutBlock } from './Layout/Component'
 import { NewTwoColumnLayoutBlock } from './NewTwoColumnLayout/Component'
@@ -16,11 +16,11 @@ import { NewTwoColumnLayoutBlock } from './NewTwoColumnLayout/Component'
 const blockComponents = {
   richText: RichTextBlock,
   linksBlock: LinksBlock,
-  events: EventsBlock,
-  eventsPage: EventsPageBlock,
+  tournaments: TournamentsBlock,
+  tournamentsPage: TournamentsPageBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  eventCards: EventCardsBlock,
+  tournamentCards: TournamentCardsBlock,
   featureCards: FeatureCardsBlock,
   newTwoColumnLayout: NewTwoColumnLayoutBlock,
   layout: LayoutBlock,

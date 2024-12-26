@@ -30,6 +30,11 @@ export const Resources: CollectionConfig = {
       type: 'textarea',
       required: true,
     },
+    // {
+    //   name: 'category',
+    //   type: 'relationship',
+    //   relationTo: '',
+    // },
     linkGroup({
       overrides: {
         maxRows: 2,

@@ -1,12 +1,12 @@
 import Container from '@/components/Container'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { EventsPageBlock as EventsPageBlockType } from '@/payload-types'
+// import { TournamentsPageBlock as TournamentsPageBlockType } from '@/payload-types'
 import { CalendarIcon, MapPinIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import RichText from '@/components/RichText'
 import { Title } from '@/components/Hero/HeroMedium'
 
-export const EventsPageBlock = ({ title, eventCards, announcements }: EventsPageBlockType) => {
+export const TournamentsPageBlock = ({ title, eventCards, announcements }) => {
   return (
     <Container className="space-y-16">
       <div className="space-y-8">

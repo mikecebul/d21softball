@@ -5,7 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.NEXT_OUTPUT === 'standalone' ? 'standalone' : undefined,
+  // output: process.env.NEXT_OUTPUT === 'standalone' ? 'standalone' : undefined,
   images: {
     remotePatterns: [
       ...[
@@ -34,12 +34,7 @@ const nextConfig = {
   reactStrictMode: true,
   redirects,
   async rewrites() {
-    return [
-      {
-        source: '/RDFK',
-        destination: '/rdfk',
-      },
-    ]
+    return []
   },
 }
 

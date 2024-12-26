@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
 
-import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -16,17 +15,17 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { Links } from '@/blocks/Links/config'
 import { superAdmin } from '@/access/superAdmin'
-import { Events } from '@/blocks/EventsBlock/config'
 import { RichText } from '@/blocks/RichText/config'
-import { EventsPage } from '@/blocks/EventsPage/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { baseUrl } from '@/utilities/baseUrl'
-import { EventCards } from '@/blocks/EventCards/config'
 import { FeatureCards } from '@/blocks/FeatureCards/config'
 import { Layout } from '@/blocks/Layout/config'
 import { NewTwoColumnLayout } from '@/blocks/NewTwoColumnLayout/config'
 import { revalidateDelete } from './hooks/revalidateDelete'
 import { editorOrHigher } from '@/access/editorOrHigher'
+import { TournamentsPage } from '@/blocks/TournamentsPage/config'
+import { Tournaments } from '@/blocks/TournamentsBlock/config'
+import { TournamentCards } from '@/blocks/TournamentCards/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -66,13 +65,13 @@ export const Pages: CollectionConfig = {
               name: 'layout',
               type: 'blocks',
               blocks: [
-                Events,
+                Tournaments,
                 RichText,
                 Links,
-                EventsPage,
+                TournamentsPage,
                 FormBlock,
                 NewTwoColumnLayout,
-                EventCards,
+                TournamentCards,
                 FeatureCards,
                 Layout,
               ],

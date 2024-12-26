@@ -74,9 +74,6 @@ export const Media: CollectionConfig = {
     {
       name: 'caption',
       type: 'text',
-      admin: {
-        hidden: true,
-      },
     },
     {
       name: 'prefix',

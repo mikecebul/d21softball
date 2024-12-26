@@ -1,13 +1,13 @@
 import { linkGroup } from '@/fields/link/linkGroup'
 import { Block } from 'payload'
 
-export const Events: Block = {
-  slug: 'events',
+export const Tournaments: Block = {
+  slug: 'tournaments',
   labels: {
-    singular: 'Events Block',
-    plural: 'Events Blocks',
+    singular: 'Tournaments Block',
+    plural: 'Tournaments Blocks',
   },
-  interfaceName: 'EventsBlock',
+  interfaceName: 'TournamentsBlock',
   fields: [
     {
       name: 'direction',
@@ -44,13 +44,13 @@ export const Events: Block = {
       relationTo: 'media',
     },
     {
-      name: 'eventItems',
+      name: 'tournaments',
       type: 'relationship',
-      relationTo: 'events',
+      relationTo: 'tournaments',
       hasMany: true,
       maxRows: 3,
       admin: {
-        description: 'Select up to 3 schedule items to display',
+        description: 'Select up to 3 tournaments to display',
       },
     },
   ],

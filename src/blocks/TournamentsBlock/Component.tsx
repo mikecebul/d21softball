@@ -1,6 +1,6 @@
 import Container from '@/components/Container'
 import { Description, Title } from '@/components/Hero/HeroMedium'
-import { EventsBlock as EventsBlockType } from '@/payload-types'
+import { TournamentsBlock as TournamentsBlockType } from '@/payload-types'
 import { format } from 'date-fns'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { CalendarIcon, MapPinIcon } from 'lucide-react'
@@ -9,14 +9,14 @@ import { CTALinks } from '@/components/CTALinks'
 import { TwoColumnLayout } from '@/components/TwoColumnLayout'
 import { Media } from '@/components/Media'
 
-export const EventsBlock = ({
+export const TournamentsBlock = ({
   title,
   description,
-  eventItems,
+  tournaments,
   direction,
   links,
   image,
-}: EventsBlockType) => {
+}: TournamentsBlockType) => {
   return (
     <Container className="space-y-12">
       <TwoColumnLayout direction={direction ?? 'ltr'}>
@@ -29,33 +29,34 @@ export const EventsBlock = ({
       </TwoColumnLayout>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array.isArray(eventItems) &&
-          eventItems.length > 0 &&
-          eventItems.map((event) => {
-            if (typeof event !== 'object') {
+        {Array.isArray(tournaments) &&
+          tournaments.length > 0 &&
+          tournaments.map((tournament) => {
+            if (typeof tournament !== 'object') {
               return null
             }
             return (
-              <Card key={event.id} className="col-span-1">
+              <Card key={tournament.id} className="col-span-1">
                 <CardHeader className="">
-                  <CardTitle>{event.title}</CardTitle>
+                  <CardTitle>{tournament.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="pb-2">
                   <CardDescription className="text-lg">
                     <span className="flex flex-col">
                       <span className="flex items-center gap-2">
                         <CalendarIcon className="size-4" />
-                        <span>{format(event.date, 'MMMM do, yyyy')}</span>
+                        <span>{format(tournament.startDate, 'MMMM do, yyyy')}</span> -{' '}
+                        <span>{format(tournament.endDate, 'MMMM do, yyyy')}</span>
                       </span>
                       <span className="flex items-center gap-2">
                         <MapPinIcon className="size-4" />
-                        <span>{event.location}</span>
+                        <span>{tournament.location}</span>
                       </span>
                     </span>
                   </CardDescription>
                 </CardContent>
                 <CardContent className="">
-                  <RichText content={event.description} />
+                  <RichText content={tournament.description} />
                 </CardContent>
               </Card>
             )

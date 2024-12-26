@@ -1,5 +1,5 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { resendAdapter } from '@payloadcms/email-resend'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
 import { stripePlugin } from '@payloadcms/plugin-stripe'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -35,7 +35,7 @@ import { GenerateTitle, GenerateURL, GenerateImage } from '@payloadcms/plugin-se
 import { Page } from 'src/payload-types'
 import { CompanyInfo } from './globals/CompanyInfo/config'
 import { superAdmin } from './access/superAdmin'
-import { Events } from './collections/Events'
+import { Tournaments } from './collections/Tournaments'
 import { Media } from './collections/Media'
 import { MediaBlock } from './blocks/MediaBlock/config'
 import { baseUrl } from './utilities/baseUrl'
@@ -46,15 +46,16 @@ import { editorOrHigher } from './access/editorOrHigher'
 import { anyone } from './access/anyone'
 import { adminOrSuperAdmin } from './access/adminOrSuperAdmin'
 import { authenticated } from './access/authenticated'
+import { Events } from './collections/Events'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const generateTitle: GenerateTitle<Page> = ({ doc }) => {
   if ('name' in doc) {
-    return doc.name ? `${doc.name} | CVX Junior Golf` : 'CVX Junior Golf'
+    return doc.name ? `${doc.name} | D21 Softball` : 'D21 Softball'
   }
-  return doc?.title ? `${doc.title} | CVX Junior Golf` : 'CVX Junior Golf'
+  return doc?.title ? `${doc.title} | D21 Softball` : 'D21 Softball'
 }
 
 const generateURL: GenerateURL<Page> = ({ doc }) => {
@@ -82,7 +83,7 @@ export default buildConfig({
     },
     meta: {
       icons: [{ url: '/favicon.ico' }],
-      titleSuffix: ' | CVX Junior Golf',
+      titleSuffix: ' | D21 Softball',
     },
     user: Users.slug,
     livePreview: {
@@ -152,14 +153,21 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Events, Media, Users],
+  collections: [Pages, Events, Tournaments, Media, Users],
   cors: [baseUrl].filter(Boolean),
   csrf: [baseUrl].filter(Boolean),
-  email: resendAdapter({
-    defaultFromAddress: process.env.RESEND_DEFAULT_EMAIL || 'info@cvxjrgolf.org',
-    defaultFromName: 'Charlevoix County Junior Golf Association',
-    apiKey: process.env.RESEND_API_KEY!,
-  }),
+  // email: nodemailerAdapter({
+  //   defaultFromAddress: process.env.EMAIL_SMTP_USER || 'website@d21softball.org',
+  //   defaultFromName: 'D21 Softball',
+  //   transportOptions: {
+  //     host: process.env.EMAIL_SMTP_HOST,
+  //     port: process.env.EMAIL_SMTP_PORT,
+  //     auth: {
+  //       user: process.env.EMAIL_SMTP_USER,
+  //       pass: process.env.EMAIL_SMTP_PASS,
+  //     },
+  //   },
+  // }),
   endpoints: [],
   globals: [Header, Footer, CompanyInfo],
   plugins: [
