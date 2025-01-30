@@ -15,17 +15,12 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { Links } from '@/blocks/Links/config'
 import { superAdmin } from '@/access/superAdmin'
-import { RichText } from '@/blocks/RichText/config'
-import { FormBlock } from '@/blocks/Form/config'
 import { baseUrl } from '@/utilities/baseUrl'
-import { FeatureCards } from '@/blocks/FeatureCards/config'
-import { Layout } from '@/blocks/Layout/config'
-import { NewTwoColumnLayout } from '@/blocks/NewTwoColumnLayout/config'
+import { MultiRowLayout } from '@/blocks/MultiRowLayout/config'
+import { TwoColumnLayout } from '@/blocks/TwoColumnLayout/config'
 import { revalidateDelete } from './hooks/revalidateDelete'
 import { editorOrHigher } from '@/access/editorOrHigher'
-import { TournamentsPage } from '@/blocks/TournamentsPage/config'
-import { Tournaments } from '@/blocks/TournamentsBlock/config'
-import { TournamentCards } from '@/blocks/TournamentCards/config'
+import { Updates } from '@/blocks/Updates/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -64,17 +59,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [
-                Tournaments,
-                RichText,
-                Links,
-                TournamentsPage,
-                FormBlock,
-                NewTwoColumnLayout,
-                TournamentCards,
-                FeatureCards,
-                Layout,
-              ],
+              blocks: [Links, TwoColumnLayout, MultiRowLayout, Updates],
               required: true,
             },
           ],

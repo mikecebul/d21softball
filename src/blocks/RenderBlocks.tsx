@@ -1,6 +1,11 @@
 import React, { Fragment } from 'react'
 
-import type { Page } from '@/payload-types'
+import type {
+  Page,
+  TwoColumnLayoutBlock as TwoColumnLayoutBlockType,
+  MultiRowLayoutBlock as MultiRowLayoutBlockType,
+} from '@/payload-types'
+import { TwoColumnLayoutBlock } from './TwoColumnLayout/Component'
 
 import { LinksBlock } from './Links/Component'
 import { TournamentsBlock } from './TournamentsBlock/Component'
@@ -10,8 +15,11 @@ import { FormBlock } from './Form/Component'
 import { MediaBlock } from './MediaBlock/Component'
 import { TournamentCardsBlock } from './TournamentCards/Component'
 import { FeatureCardsBlock } from './FeatureCards/Component'
-import { LayoutBlock } from './Layout/Component'
-import { NewTwoColumnLayoutBlock } from './NewTwoColumnLayout/Component'
+import { MultiRowLayoutBlock } from './MultiRowLayout/Component'
+import { UpdatesBlock as UpdatesBlockComponent } from './Updates/Component'
+import { CTA } from './CTA/Component'
+import { TitleBlock } from './Title/Component'
+import { UpdateCardsBlock } from './UpdateCards/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
@@ -22,12 +30,20 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   tournamentCards: TournamentCardsBlock,
   featureCards: FeatureCardsBlock,
-  newTwoColumnLayout: NewTwoColumnLayoutBlock,
-  layout: LayoutBlock,
+  twoColumnLayout: TwoColumnLayoutBlock,
+  multiRowLayout: MultiRowLayoutBlock,
+  updates: UpdatesBlockComponent,
+  cta: CTA,
+  titleBlock: TitleBlock,
+  updateCards: UpdateCardsBlock,
 }
 
 export const RenderBlocks: React.FC<{
-  blocks: Page['layout'][number][]
+  blocks:
+    | Page['layout'][number][]
+    | TwoColumnLayoutBlockType['columnOne']
+    | TwoColumnLayoutBlockType['columnTwo']
+    | MultiRowLayoutBlockType['blocks']
   nested?: boolean
 }> = (props) => {
   const { blocks, nested = false } = props

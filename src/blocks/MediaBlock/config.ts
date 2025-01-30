@@ -5,25 +5,25 @@ export const MediaBlock: Block = {
   interfaceName: 'MediaBlock',
   fields: [
     {
-      name: 'position',
-      type: 'select',
-      defaultValue: 'default',
-      options: [
-        {
-          label: 'Default',
-          value: 'default',
-        },
-        {
-          label: 'Fullscreen',
-          value: 'fullscreen',
-        },
-      ],
-    },
-    {
       name: 'media',
       type: 'upload',
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'caption',
+      type: 'text',
+      admin: {
+        condition: (_, siblingData) => Boolean(siblingData.media?.type === 'image'),
+      },
+    },
+    {
+      name: 'priority',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description: 'If true, the media will be prioritized on first load',
+      },
     },
   ],
 }

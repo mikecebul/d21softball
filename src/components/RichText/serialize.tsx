@@ -101,13 +101,11 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'mediaBlock':
               return (
                 <MediaBlock
-                  className="col-start-1 col-span-3"
+                  className="col-span-3 col-start-1"
                   imgClassName="m-0"
                   key={index}
                   {...block}
                   captionClassName="mx-auto max-w-[48rem]"
-                  enableGutter={false}
-                  disableInnerContainer={true}
                 />
               )
             // case 'banner':
@@ -125,7 +123,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             }
             case 'paragraph': {
               return (
-                <p className="col-start-2 text-base prose text-pretty" key={index}>
+                <p className="prose col-start-2 text-pretty text-base" key={index}>
                   {serializedChildren}
                 </p>
               )
@@ -143,7 +141,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               const textSizeClass = textSizeMap[Tag] || 'text-base'
 
               return (
-                <Tag className={cn('col-start-2 prose text-pretty', textSizeClass)} key={index}>
+                <Tag className={cn('prose col-start-2 text-pretty', textSizeClass)} key={index}>
                   {serializedChildren}
                 </Tag>
               )

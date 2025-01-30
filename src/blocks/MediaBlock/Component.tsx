@@ -2,7 +2,6 @@ import type { StaticImageData } from 'next/image'
 
 import { cn } from 'src/utilities/cn'
 import React from 'react'
-import RichText from '@/components/RichText'
 
 import type { MediaBlock as MediaBlockType } from '@/payload-types'
 
@@ -12,59 +11,24 @@ type Props = MediaBlockType & {
   breakout?: boolean
   captionClassName?: string
   className?: string
-  enableGutter?: boolean
   id?: string
   imgClassName?: string
   staticImage?: StaticImageData
-  disableInnerContainer?: boolean
 }
 
 export const MediaBlock: React.FC<Props> = (props) => {
-  const {
-    captionClassName,
-    className,
-    enableGutter = true,
-    imgClassName,
-    media,
-    position = 'default',
-    staticImage,
-    disableInnerContainer,
-  } = props
-
-  let caption
-  if (media && typeof media === 'object') caption = media.caption
+  const { captionClassName, className, media, staticImage } = props
 
   return (
-    <div
-      className={cn(
-        '',
-        {
-          container: position === 'default' && enableGutter,
-        },
-        className,
-      )}
-    >
-      {position === 'fullscreen' && (
-        <div className="relative">
-          <Media resource={media} src={staticImage} />
-        </div>
-      )}
-      {position === 'default' && (
-        <Media imgClassName={cn('rounded', imgClassName)} resource={media} src={staticImage} />
-      )}
-      {caption && (
-        <div
-          className={cn(
-            'mt-6',
-            {
-              container: position === 'fullscreen' && !disableInnerContainer,
-            },
-            captionClassName,
-          )}
-        >
-          <RichText content={caption} enableGutter={false} />
-        </div>
-      )}
+    <div className={className}>
+      <figure className="relative">
+        <Media resource={media} src={staticImage} />
+        {typeof media === 'object' && media?.caption && (
+          <figcaption className={cn('pt-6', captionClassName)}>
+            <p>{media.caption}</p>
+          </figcaption>
+        )}
+      </figure>
     </div>
   )
 }

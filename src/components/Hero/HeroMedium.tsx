@@ -1,12 +1,22 @@
 import { cn } from '@/utilities/cn'
 
-export function HeroMedium({ title, description }: { title?: string; description?: string }) {
+export function HeroMedium({
+  title,
+  description,
+  className,
+}: {
+  title?: string
+  description?: string
+  className?: string
+}) {
   return (
-    <div className="mx-auto flex flex-col justify-center max-w-prose text-left text-pretty lg:text-center gap-4">
-      <div>
-        {/* {!!subtitle && <Subtitle text={subtitle} />} */}
-        {!!title && <Title text={title} />}
-      </div>
+    <div
+      className={cn(
+        'mx-auto flex max-w-prose flex-col justify-center gap-4 text-pretty text-left lg:text-center',
+        className,
+      )}
+    >
+      <div>{!!title && <Title text={title} />}</div>
       {!!description && <Description text={description} />}
     </div>
   )
@@ -14,7 +24,7 @@ export function HeroMedium({ title, description }: { title?: string; description
 
 export const Subtitle = ({ text }: { text: string }) => {
   return (
-    <h3 className="text-base font-semibold leading-7 capitalize text-brand max-w-prose">{text}</h3>
+    <h3 className="max-w-prose text-base font-semibold capitalize leading-7 text-brand">{text}</h3>
   )
 }
 export const Title = ({
@@ -24,13 +34,13 @@ export const Title = ({
 }: {
   text: string
   className?: string
-  heading?: 'h1' | 'h2'
+  heading?: 'h1' | 'h2' | 'h3'
 }) => {
   if (heading === 'h1') {
     return (
       <h1
         className={cn(
-          'text-6xl md:text-7xl font-bold tracking-tight text-balance max-w-prose',
+          'max-w-prose text-balance text-6xl font-bold tracking-tight md:text-7xl',
           className,
         )}
       >
@@ -40,20 +50,22 @@ export const Title = ({
   }
   if (heading === 'h2') {
     return (
-      <h2
-        className={cn(
-          'text-5xl font-bold tracking-tight text-balance max-w-prose',
-          className,
-        )}
-      >
+      <h2 className={cn('max-w-prose text-balance text-5xl font-bold tracking-tight', className)}>
         {text}
       </h2>
+    )
+  }
+  if (heading === 'h3') {
+    return (
+      <h3 className={cn('max-w-prose text-balance text-4xl font-bold tracking-tight', className)}>
+        {text}
+      </h3>
     )
   }
 }
 export const Description = ({ text, className }: { text: string; className?: string }) => {
   return (
-    <p className={cn('text-lg leading-7 text-muted-foreground max-w-prose text-pretty', className)}>
+    <p className={cn('max-w-prose text-pretty text-lg leading-7 text-muted-foreground', className)}>
       {text}
     </p>
   )

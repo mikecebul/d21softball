@@ -8,16 +8,6 @@
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LinkGroup".
- */
-export type LinkGroup =
-  | {
-      link: Link;
-      id?: string | null;
-    }[]
-  | null;
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LinkCards".
  */
 export type LinkCards =
@@ -32,6 +22,16 @@ export type LinkCards =
       keywords?: string | null;
       image?: (string | null) | Media;
       href: string;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkGroup".
+ */
+export type LinkGroup =
+  | {
+      link: Link;
       id?: string | null;
     }[]
   | null;
@@ -114,17 +114,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout: (
-    | TournamentsBlock
-    | RichTextBlock
-    | LinksBlock
-    | TournamentsPageBlock
-    | FormBlock
-    | NewTwoColumnLayoutBlock
-    | TournamentCardsBlock
-    | FeatureCardsBlock
-    | LayoutBlock
-  )[];
+  layout: (LinksBlock | TwoColumnLayoutBlock | MultiRowLayoutBlock | UpdatesBlock)[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -145,44 +135,15 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TournamentsBlock".
+ * via the `definition` "LinksBlock".
  */
-export interface TournamentsBlock {
-  direction?: ('ltr' | 'rtl') | null;
+export interface LinksBlock {
   title: string;
-  description: string;
-  links?: LinkGroup;
-  image?: (string | null) | Media;
-  /**
-   * Select up to 3 tournaments to display
-   */
-  tournaments?: (string | Tournament)[] | null;
+  description?: string | null;
+  linkCards?: LinkCards;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'tournaments';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link".
- */
-export interface Link {
-  type?: ('reference' | 'custom') | null;
-  newTab?: boolean | null;
-  reference?:
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null);
-  url?: string | null;
-  label: string;
-  /**
-   * Choose how the link should be rendered.
-   */
-  appearance?: ('default' | 'outline') | null;
+  blockType: 'linksBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -228,40 +189,69 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tournaments".
+ * via the `definition` "TwoColumnLayoutBlock".
  */
-export interface Tournament {
-  id: string;
-  title: string;
-  class: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+export interface TwoColumnLayoutBlock {
+  nested?: boolean | null;
+  /**
+   * The breakpoint at which the layout switches to a two column layout
+   */
+  breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
+  columnOne?: (CTABlock | RichTextBlock | MediaBlock | FormBlock)[] | null;
+  columnTwo?: (MediaBlock | FormBlock | CTABlock | RichTextBlock)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'twoColumnLayout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock".
+ */
+export interface CTABlock {
+  verticalAlignment?: ('top' | 'center' | 'bottom') | null;
+  cta: {
+    hasSubtitle?: boolean | null;
+    subtitle?: {
+      icon?: string | null;
+      text?: string | null;
     };
-    [k: string]: unknown;
+    title: string;
+    heading?: ('h1' | 'h2') | null;
+    description: string;
+    links?: LinkGroup;
   };
-  price: number;
-  updatedAt: string;
-  createdAt: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Link".
+ */
+export interface Link {
+  type?: ('reference' | 'custom') | null;
+  newTab?: boolean | null;
+  reference?:
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null);
+  url?: string | null;
+  label: string;
+  /**
+   * Choose how the link should be rendered.
+   */
+  appearance?: ('default' | 'outline') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RichTextBlock".
  */
 export interface RichTextBlock {
-  subtitle?: string | null;
   richContent?: {
     root: {
       type: string;
@@ -277,55 +267,24 @@ export interface RichTextBlock {
     };
     [k: string]: unknown;
   } | null;
-  priority?: boolean | null;
-  images?: (string | Media)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'richText';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LinksBlock".
+ * via the `definition` "MediaBlock".
  */
-export interface LinksBlock {
-  title: string;
-  description?: string | null;
-  linkCards?: LinkCards;
+export interface MediaBlock {
+  media: string | Media;
+  caption?: string | null;
+  /**
+   * If true, the media will be prioritized on first load
+   */
+  priority?: boolean | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'linksBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TournamentsPageBlock".
- */
-export interface TournamentsPageBlock {
-  title?: string | null;
-  tournaments?: (string | Tournament)[] | null;
-  announcements?:
-    | {
-        title: string;
-        description: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'tournamentsPage';
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -603,100 +562,95 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "NewTwoColumnLayoutBlock".
+ * via the `definition` "MultiRowLayoutBlock".
  */
-export interface NewTwoColumnLayoutBlock {
-  /**
-   * The direction of the layout
-   */
-  direction?: ('ltr' | 'rtl') | null;
-  /**
-   * The breakpoint at which the layout switches to a two column layout
-   */
-  breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
-  columnOne?: {
-    contentType?: ('cta' | 'richText') | null;
-    verticalAlignment?: ('top' | 'center' | 'bottom') | null;
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    cta?: {
-      hasSubtitle?: boolean | null;
-      subtitle?: {
-        icon?: string | null;
-        text?: string | null;
-      };
-      title: string;
-      heading?: ('h1' | 'h2') | null;
-      description: string;
-      links?: LinkGroup;
-    };
-  };
-  columnTwo?: {
-    contentType?: ('image' | 'form') | null;
-    priority?: boolean | null;
-    /**
-     * Images will follow as user scrolls
-     */
-    sticky?: boolean | null;
-    images?: (string | Media)[] | null;
-    form?: FormBlock[] | null;
-  };
+export interface MultiRowLayoutBlock {
+  nested?: boolean | null;
+  blocks?: (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | UpdateCardsType)[] | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'newTwoColumnLayout';
+  blockType: 'multiRowLayout';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TournamentCardsBlock".
+ * via the `definition` "TitleBlock".
  */
-export interface TournamentCardsBlock {
-  /**
-   * Select up to 3 Tournaments to display
-   */
-  tournaments?: (string | Tournament)[] | null;
+export interface TitleBlock {
+  heading?: ('h1' | 'h2' | 'h3') | null;
+  title: string;
+  description?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'tournamentCards';
+  blockType: 'titleBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureCardsBlock".
+ * via the `definition` "UpdateCardsType".
  */
-export interface FeatureCardsBlock {
+export interface UpdateCardsType {
   cards?:
     | {
-        icon?: string | null;
-        title?: string | null;
+        title: string;
+        dateOrDescription?: ('date' | 'description' | 'none') | null;
         description?: string | null;
+        updatedAt?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
         id?: string | null;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'featureCards';
+  blockType: 'updateCards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LayoutBlock".
+ * via the `definition` "UpdatesBlock".
  */
-export interface LayoutBlock {
-  blocks?: (NewTwoColumnLayoutBlock | FeatureCardsBlock | TournamentCardsBlock)[] | null;
+export interface UpdatesBlock {
+  commissionerUpdateTitle: string;
+  commissionerUpdateContent: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  commissionerUpdateName: string;
+  commissionerUpdateImage?: (string | null) | Media;
+  commissionerUpdateUpdatedAt: string;
+  standingsTitle: string;
+  standings: {
+    rank: number;
+    teamName: string;
+    wins: number;
+    losses: number;
+    id?: string | null;
+  }[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'layout';
+  blockType: 'updates';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -722,6 +676,36 @@ export interface Event {
   };
   date: string;
   location: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tournaments".
+ */
+export interface Tournament {
+  id: string;
+  title: string;
+  class: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  price: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -882,15 +866,10 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        tournaments?: T | TournamentsBlockSelect<T>;
-        richText?: T | RichTextBlockSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
-        tournamentsPage?: T | TournamentsPageBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-        newTwoColumnLayout?: T | NewTwoColumnLayoutBlockSelect<T>;
-        tournamentCards?: T | TournamentCardsBlockSelect<T>;
-        featureCards?: T | FeatureCardsBlockSelect<T>;
-        layout?: T | LayoutBlockSelect<T>;
+        twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
+        multiRowLayout?: T | MultiRowLayoutBlockSelect<T>;
+        updates?: T | UpdatesBlockSelect<T>;
       };
   meta?:
     | T
@@ -910,52 +889,6 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TournamentsBlock_select".
- */
-export interface TournamentsBlockSelect<T extends boolean = true> {
-  direction?: T;
-  title?: T;
-  description?: T;
-  links?: T | LinkGroupSelect<T>;
-  image?: T;
-  tournaments?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LinkGroup_select".
- */
-export interface LinkGroupSelect<T extends boolean = true> {
-  link?: T | LinkSelect<T>;
-  id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link_select".
- */
-export interface LinkSelect<T extends boolean = true> {
-  type?: T;
-  newTab?: T;
-  reference?: T;
-  url?: T;
-  label?: T;
-  appearance?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RichTextBlock_select".
- */
-export interface RichTextBlockSelect<T extends boolean = true> {
-  subtitle?: T;
-  richContent?: T;
-  priority?: T;
-  images?: T;
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -984,18 +917,91 @@ export interface LinkCardsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TournamentsPageBlock_select".
+ * via the `definition` "TwoColumnLayoutBlock_select".
  */
-export interface TournamentsPageBlockSelect<T extends boolean = true> {
-  title?: T;
-  tournaments?: T;
-  announcements?:
+export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
+  nested?: T;
+  breakpoint?: T;
+  columnOne?:
     | T
     | {
-        title?: T;
-        description?: T;
-        id?: T;
+        cta?: T | CTABlockSelect<T>;
+        richText?: T | RichTextBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
       };
+  columnTwo?:
+    | T
+    | {
+        mediaBlock?: T | MediaBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
+        richText?: T | RichTextBlockSelect<T>;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock_select".
+ */
+export interface CTABlockSelect<T extends boolean = true> {
+  verticalAlignment?: T;
+  cta?:
+    | T
+    | {
+        hasSubtitle?: T;
+        subtitle?:
+          | T
+          | {
+              icon?: T;
+              text?: T;
+            };
+        title?: T;
+        heading?: T;
+        description?: T;
+        links?: T | LinkGroupSelect<T>;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkGroup_select".
+ */
+export interface LinkGroupSelect<T extends boolean = true> {
+  link?: T | LinkSelect<T>;
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Link_select".
+ */
+export interface LinkSelect<T extends boolean = true> {
+  type?: T;
+  newTab?: T;
+  reference?: T;
+  url?: T;
+  label?: T;
+  appearance?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock_select".
+ */
+export interface RichTextBlockSelect<T extends boolean = true> {
+  richContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock_select".
+ */
+export interface MediaBlockSelect<T extends boolean = true> {
+  media?: T;
+  caption?: T;
+  priority?: T;
   id?: T;
   blockName?: T;
 }
@@ -1012,69 +1018,45 @@ export interface FormBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "NewTwoColumnLayoutBlock_select".
+ * via the `definition` "MultiRowLayoutBlock_select".
  */
-export interface NewTwoColumnLayoutBlockSelect<T extends boolean = true> {
-  direction?: T;
-  breakpoint?: T;
-  columnOne?:
+export interface MultiRowLayoutBlockSelect<T extends boolean = true> {
+  nested?: T;
+  blocks?:
     | T
     | {
-        contentType?: T;
-        verticalAlignment?: T;
-        richText?: T;
-        cta?:
-          | T
-          | {
-              hasSubtitle?: T;
-              subtitle?:
-                | T
-                | {
-                    icon?: T;
-                    text?: T;
-                  };
-              title?: T;
-              heading?: T;
-              description?: T;
-              links?: T | LinkGroupSelect<T>;
-            };
-      };
-  columnTwo?:
-    | T
-    | {
-        contentType?: T;
-        priority?: T;
-        sticky?: T;
-        images?: T;
-        form?:
-          | T
-          | {
-              formBlock?: T | FormBlockSelect<T>;
-            };
+        titleBlock?: T | TitleBlockSelect<T>;
+        richText?: T | RichTextBlockSelect<T>;
+        twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
+        updateCards?: T | UpdateCardsTypeSelect<T>;
       };
   id?: T;
   blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TournamentCardsBlock_select".
+ * via the `definition` "TitleBlock_select".
  */
-export interface TournamentCardsBlockSelect<T extends boolean = true> {
-  tournaments?: T;
+export interface TitleBlockSelect<T extends boolean = true> {
+  heading?: T;
+  title?: T;
+  description?: T;
   id?: T;
   blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureCardsBlock_select".
+ * via the `definition` "UpdateCardsType_select".
  */
-export interface FeatureCardsBlockSelect<T extends boolean = true> {
+export interface UpdateCardsTypeSelect<T extends boolean = true> {
   cards?:
     | T
     | {
-        icon?: T;
         title?: T;
+        dateOrDescription?: T;
         description?: T;
+        updatedAt?: T;
+        content?: T;
         id?: T;
       };
   id?: T;
@@ -1082,15 +1064,23 @@ export interface FeatureCardsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LayoutBlock_select".
+ * via the `definition` "UpdatesBlock_select".
  */
-export interface LayoutBlockSelect<T extends boolean = true> {
-  blocks?:
+export interface UpdatesBlockSelect<T extends boolean = true> {
+  commissionerUpdateTitle?: T;
+  commissionerUpdateContent?: T;
+  commissionerUpdateName?: T;
+  commissionerUpdateImage?: T;
+  commissionerUpdateUpdatedAt?: T;
+  standingsTitle?: T;
+  standings?:
     | T
     | {
-        newTwoColumnLayout?: T | NewTwoColumnLayoutBlockSelect<T>;
-        featureCards?: T | FeatureCardsBlockSelect<T>;
-        tournamentCards?: T | TournamentCardsBlockSelect<T>;
+        rank?: T;
+        teamName?: T;
+        wins?: T;
+        losses?: T;
+        id?: T;
       };
   id?: T;
   blockName?: T;
@@ -1619,17 +1609,6 @@ export interface CompanyInfoSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  position?: ('default' | 'fullscreen') | null;
-  media: string | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
