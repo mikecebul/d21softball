@@ -20,7 +20,6 @@ import { MultiRowLayout } from '@/blocks/MultiRowLayout/config'
 import { TwoColumnLayout } from '@/blocks/TwoColumnLayout/config'
 import { revalidateDelete } from './hooks/revalidateDelete'
 import { editorOrHigher } from '@/access/editorOrHigher'
-import { Updates } from '@/blocks/Updates/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -59,7 +58,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Links, TwoColumnLayout, MultiRowLayout, Updates],
+              blocks: [Links, TwoColumnLayout, MultiRowLayout],
               required: true,
             },
           ],

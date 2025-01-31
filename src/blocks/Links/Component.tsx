@@ -8,18 +8,17 @@ import { GridSVG } from '@/components/GridSVG'
 import { HeroMedium } from '@/components/Hero/HeroMedium'
 import type { LinksBlock as LinksBlockType } from '@/payload-types'
 
-export const LinksBlock = ({ title, description, linkCards }: LinksBlockType) => {
+export const LinksBlock = ({ title, description, cards }: LinksBlockType) => {
   return (
     <Container>
       <GridSVG />
       <HeroMedium title={title || undefined} description={description || undefined} />
-      {!!linkCards && linkCards.length > 0 && (
+      {!!cards && cards.length > 0 && (
         <MotionStaggerChildren>
           <CardGrid>
-            {linkCards.map((card) => (
+            {cards.map((card) => (
               <MotionStaggeredChild key={card.id}>
-                {card.linkType === 'video' && <VideoCard card={card} />}
-                {card.linkType === 'link' && <LinkCard card={card} />}
+                <LinkCard card={card} />
               </MotionStaggeredChild>
             ))}
           </CardGrid>

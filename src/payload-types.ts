@@ -8,25 +8,6 @@
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LinkCards".
- */
-export type LinkCards =
-  | {
-      linkType?: ('link' | 'video') | null;
-      title: string;
-      description: string;
-      imageUploadOption?: ('generate' | 'manual') | null;
-      /**
-       * Coma seperated words
-       */
-      keywords?: string | null;
-      image?: (string | null) | Media;
-      href: string;
-      id?: string | null;
-    }[]
-  | null;
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LinkGroup".
  */
 export type LinkGroup =
@@ -114,7 +95,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout: (LinksBlock | TwoColumnLayoutBlock | MultiRowLayoutBlock | UpdatesBlock)[];
+  layout: (LinksBlock | TwoColumnLayoutBlock | MultiRowLayoutBlock)[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -140,7 +121,15 @@ export interface Page {
 export interface LinksBlock {
   title: string;
   description?: string | null;
-  linkCards?: LinkCards;
+  cards?:
+    | {
+        title: string;
+        description?: string | null;
+        image: string | Media;
+        link: Link;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'linksBlock';
@@ -189,6 +178,29 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Link".
+ */
+export interface Link {
+  type?: ('reference' | 'custom') | null;
+  newTab?: boolean | null;
+  reference?:
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null);
+  url?: string | null;
+  label: string;
+  /**
+   * Choose how the link should be rendered.
+   */
+  appearance?: ('default' | 'outline') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TwoColumnLayoutBlock".
  */
 export interface TwoColumnLayoutBlock {
@@ -223,29 +235,6 @@ export interface CTABlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link".
- */
-export interface Link {
-  type?: ('reference' | 'custom') | null;
-  newTab?: boolean | null;
-  reference?:
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null);
-  url?: string | null;
-  label: string;
-  /**
-   * Choose how the link should be rendered.
-   */
-  appearance?: ('default' | 'outline') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -566,7 +555,7 @@ export interface Form {
  */
 export interface MultiRowLayoutBlock {
   nested?: boolean | null;
-  blocks?: (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | UpdateCardsType)[] | null;
+  blocks?: (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | UpdateCardsType | LinksBlock)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'multiRowLayout';
@@ -615,42 +604,6 @@ export interface UpdateCardsType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'updateCards';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "UpdatesBlock".
- */
-export interface UpdatesBlock {
-  commissionerUpdateTitle: string;
-  commissionerUpdateContent: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  commissionerUpdateName: string;
-  commissionerUpdateImage?: (string | null) | Media;
-  commissionerUpdateUpdatedAt: string;
-  standingsTitle: string;
-  standings: {
-    rank: number;
-    teamName: string;
-    wins: number;
-    losses: number;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'updates';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -869,7 +822,6 @@ export interface PagesSelect<T extends boolean = true> {
         linksBlock?: T | LinksBlockSelect<T>;
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
         multiRowLayout?: T | MultiRowLayoutBlockSelect<T>;
-        updates?: T | UpdatesBlockSelect<T>;
       };
   meta?:
     | T
@@ -897,23 +849,29 @@ export interface PagesSelect<T extends boolean = true> {
 export interface LinksBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  linkCards?: T | LinkCardsSelect<T>;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        link?: T | LinkSelect<T>;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LinkCards_select".
+ * via the `definition` "Link_select".
  */
-export interface LinkCardsSelect<T extends boolean = true> {
-  linkType?: T;
-  title?: T;
-  description?: T;
-  imageUploadOption?: T;
-  keywords?: T;
-  image?: T;
-  href?: T;
-  id?: T;
+export interface LinkSelect<T extends boolean = true> {
+  type?: T;
+  newTab?: T;
+  reference?: T;
+  url?: T;
+  label?: T;
+  appearance?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -975,18 +933,6 @@ export interface LinkGroupSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link_select".
- */
-export interface LinkSelect<T extends boolean = true> {
-  type?: T;
-  newTab?: T;
-  reference?: T;
-  url?: T;
-  label?: T;
-  appearance?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RichTextBlock_select".
  */
 export interface RichTextBlockSelect<T extends boolean = true> {
@@ -1029,6 +975,7 @@ export interface MultiRowLayoutBlockSelect<T extends boolean = true> {
         richText?: T | RichTextBlockSelect<T>;
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
         updateCards?: T | UpdateCardsTypeSelect<T>;
+        linksBlock?: T | LinksBlockSelect<T>;
       };
   id?: T;
   blockName?: T;
@@ -1057,29 +1004,6 @@ export interface UpdateCardsTypeSelect<T extends boolean = true> {
         description?: T;
         updatedAt?: T;
         content?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "UpdatesBlock_select".
- */
-export interface UpdatesBlockSelect<T extends boolean = true> {
-  commissionerUpdateTitle?: T;
-  commissionerUpdateContent?: T;
-  commissionerUpdateName?: T;
-  commissionerUpdateImage?: T;
-  commissionerUpdateUpdatedAt?: T;
-  standingsTitle?: T;
-  standings?:
-    | T
-    | {
-        rank?: T;
-        teamName?: T;
-        wins?: T;
-        losses?: T;
         id?: T;
       };
   id?: T;

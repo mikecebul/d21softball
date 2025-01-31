@@ -14,6 +14,9 @@ importers:
       '@lucide/lab':
         specifier: ^0.1.2
         version: 0.1.2
+      '@payload-bites/image-search':
+        specifier: ^1.3.0
+        version: 1.3.0(@payloadcms/translations@3.20.0)(@payloadcms/ui@3.20.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))(payload@3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@payloadcms/db-mongodb':
         specifier: 3.20.0
         version: 3.20.0(payload@3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))
@@ -1097,6 +1100,15 @@ packages:
   '@npmcli/promise-spawn@7.0.2':
     resolution: {integrity: sha512-xhfYPXoV5Dy4UkY0D+v2KkwvnDfiA/8Mt3sWCGI/hM03NsYIH8ZaG6QzS9x7pje5vHZBZJ2v6VRFVTWACnqcmQ==}
     engines: {node: ^16.14.0 || >=18.0.0}
+
+  '@payload-bites/image-search@1.3.0':
+    resolution: {integrity: sha512-BeO0sgbmySUFOZz93uRM1k71/ZjZBZBQBterXjgwoR3tViXVsBERfdpxO07OiIH/3YXboxJxKc+IdRym0ccp/Q==}
+    peerDependencies:
+      '@payloadcms/translations': ^3.19.0
+      '@payloadcms/ui': ^3.19.0
+      payload: ^3.19.0
+      react: ^19
+      react-dom: ^19
 
   '@payloadcms/db-mongodb@3.20.0':
     resolution: {integrity: sha512-Zg+A2KRKyPCDEhalskLVqA1IV48XtE6lWkImzvvRse9PZHQUXSnZ/VdAgY0SdruyRJ5GJHD/Crn34fFw5nXkwQ==}
@@ -4290,6 +4302,11 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  react-plock@3.4.0:
+    resolution: {integrity: sha512-u2L2V6xLDQSzZzl38PEPL2Z1zAQJ1CVuYnT44H5CjX6jbFqw9oRH+YzHuBpK2V/AbLep4PPwhht93lpeGC9Yqw==}
+    peerDependencies:
+      react: ^18.2.0
+
   react-remove-scroll-bar@2.3.8:
     resolution: {integrity: sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==}
     engines: {node: '>=10'}
@@ -6332,6 +6349,15 @@ snapshots:
   '@npmcli/promise-spawn@7.0.2':
     dependencies:
       which: 4.0.0
+
+  '@payload-bites/image-search@1.3.0(@payloadcms/translations@3.20.0)(@payloadcms/ui@3.20.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))(payload@3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@payloadcms/translations': 3.20.0
+      '@payloadcms/ui': 3.20.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4)
+      payload: 3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      react-plock: 3.4.0(react@19.0.0)
 
   '@payloadcms/db-mongodb@3.20.0(payload@3.20.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.5.4))':
     dependencies:
@@ -10236,6 +10262,10 @@ snapshots:
       react: 19.0.0
 
   react-is@16.13.1: {}
+
+  react-plock@3.4.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   react-remove-scroll-bar@2.3.8(@types/react@19.0.1)(react@19.0.0):
     dependencies:

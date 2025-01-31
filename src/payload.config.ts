@@ -1,6 +1,5 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
-
+import { imageSearchPlugin } from '@payload-bites/image-search'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
@@ -171,6 +170,7 @@ export default buildConfig({
   endpoints: [],
   globals: [Header, Footer, CompanyInfo],
   plugins: [
+    imageSearchPlugin({ enabled: true }),
     stripePlugin({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test') ?? true,
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',

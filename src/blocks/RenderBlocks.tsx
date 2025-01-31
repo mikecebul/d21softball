@@ -16,7 +16,6 @@ import { MediaBlock } from './MediaBlock/Component'
 import { TournamentCardsBlock } from './TournamentCards/Component'
 import { FeatureCardsBlock } from './FeatureCards/Component'
 import { MultiRowLayoutBlock } from './MultiRowLayout/Component'
-import { UpdatesBlock as UpdatesBlockComponent } from './Updates/Component'
 import { CTA } from './CTA/Component'
 import { TitleBlock } from './Title/Component'
 import { UpdateCardsBlock } from './UpdateCards/Component'
@@ -32,7 +31,6 @@ const blockComponents = {
   featureCards: FeatureCardsBlock,
   twoColumnLayout: TwoColumnLayoutBlock,
   multiRowLayout: MultiRowLayoutBlock,
-  updates: UpdatesBlockComponent,
   cta: CTA,
   titleBlock: TitleBlock,
   updateCards: UpdateCardsBlock,

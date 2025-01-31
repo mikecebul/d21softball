@@ -1,5 +1,5 @@
 import { Block } from 'payload'
-import { linkCards } from '@/fields/cards/linkCards'
+import { link } from '@/fields/link'
 
 export const Links: Block = {
   slug: 'linksBlock',
@@ -16,6 +16,32 @@ export const Links: Block = {
       label: 'Description',
       type: 'textarea',
     },
-    linkCards,
+    {
+      name: 'cards',
+      type: 'array',
+      admin: {
+        components: {
+          RowLabel: '@/components/RowLabel/RowLabelWithTitle',
+        },
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        link(),
+      ],
+    },
   ],
 }

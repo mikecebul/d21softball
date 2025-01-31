@@ -1,6 +1,7 @@
 import type { ArrayField, Field } from 'payload'
 import { addHTTPS } from '@/hooks/addHTTPS'
 import { fetchRandomImage } from './fetchRandomImage'
+import { link } from '../link'
 
 export const linkCards: ArrayField = {
   name: 'linkCards',

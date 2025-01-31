@@ -3,6 +3,7 @@ import { TwoColumnLayout } from '../TwoColumnLayout/config'
 import { TitleBlock } from '../Title/config'
 import { RichText } from '../RichText/config'
 import { UpdateCards } from '../UpdateCards/config'
+import { Links } from '../Links/config'
 
 export const MultiRowLayout: Block = {
   slug: 'multiRowLayout',
@@ -20,7 +21,7 @@ export const MultiRowLayout: Block = {
     {
       name: 'blocks',
       type: 'blocks',
-      blocks: [TitleBlock, RichText, TwoColumnLayout, UpdateCards],
+      blocks: [TitleBlock, RichText, TwoColumnLayout, UpdateCards, Links],
     },
   ],
 }
