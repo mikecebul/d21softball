@@ -66,6 +66,14 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     )
   }
 
+  if (appearance === 'card') {
+    return (
+      <Link className={cn('object-top', className)} href={href || url || ''} {...newTabProps}>
+        {children && children}
+      </Link>
+    )
+  }
+
   return (
     <Button
       asChild
