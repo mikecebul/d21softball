@@ -266,7 +266,7 @@ export interface RichTextBlock {
  */
 export interface MediaBlock {
   media: string | Media;
-  caption?: string | null;
+  showCaption: boolean;
   /**
    * If true, the media will be prioritized on first load
    */
@@ -946,7 +946,7 @@ export interface RichTextBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
-  caption?: T;
+  showCaption?: T;
   priority?: T;
   id?: T;
   blockName?: T;

@@ -1,15 +1,25 @@
-import { Card, CardContent, CardDescriptionDiv, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescriptionDiv,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import RichText from '@/components/RichText'
 import { UpdateCardsType } from '@/payload-types'
+import { Button, buttonVariants } from '@/components/ui/button'
+import Link from 'next/link'
+import { cn } from '@/utilities/cn'
 
 export const UpdateCardsBlock = ({ cards }: UpdateCardsType) => {
   return (
-    <div className="flex flex-wrap gap-8">
+    <div className="flex flex-wrap justify-between gap-8">
       {cards &&
         cards.map(({ title, content, dateOrDescription, description, updatedAt }) => (
-          <Card className="w-full max-w-2xl shadow-lg">
+          <Card className="flex w-full max-w-2xl flex-col shadow-lg">
             <CardHeader className="">
               <CardTitle className="text-3xl">{title}</CardTitle>
               <CardDescriptionDiv>
@@ -22,9 +32,14 @@ export const UpdateCardsBlock = ({ cards }: UpdateCardsType) => {
                 )}
               </CardDescriptionDiv>
             </CardHeader>
-            <CardContent>
-              <RichText content={content} />
+            <CardContent className="flex-1">
+              <RichText content={content} className="" truncateLines />
             </CardContent>
+            <CardFooter>
+              <Link href="#" className={cn('w-full', buttonVariants({ variant: 'outline' }))}>
+                Read Entire Update
+              </Link>
+            </CardFooter>
           </Card>
         ))}
     </div>

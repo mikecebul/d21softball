@@ -8,6 +8,7 @@ type Props = {
   content: Record<string, any>
   enableGutter?: boolean
   enableProse?: boolean
+  truncateLines?: boolean
 }
 
 const RichText: React.FC<Props> = ({
@@ -15,6 +16,7 @@ const RichText: React.FC<Props> = ({
   content,
   enableGutter = false,
   enableProse = true,
+  truncateLines = false,
 }) => {
   if (!content) {
     return null
@@ -24,9 +26,10 @@ const RichText: React.FC<Props> = ({
     <div
       className={cn(
         {
-          'container ': enableGutter,
+          container: enableGutter,
           'max-w-none': !enableGutter,
-          'prose dark:prose-invert ': enableProse,
+          'prose dark:prose-invert': enableProse,
+          'line-clamp-10': truncateLines,
         },
         className,
       )}

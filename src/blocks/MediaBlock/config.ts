@@ -11,11 +11,10 @@ export const MediaBlock: Block = {
       required: true,
     },
     {
-      name: 'caption',
-      type: 'text',
-      admin: {
-        condition: (_, siblingData) => Boolean(siblingData.media?.type === 'image'),
-      },
+      name: 'showCaption',
+      type: 'checkbox',
+      defaultValue: false,
+      required: true,
     },
     {
       name: 'priority',

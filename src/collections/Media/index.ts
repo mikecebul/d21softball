@@ -74,6 +74,9 @@ export const Media: CollectionConfig = {
     {
       name: 'caption',
       type: 'text',
+      admin: {
+        condition: (_, siblingData) => siblingData.mimeType.startsWith('image/'),
+      },
     },
     {
       name: 'prefix',
