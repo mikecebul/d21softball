@@ -46,6 +46,7 @@ import { anyone } from './access/anyone'
 import { adminOrSuperAdmin } from './access/adminOrSuperAdmin'
 import { authenticated } from './access/authenticated'
 import { Events } from './collections/Events'
+import { Updates } from './collections/Updates'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -152,7 +153,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Events, Tournaments, Media, Users],
+  collections: [Pages, Updates, Events, Tournaments, Media, Users],
   cors: [baseUrl].filter(Boolean),
   csrf: [baseUrl].filter(Boolean),
   // email: nodemailerAdapter({

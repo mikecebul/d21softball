@@ -13,13 +13,31 @@ import { UpdateCardsType } from '@/payload-types'
 import { Button, buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
-export const UpdateCardsBlock = ({ cards }: UpdateCardsType) => {
+export const UpdateCardsBlock = async ({ allUpdates, updates }: UpdateCardsType) => {
+  const payload = await getPayload({ config: configPromise })
+  const { docs: fetchedUpdates } = await payload.find({
+    collection: 'updates',
+    draft: false,
+    limit: 1000,
+    overrideAccess: true,
+    pagination: false,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+  })
+
+  const cards = allUpdates ? fetchedUpdates : updates
+
   return (
-    <div className="flex flex-wrap justify-between gap-8">
+    <div className="grid gap-6 lg:grid-cols-2 2xl:grid-cols-3">
       {cards &&
-        cards.map(({ title, content, dateOrDescription, description, updatedAt }) => (
-          <Card className="flex w-full max-w-2xl flex-col shadow-lg">
+        cards.map(({ title, slug, content, dateOrDescription, description, updatedAt, id }) => (
+          <Card className="flex w-full max-w-2xl flex-col shadow-lg" key={id}>
             <CardHeader className="">
               <CardTitle className="text-3xl">{title}</CardTitle>
               <CardDescriptionDiv>
@@ -36,7 +54,10 @@ export const UpdateCardsBlock = ({ cards }: UpdateCardsType) => {
               <RichText content={content} className="" truncateLines />
             </CardContent>
             <CardFooter>
-              <Link href="#" className={cn('w-full', buttonVariants({ variant: 'outline' }))}>
+              <Link
+                href={`/updates/${slug}`}
+                className={cn('w-full', buttonVariants({ variant: 'outline' }))}
+              >
                 Read Entire Update
               </Link>
             </CardFooter>

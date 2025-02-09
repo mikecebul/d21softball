@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
-import type { Page } from '../payload-types'
+import type { Page, Update } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { baseUrl } from './baseUrl'
 
-export const generateMeta = async (args: { doc: Page }): Promise<Metadata> => {
+export const generateMeta = async (args: { doc: Page | Update }): Promise<Metadata> => {
   const { doc } = args || {}
 
   const ogImage =
@@ -19,8 +19,8 @@ export const generateMeta = async (args: { doc: Page }): Promise<Metadata> => {
       : '/golf-hero.jpg'
 
   const title = doc?.meta?.metadata?.title
-    ? doc.meta.metadata.title + ' | CVX Junior Golf'
-    : 'CVX Junior Golf'
+    ? doc.meta.metadata.title + ' | D21 Softball'
+    : 'D21 Softball'
 
   return {
     description: doc?.meta?.metadata?.description,

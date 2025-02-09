@@ -23,6 +23,7 @@ export interface Config {
   };
   collections: {
     pages: Page;
+    updates: Update;
     events: Event;
     tournaments: Tournament;
     media: Media;
@@ -37,6 +38,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    updates: UpdatesSelect<false> | UpdatesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     tournaments: TournamentsSelect<false> | TournamentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -577,33 +579,51 @@ export interface TitleBlock {
  * via the `definition` "UpdateCardsType".
  */
 export interface UpdateCardsType {
-  cards?:
-    | {
-        title: string;
-        dateOrDescription?: ('date' | 'description' | 'none') | null;
-        description?: string | null;
-        updatedAt?: string | null;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  allUpdates: boolean;
+  updates?: (string | Update)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'updateCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "updates".
+ */
+export interface Update {
+  id: string;
+  title: string;
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  dateOrDescription?: ('date' | 'description' | 'none') | null;
+  description?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  hideFromSearchEngines?: boolean | null;
+  metadata?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -739,6 +759,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'updates';
+        value: string | Update;
       } | null)
     | ({
         relationTo: 'events';
@@ -996,18 +1020,34 @@ export interface TitleBlockSelect<T extends boolean = true> {
  * via the `definition` "UpdateCardsType_select".
  */
 export interface UpdateCardsTypeSelect<T extends boolean = true> {
-  cards?:
+  allUpdates?: T;
+  updates?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "updates_select".
+ */
+export interface UpdatesSelect<T extends boolean = true> {
+  title?: T;
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
+  dateOrDescription?: T;
+  description?: T;
+  content?: T;
+  hideFromSearchEngines?: T;
+  metadata?:
     | T
     | {
         title?: T;
-        dateOrDescription?: T;
+        image?: T;
         description?: T;
-        updatedAt?: T;
-        content?: T;
-        id?: T;
       };
-  id?: T;
-  blockName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
