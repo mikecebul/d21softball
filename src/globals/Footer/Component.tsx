@@ -8,7 +8,8 @@ import Container from '@/components/Container'
 import { CMSLink } from '@/components/Link'
 import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
-import { GoogleMap } from './GoogleMap'
+//import { GoogleMap } from './GoogleMap'
+import Image from 'next/image'
 
 export async function Footer() {
   const payload = await getPayload({ config: payloadConfig })
@@ -18,7 +19,7 @@ export async function Footer() {
     depth: 1,
   })
 
-  const { contact, social, hours, } = await payload.findGlobal({
+  const { contact, social, hours } = await payload.findGlobal({
     slug: 'company-info',
     depth: 1,
   })
@@ -26,13 +27,13 @@ export async function Footer() {
   return (
     <footer>
       <Container className="py-0">
-        <div className="grid gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {/* PageLinks */}
           {pageLinks && pageLinks.length > 0 && (
-            <div className="flex flex-col col-span-1">
+            <div className="col-span-1 flex flex-col">
               <p className="text-lg font-bold">Website</p>
               <Separator className="my-4" />
-              <ul className="flex flex-col mb-8 space-y-4 font-medium text-gray-500">
+              <ul className="mb-8 flex flex-col space-y-4 font-medium text-gray-500">
                 {pageLinks.map(({ link }, id) => {
                   return (
                     <li key={id}>
@@ -45,10 +46,10 @@ export async function Footer() {
           )}
           {/* Contact Info */}
           {showContact && contact && (
-            <div className="flex flex-col col-span-1">
+            <div className="col-span-1 flex flex-col">
               <p className="text-lg font-bold">Contact</p>
               <Separator className="my-4" />
-              <ul className="flex flex-col mb-8 space-y-4 text-gray-500 ">
+              <ul className="mb-8 flex flex-col space-y-4 text-gray-500">
                 {typeof contact.phone === 'string' && contact.phone.length > 0 && (
                   <li key={contact.phone} className="group">
                     <a
@@ -58,7 +59,7 @@ export async function Footer() {
                         'flex justify-start group-hover:text-primary',
                       )}
                     >
-                      <Phone className="flex-shrink-0 mr-2" size={20} />
+                      <Phone className="mr-2 flex-shrink-0" size={20} />
                       {contact.phone}
                     </a>
                   </li>
@@ -72,7 +73,7 @@ export async function Footer() {
                         'flex justify-start group-hover:text-primary',
                       )}
                     >
-                      <Mail className="flex-shrink-0 mr-2" size={20} />
+                      <Mail className="mr-2 flex-shrink-0" size={20} />
                       {contact.email}
                     </a>
                   </li>
@@ -86,11 +87,13 @@ export async function Footer() {
                   </li>
                 )}
                 {(contact.physicalAddress?.street || contact.mailingAddress?.street) && (
-                  <li className={cn(
-                    buttonVariants({ variant: 'text' }),
-                    'text-gray-500 flex items-start justify-start h-full',
-                  )}>
-                    <Navigation className="flex-shrink-0 mr-2" size={20} />
+                  <li
+                    className={cn(
+                      buttonVariants({ variant: 'text' }),
+                      'flex h-full items-start justify-start text-gray-500',
+                    )}
+                  >
+                    <Navigation className="mr-2 flex-shrink-0" size={20} />
                     <ul>
                       {contact.physicalAddress?.street && (
                         <li>
@@ -133,7 +136,7 @@ export async function Footer() {
                   <li
                     className={cn(
                       buttonVariants({ variant: 'text' }),
-                      'text-gray-500 flex items-start justify-start h-full',
+                      'flex h-full items-start justify-start text-gray-500',
                     )}
                   >
                     <Clock className="mr-2" size={20} />
@@ -160,19 +163,26 @@ export async function Footer() {
           {/* Map Section */}
           {showGoogleMap && (
             <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-              <p className="text-lg font-bold">Location</p>
+              <p className="text-lg font-bold">Division</p>
               <Separator className="my-4" />
-              <GoogleMap contact={contact} />
+              {/** <GoogleMap contact={contact} /> **/}
+              <Image
+                src="/footer-usa-softball-logo.png"
+                alt="usa softball of michigan logo"
+                height="350"
+                width="350"
+                className="h-[350px]"
+              />
             </div>
           )}
         </div>
 
         <Separator />
         <div className="flex items-center justify-center">
-          <span className="block text-sm text-center text-gray-500">
+          <span className="block text-center text-sm text-gray-500">
             © {new Date().getFullYear()}{' '}
             <Link href="/" className={cn(buttonVariants({ variant: 'ghost' }), 'p-0')}>
-              CVX Junior Golf
+              District 21 Softball
             </Link>
             . All Rights Reserved.
           </span>
