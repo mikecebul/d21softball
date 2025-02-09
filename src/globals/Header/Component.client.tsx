@@ -21,14 +21,14 @@ export const HeaderClient = ({
   return (
     <header className="sticky top-0 z-40 flex w-full overflow-clip bg-background/50 py-3 backdrop-blur-sm">
       <div className="flex w-full items-center px-4 2xl:container md:px-8 2xl:px-0">
-        <Logo name={companyName ?? 'Charlevoix Junior Golf'} />
+        <Logo name={companyName ?? 'District 21 Softball'} />
         <MainNav navItems={navItems} />
-        <MobileNav navItems={navItems} companyName={companyName ?? 'Charlevoix Junior Golf'} />
+        <MobileNav navItems={navItems} companyName={companyName ?? 'District 21 Softball'} />
         <div className="flex flex-col items-center text-lg xl:flex-row 2xl:space-x-2">
           <div
             className={cn(
               buttonVariants({ variant: 'text' }),
-              'hidden text-lg text-brand xl:inline-flex pr-0',
+              'hidden pr-0 text-lg text-brand xl:inline-flex',
             )}
           >
             <Icons.phone className="mr-2" size={20} />
