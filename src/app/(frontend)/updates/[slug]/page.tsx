@@ -6,6 +6,7 @@ import { Metadata } from 'next'
 
 import { getPayload } from 'payload'
 import { generateMeta } from '@/utilities/generateMeta'
+import { UpdateBlock } from '@/components/Update'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -35,7 +36,7 @@ export default async function UpdatePage({ params: paramsPromise }: Args) {
     <main className="">
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
-      <p>Updates</p>
+      <UpdateBlock update={update} />
     </main>
   )
 }
