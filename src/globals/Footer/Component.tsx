@@ -14,7 +14,7 @@ import Image from 'next/image'
 export async function Footer() {
   const payload = await getPayload({ config: payloadConfig })
 
-  const { pageLinks, showContact, showGoogleMap } = await payload.findGlobal({
+  const { pageLinks, showContact, showDivisionLogo } = await payload.findGlobal({
     slug: 'footer',
     depth: 1,
   })
@@ -160,8 +160,8 @@ export async function Footer() {
             </div>
           )}
 
-          {/* Map Section */}
-          {showGoogleMap && (
+          {/* Division Logo Section */}
+          {showDivisionLogo && (
             <div className="col-span-1 sm:col-span-2 lg:col-span-1">
               <p className="text-lg font-bold">Division</p>
               <Separator className="my-4" />

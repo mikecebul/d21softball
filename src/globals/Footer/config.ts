@@ -35,9 +35,9 @@ export const Footer: GlobalConfig = {
       label: 'Add column for business contact information.',
     },
     {
-      name: 'showGoogleMap',
+      name: 'showDivisionLogo',
       type: 'checkbox',
-      label: 'Add Google Map to footer.',
+      label: 'Add Division Logo to footer.',
       defaultValue: true,
     },
   ],

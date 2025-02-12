@@ -47,6 +47,7 @@ import { adminOrSuperAdmin } from './access/adminOrSuperAdmin'
 import { authenticated } from './access/authenticated'
 import { Events } from './collections/Events'
 import { Updates } from './collections/Updates'
+import { Resources } from './collections/Resources'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -153,7 +154,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Updates, Events, Tournaments, Media, Users],
+  collections: [Pages, Updates, Resources, Events, Tournaments, Media, Users],
   cors: [baseUrl].filter(Boolean),
   csrf: [baseUrl].filter(Boolean),
   // email: nodemailerAdapter({
@@ -171,7 +172,7 @@ export default buildConfig({
   endpoints: [],
   globals: [Header, Footer, CompanyInfo],
   plugins: [
-    imageSearchPlugin({ enabled: true }),
+    imageSearchPlugin(),
     stripePlugin({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test') ?? true,
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',

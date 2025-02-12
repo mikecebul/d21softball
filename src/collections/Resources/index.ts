@@ -1,7 +1,8 @@
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { editorOrHigher } from '@/access/editorOrHigher'
-import { linkGroup } from '@/fields/link/linkGroup'
+import { superAdmin } from '@/access/superAdmin'
+import { link } from '@/fields/link'
 import { CollectionConfig } from 'payload'
 
 export const Resources: CollectionConfig = {
@@ -18,6 +19,7 @@ export const Resources: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    hideAPIURL: !superAdmin,
   },
   fields: [
     {
@@ -28,17 +30,20 @@ export const Resources: CollectionConfig = {
     {
       name: 'description',
       type: 'textarea',
-      required: true,
     },
-    // {
-    //   name: 'category',
-    //   type: 'relationship',
-    //   relationTo: '',
-    // },
-    linkGroup({
-      overrides: {
-        maxRows: 2,
-      },
-    }),
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media'
+    },
+    link(),
   ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+    },
+    maxPerDoc: 50,
+  },
 }

@@ -66,6 +66,7 @@ export default {
         brand: {
           DEFAULT: 'hsl(var(--brand))',
           foreground: 'hsl(var(--brand-foreground))',
+          secondary: 'hsl(var(--brand-secondary))',
         },
         card: {
           DEFAULT: 'hsl(var(--card))',

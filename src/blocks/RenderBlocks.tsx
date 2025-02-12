@@ -19,6 +19,7 @@ import { MultiRowLayoutBlock } from './MultiRowLayout/Component'
 import { CTA } from './CTA/Component'
 import { TitleBlock } from './Title/Component'
 import { UpdateCardsBlock } from './UpdateCards/Component'
+import { ResourceCardsBlock } from './ResourceCards/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
@@ -34,14 +35,15 @@ const blockComponents = {
   cta: CTA,
   titleBlock: TitleBlock,
   updateCards: UpdateCardsBlock,
+  resourceCards: ResourceCardsBlock
 }
 
 export const RenderBlocks: React.FC<{
   blocks:
-    | Page['layout'][number][]
-    | TwoColumnLayoutBlockType['columnOne']
-    | TwoColumnLayoutBlockType['columnTwo']
-    | MultiRowLayoutBlockType['blocks']
+  | Page['layout'][number][]
+  | TwoColumnLayoutBlockType['columnOne']
+  | TwoColumnLayoutBlockType['columnTwo']
+  | MultiRowLayoutBlockType['blocks']
   nested?: boolean
 }> = (props) => {
   const { blocks, nested = false } = props

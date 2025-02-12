@@ -77,6 +77,7 @@ export interface Config {
   collections: {
     pages: Page;
     updates: Update;
+    resources: Resource;
     events: Event;
     tournaments: Tournament;
     media: Media;
@@ -92,6 +93,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     updates: UpdatesSelect<false> | UpdatesSelect<true>;
+    resources: ResourcesSelect<false> | ResourcesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     tournaments: TournamentsSelect<false> | TournamentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -610,7 +612,9 @@ export interface Form {
  */
 export interface MultiRowLayoutBlock {
   nested?: boolean | null;
-  blocks?: (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | UpdateCardsType | LinksBlock)[] | null;
+  blocks?:
+    | (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | UpdateCardsType | ResourceCardsType | LinksBlock)[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'multiRowLayout';
@@ -674,6 +678,31 @@ export interface Update {
     image?: (string | null) | Media;
     description?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceCardsType".
+ */
+export interface ResourceCardsType {
+  allResources: boolean;
+  resources?: (string | Resource)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resourceCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources".
+ */
+export interface Resource {
+  id: string;
+  title: string;
+  description?: string | null;
+  image?: (string | null) | Media;
+  link: Link;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -816,6 +845,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'updates';
         value: string | Update;
+      } | null)
+    | ({
+        relationTo: 'resources';
+        value: string | Resource;
       } | null)
     | ({
         relationTo: 'events';
@@ -1052,6 +1085,7 @@ export interface MultiRowLayoutBlockSelect<T extends boolean = true> {
         richText?: T | RichTextBlockSelect<T>;
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
         updateCards?: T | UpdateCardsTypeSelect<T>;
+        resourceCards?: T | ResourceCardsTypeSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
       };
   id?: T;
@@ -1080,6 +1114,16 @@ export interface UpdateCardsTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceCardsType_select".
+ */
+export interface ResourceCardsTypeSelect<T extends boolean = true> {
+  allResources?: T;
+  resources?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "updates_select".
  */
 export interface UpdatesSelect<T extends boolean = true> {
@@ -1098,6 +1142,19 @@ export interface UpdatesSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources_select".
+ */
+export interface ResourcesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  link?: T | LinkSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1499,7 +1556,7 @@ export interface Footer {
       }[]
     | null;
   showContact?: boolean | null;
-  showGoogleMap?: boolean | null;
+  showDivisionLogo?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1576,7 +1633,7 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   showContact?: T;
-  showGoogleMap?: T;
+  showDivisionLogo?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

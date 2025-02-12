@@ -9,7 +9,6 @@ export const TwoColumnLayoutBlock = ({
   columnTwo,
   nested,
 }: TwoColumnLayoutBlockType) => {
-  console.log(columnOne)
   const component = (
     <div className={cn('grid grid-cols-1 gap-12', `${breakpoint}:grid-cols-2`)}>
       <div className="flex flex-col gap-4">
