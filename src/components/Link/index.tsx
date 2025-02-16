@@ -11,7 +11,7 @@ type CMSLinkType = {
   appearance?: 'inline' | ButtonProps['variant']
   children?: React.ReactNode
   className?: string
-  label?: string | null
+  label?: string | null | React.ReactNode
   newTab?: boolean | null
   onClick?: React.MouseEventHandler<HTMLAnchorElement> | React.MouseEventHandler<HTMLButtonElement>
   reference?: {

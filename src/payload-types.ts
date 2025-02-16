@@ -251,7 +251,7 @@ export interface Link {
   /**
    * Choose how the link should be rendered.
    */
-  appearance?: ('default' | 'outline') | null;
+  appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1543,16 +1543,13 @@ export interface CompanyInfo {
       street: string;
       cityStateZip: string;
       /**
-       * Select the exact location on Google Maps
-       *
-       * @minItems 2
-       * @maxItems 2
+       * Link for directions on Google Maps
        */
-      coordinates?: [number, number] | null;
+      googleMapLink?: string | null;
     };
-    mailingAddress: {
-      street: string;
-      cityStateZip: string;
+    mailingAddress?: {
+      street?: string | null;
+      cityStateZip?: string | null;
     };
   };
   social?:
@@ -1623,7 +1620,7 @@ export interface CompanyInfoSelect<T extends boolean = true> {
           | {
               street?: T;
               cityStateZip?: T;
-              coordinates?: T;
+              googleMapLink?: T;
             };
         mailingAddress?:
           | T

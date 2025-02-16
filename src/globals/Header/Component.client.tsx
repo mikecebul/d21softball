@@ -28,7 +28,7 @@ export const HeaderClient = ({
           <div
             className={cn(
               buttonVariants({ variant: 'text' }),
-              'hidden pr-0 text-lg text-brand xl:inline-flex',
+              'hidden pr-0 text-lg text-brand-secondary xl:inline-flex',
             )}
           >
             <Icons.phone className="mr-2" size={20} />

@@ -92,11 +92,11 @@ export const CompanyInfo: GlobalConfig = {
               ],
             },
             {
-              name: 'coordinates',
-              type: 'point',
-              label: 'Map Location',
+              name: 'googleMapLink',
+              type: 'text',
               admin: {
-                description: 'Select the exact location on Google Maps',
+                width: '50%',
+                description: 'Link for directions on Google Maps',
               },
             },
           ],
@@ -113,14 +113,26 @@ export const CompanyInfo: GlobalConfig = {
                   name: 'street',
                   label: 'Street Address',
                   type: 'text',
-                  required: true,
-                  admin: { width: '50%' },
+                  validate: (value, { siblingData }) => {
+                    if (siblingData?.cityStateZip && !value) {
+                      return 'Mailing address must have both street and city, state, zip.'
+                    }
+                    return true
+                  },
+                  admin: {
+                    width: '50%'
+                  },
                 },
                 {
                   name: 'cityStateZip',
                   label: 'City, State, Zip',
                   type: 'text',
-                  required: true,
+                  validate: (value, { siblingData }) => {
+                    if (siblingData?.street && !value) {
+                      return 'Mailing address must have both street and city, state, zip.'
+                    }
+                    return true
+                  },
                   admin: { width: '50%' },
                 },
               ],

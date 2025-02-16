@@ -21,6 +21,7 @@ const buttonVariants = cva(
       },
       variant: {
         brand: 'bg-brand text-primary-foreground hover:bg-brand/90',
+        brandSecondary: 'bg-brand-secondary text-primary-foreground hover:bg-brand-secondary/90',
         brandOutline:
           'border border-brand border-2 bg-background font-semibold text-brand hover:bg-card hover:text-accent-foreground',
         default: 'bg-primary text-primary-foreground hover:bg-primary/90 w-full lg:w-auto min-w-64',
@@ -29,6 +30,7 @@ const buttonVariants = cva(
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
         outline: 'border border-border bg-background hover:bg-card hover:text-accent-foreground',
         nav: 'text-lg font-medium transition-colors hover:bg-accent/50 hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 rounded-lg',
+        footerNav: 'text-base font-medium transition-colors hover:bg-accent/50 hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 rounded-lg justify-start',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         text: '',
         card: 'hover:bg-accent hover:text-accent-foreground',

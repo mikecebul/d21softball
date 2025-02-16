@@ -23,6 +23,7 @@ export function MobileNav({ navItems, companyName }: { navItems: NavItem[]; comp
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
+            variant="ghost"
             className="h-8 w-8 bg-secondary p-0 text-primary hover:bg-muted-foreground/20"
             onClick={() => setOpen(!open)}
           >
@@ -49,7 +50,7 @@ export function MobileNav({ navItems, companyName }: { navItems: NavItem[]; comp
                       typeof link.reference.value.slug === 'string'
                       ? link.reference.value.slug
                       : link.reference?.relationTo === 'media' &&
-                          typeof link.reference.value.url === 'string'
+                        typeof link.reference.value.url === 'string'
                         ? link.reference.value.url
                         : ''
                     : ''

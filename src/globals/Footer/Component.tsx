@@ -10,6 +10,7 @@ import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
 //import { GoogleMap } from './GoogleMap'
 import Image from 'next/image'
+import { label } from '@/blocks/Form/blocks'
 
 export async function Footer() {
   const payload = await getPayload({ config: payloadConfig })
@@ -37,7 +38,7 @@ export async function Footer() {
                 {pageLinks.map(({ link }, id) => {
                   return (
                     <li key={id}>
-                      <CMSLink {...link} appearance="nav" className={cn('text-sm')} />
+                      <CMSLink {...link} appearance="footerNav" />
                     </li>
                   )
                 })}
@@ -52,35 +53,35 @@ export async function Footer() {
               <ul className="mb-8 flex flex-col space-y-4 text-gray-500">
                 {typeof contact.phone === 'string' && contact.phone.length > 0 && (
                   <li key={contact.phone} className="group">
-                    <a
-                      href={`tel:${contact.phone.replace(/\D/g, '')}`}
-                      className={cn(
-                        buttonVariants({ variant: 'ghost' }),
-                        'flex justify-start group-hover:text-primary',
-                      )}
-                    >
-                      <Phone className="mr-2 flex-shrink-0" size={20} />
-                      {contact.phone}
-                    </a>
+                    <CMSLink
+                      appearance='footerNav'
+                      url={`tel:${contact.phone.replace(/\D/g, '')}`}
+                      label={
+                        <div className="inline-flex justify-start items-center">
+                          <Phone className="mr-2 flex-shrink-0" size={20} />
+                          {contact.phone}
+                        </div>
+                      }
+                    />
                   </li>
                 )}
                 {typeof contact.email === 'string' && contact.email.length > 0 && (
                   <li key={contact.email} className="group">
-                    <a
-                      href={`mailto:${contact.email}`}
-                      className={cn(
-                        buttonVariants({ variant: 'ghost' }),
-                        'flex justify-start group-hover:text-primary',
-                      )}
-                    >
-                      <Mail className="mr-2 flex-shrink-0" size={20} />
-                      {contact.email}
-                    </a>
+                    <CMSLink
+                      url={`mailto:${contact.email}`}
+                      appearance="footerNav"
+                      label={
+                        <div className="inline-flex justify-start items-center">
+                          <Mail className="mr-2 flex-shrink-0" size={20} />
+                          {contact.email}
+                        </div>
+                      }
+                    />
                   </li>
                 )}
                 {typeof contact.fax === 'string' && contact.fax.length > 0 && (
                   <li key={contact.fax} className="group">
-                    <div className={cn(buttonVariants({ variant: 'text' }), 'text-gray-500')}>
+                    <div className={cn(buttonVariants({ variant: 'footerNav' }),)}>
                       <Printer className="mr-2" size={20} />
                       {contact.fax}
                     </div>
@@ -88,46 +89,55 @@ export async function Footer() {
                 )}
                 {(contact.physicalAddress?.street || contact.mailingAddress?.street) && (
                   <li
-                    className={cn(
-                      buttonVariants({ variant: 'text' }),
-                      'flex h-full items-start justify-start text-gray-500',
-                    )}
                   >
-                    <Navigation className="mr-2 flex-shrink-0" size={20} />
-                    <ul>
-                      {contact.physicalAddress?.street && (
-                        <li>
-                          <span>
-                            <strong>Physical: </strong>
-                            {`${contact.physicalAddress.street}, ${contact.physicalAddress.cityStateZip}`}
-                          </span>
-                        </li>
-                      )}
-                      {contact.mailingAddress?.street && (
-                        <li>
-                          <span>
-                            <strong>Mailing: </strong>
-                            {`${contact.mailingAddress.street}, ${contact.mailingAddress.cityStateZip}`}
-                          </span>
-                        </li>
-                      )}
-                    </ul>
+                    <CMSLink
+                      appearance="footerNav"
+                      url={contact.physicalAddress.googleMapLink ?? null}
+                      newTab
+                      label={
+                        <div className='inline-flex justify-start items-center'>
+                          <Navigation className="mr-2 flex-shrink-0" size={20} />
+                          {contact.mailingAddress?.street ? (
+                            // Show both addresses if mailing address exists
+                            <ul>
+                              <li>
+                                <span>
+                                  <strong>Physical: </strong>
+                                  {`${contact.physicalAddress.street}, ${contact.physicalAddress.cityStateZip}`}
+                                </span>
+                              </li>
+                              <li>
+                                <span>
+                                  <strong>Mailing: </strong>
+                                  {`${contact.mailingAddress.street}, ${contact.mailingAddress.cityStateZip}`}
+                                </span>
+                              </li>
+                            </ul>
+                          ) : (
+                            // Show simple address if only physical address exists
+                            <span>
+                              {`${contact.physicalAddress.street}, ${contact.physicalAddress.cityStateZip}`}
+                            </span>
+                          )}
+                        </div>
+                      }
+                    />
                   </li>
                 )}
                 {/* Social Links */}
                 {!!social &&
                   social?.map(({ link }) => (
                     <li key={link.label} className="group">
-                      <a
-                        href={link.url ?? ''}
-                        className={cn(
-                          buttonVariants({ variant: 'ghost' }),
-                          'flex justify-start group-hover:text-primary',
-                        )}
-                      >
-                        <Facebook className="mr-2" size={20} />
-                        {link.label}
-                      </a>
+                      <CMSLink
+                        {...link}
+                        appearance="footerNav"
+                        label={
+                          <div className="inline-flex justify-start items-center">
+                            <Facebook className="mr-2" size={20} />
+                            {link.label}
+                          </div>
+                        }
+                      />
                     </li>
                   ))}
 
@@ -169,9 +179,9 @@ export async function Footer() {
               <Image
                 src="/footer-usa-softball-logo.png"
                 alt="usa softball of michigan logo"
-                height="350"
-                width="350"
-                className="h-[350px]"
+                height="250"
+                width="250"
+                className="h-[250px] max-lg:mx-auto"
               />
             </div>
           )}
