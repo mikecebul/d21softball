@@ -4,8 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import Image from 'next/image'
 import { LinkCardType } from './types'
 import { CMSLink } from '../Link'
+import { Resource } from '@/payload-types'
 
-export const LinkCard = ({ card }: { card: LinkCardType }) => {
+export const LinkCard = ({ card }: { card: LinkCardType | Resource }) => {
   return (
     <CMSLink {...card.link} appearance="card">
       <Card className="group flex h-full max-w-lg flex-col bg-accent/60 px-0 py-0 text-left shadow hover:bg-accent">

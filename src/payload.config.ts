@@ -45,7 +45,6 @@ import { editorOrHigher } from './access/editorOrHigher'
 import { anyone } from './access/anyone'
 import { adminOrSuperAdmin } from './access/adminOrSuperAdmin'
 import { authenticated } from './access/authenticated'
-import { Events } from './collections/Events'
 import { Updates } from './collections/Updates'
 import { Resources } from './collections/Resources'
 
@@ -154,7 +153,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Updates, Resources, Events, Tournaments, Media, Users],
+  collections: [Pages, Updates, Resources, Tournaments, Media, Users],
   cors: [baseUrl].filter(Boolean),
   csrf: [baseUrl].filter(Boolean),
   // email: nodemailerAdapter({

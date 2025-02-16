@@ -4,22 +4,21 @@ import type {
   Page,
   TwoColumnLayoutBlock as TwoColumnLayoutBlockType,
   MultiRowLayoutBlock as MultiRowLayoutBlockType,
+  HeroLayoutBlockType,
 } from '@/payload-types'
-import { TwoColumnLayoutBlock } from './TwoColumnLayout/Component'
+import { HeroLayoutBlock } from './layouts/HeroLayout/Component'
+import { MultiRowLayoutBlock } from '@/blocks/layouts/MultiRowLayout/Component'
+import { TwoColumnLayoutBlock } from '@/blocks/layouts/TwoColumnLayout/Component'
 
-import { LinksBlock } from './Links/Component'
-import { TournamentsBlock } from './TournamentsBlock/Component'
-import { RichTextBlock } from './RichText/Component'
-import { TournamentsPageBlock } from './TournamentsPage/Component'
-import { FormBlock } from './Form/Component'
-import { MediaBlock } from './MediaBlock/Component'
-import { TournamentCardsBlock } from './TournamentCards/Component'
-import { FeatureCardsBlock } from './FeatureCards/Component'
-import { MultiRowLayoutBlock } from './MultiRowLayout/Component'
+import { CardsBlock } from './Cards/Component'
 import { CTA } from './CTA/Component'
+import { FormBlock } from './Form/Component'
+import { LinksBlock } from './Links/Component'
+import { MediaBlock } from './MediaBlock/Component'
+import { RichTextBlock } from './RichText/Component'
 import { TitleBlock } from './Title/Component'
-import { UpdateCardsBlock } from './UpdateCards/Component'
-import { ResourceCardsBlock } from './ResourceCards/Component'
+import { TournamentsBlock } from './TournamentsBlock/Component'
+import { TournamentsPageBlock } from './TournamentsPage/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
@@ -28,14 +27,12 @@ const blockComponents = {
   tournamentsPage: TournamentsPageBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  tournamentCards: TournamentCardsBlock,
-  featureCards: FeatureCardsBlock,
   twoColumnLayout: TwoColumnLayoutBlock,
   multiRowLayout: MultiRowLayoutBlock,
   cta: CTA,
   titleBlock: TitleBlock,
-  updateCards: UpdateCardsBlock,
-  resourceCards: ResourceCardsBlock
+  cards: CardsBlock,
+  heroLayout: HeroLayoutBlock
 }
 
 export const RenderBlocks: React.FC<{
@@ -44,6 +41,7 @@ export const RenderBlocks: React.FC<{
   | TwoColumnLayoutBlockType['columnOne']
   | TwoColumnLayoutBlockType['columnTwo']
   | MultiRowLayoutBlockType['blocks']
+  | HeroLayoutBlockType['blocks']
   nested?: boolean
 }> = (props) => {
   const { blocks, nested = false } = props

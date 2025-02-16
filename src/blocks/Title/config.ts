@@ -15,6 +15,16 @@ export const TitleBlock: Block = {
       ],
     },
     {
+      name: 'alignment',
+      type: 'radio',
+      defaultValue: 'left',
+      options: [
+        { label: 'Left', value: 'left' },
+        { label: 'Center', value: 'center' },
+        { label: 'Right', value: 'right' },
+      ],
+    },
+    {
       name: 'title',
       type: 'text',
       required: true,

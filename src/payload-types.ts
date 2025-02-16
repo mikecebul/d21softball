@@ -78,7 +78,6 @@ export interface Config {
     pages: Page;
     updates: Update;
     resources: Resource;
-    events: Event;
     tournaments: Tournament;
     media: Media;
     users: User;
@@ -94,7 +93,6 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     updates: UpdatesSelect<false> | UpdatesSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
-    events: EventsSelect<false> | EventsSelect<true>;
     tournaments: TournamentsSelect<false> | TournamentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -152,7 +150,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout: (LinksBlock | TwoColumnLayoutBlock | MultiRowLayoutBlock)[];
+  layout: (HeroLayoutBlockType | TwoColumnLayoutBlock | MultiRowLayoutBlock | LinksBlock)[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -173,23 +171,82 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LinksBlock".
+ * via the `definition` "HeroLayoutBlockType".
  */
-export interface LinksBlock {
-  title: string;
-  description?: string | null;
-  cards?:
-    | {
-        title: string;
-        description?: string | null;
-        image: string | Media;
-        link: Link;
-        id?: string | null;
-      }[]
-    | null;
+export interface HeroLayoutBlockType {
+  nested?: boolean | null;
+  blocks?: (TitleBlock | TwoColumnLayoutBlock)[] | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'linksBlock';
+  blockType: 'heroLayout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TitleBlock".
+ */
+export interface TitleBlock {
+  heading?: ('h1' | 'h2' | 'h3') | null;
+  alignment?: ('left' | 'center' | 'right') | null;
+  title: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'titleBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwoColumnLayoutBlock".
+ */
+export interface TwoColumnLayoutBlock {
+  nested?: boolean | null;
+  /**
+   * The breakpoint at which the layout switches to a two column layout
+   */
+  breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
+  columnOne?: (CTABlock | RichTextBlock | MediaBlock | FormBlock)[] | null;
+  columnTwo?: (MediaBlock | FormBlock | CTABlock | RichTextBlock)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'twoColumnLayout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock".
+ */
+export interface CTABlock {
+  verticalAlignment?: ('top' | 'center' | 'bottom') | null;
+  cta: {
+    hasSubtitle?: boolean | null;
+    subtitle?: {
+      icon?: string | null;
+      text?: string | null;
+    };
+    title: string;
+    heading?: ('h1' | 'h2') | null;
+    description: string;
+    links?: LinkGroup;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Link".
+ */
+export interface Link {
+  type?: ('reference' | 'custom') | null;
+  newTab?: boolean | null;
+  reference?:
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null);
+  url?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -232,66 +289,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link".
- */
-export interface Link {
-  type?: ('reference' | 'custom') | null;
-  newTab?: boolean | null;
-  reference?:
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null);
-  url?: string | null;
-  label: string;
-  /**
-   * Choose how the link should be rendered.
-   */
-  appearance?: ('default' | 'outline') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TwoColumnLayoutBlock".
- */
-export interface TwoColumnLayoutBlock {
-  nested?: boolean | null;
-  /**
-   * The breakpoint at which the layout switches to a two column layout
-   */
-  breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
-  columnOne?: (CTABlock | RichTextBlock | MediaBlock | FormBlock)[] | null;
-  columnTwo?: (MediaBlock | FormBlock | CTABlock | RichTextBlock)[] | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'twoColumnLayout';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CTABlock".
- */
-export interface CTABlock {
-  verticalAlignment?: ('top' | 'center' | 'bottom') | null;
-  cta: {
-    hasSubtitle?: boolean | null;
-    subtitle?: {
-      icon?: string | null;
-      text?: string | null;
-    };
-    title: string;
-    heading?: ('h1' | 'h2') | null;
-    description: string;
-    links?: LinkGroup;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -612,35 +609,25 @@ export interface Form {
  */
 export interface MultiRowLayoutBlock {
   nested?: boolean | null;
-  blocks?:
-    | (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | UpdateCardsType | ResourceCardsType | LinksBlock)[]
-    | null;
+  blocks?: (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | CardsBlockType | LinksBlock)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'multiRowLayout';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TitleBlock".
+ * via the `definition` "CardsBlockType".
  */
-export interface TitleBlock {
-  heading?: ('h1' | 'h2' | 'h3') | null;
-  title: string;
-  description?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'titleBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "UpdateCardsType".
- */
-export interface UpdateCardsType {
-  allUpdates: boolean;
+export interface CardsBlockType {
+  cardType: 'updates' | 'resources';
+  showAll: boolean;
   updates?: (string | Update)[] | null;
+  resources?: (string | Resource)[] | null;
+  showLink: boolean;
+  link?: Link;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'updateCards';
+  blockType: 'cards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -684,55 +671,37 @@ export interface Update {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ResourceCardsType".
- */
-export interface ResourceCardsType {
-  allResources: boolean;
-  resources?: (string | Resource)[] | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'resourceCards';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "resources".
  */
 export interface Resource {
   id: string;
   title: string;
   description?: string | null;
-  image?: (string | null) | Media;
-  link: Link;
+  image: string | Media;
+  link?: Link;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events".
+ * via the `definition` "LinksBlock".
  */
-export interface Event {
-  id: string;
+export interface LinksBlock {
   title: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  date: string;
-  location: string;
-  updatedAt: string;
-  createdAt: string;
+  description?: string | null;
+  cards?:
+    | {
+        title: string;
+        description?: string | null;
+        image: string | Media;
+        link: Link;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'linksBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -851,10 +820,6 @@ export interface PayloadLockedDocument {
         value: string | Resource;
       } | null)
     | ({
-        relationTo: 'events';
-        value: string | Event;
-      } | null)
-    | ({
         relationTo: 'tournaments';
         value: string | Tournament;
       } | null)
@@ -929,9 +894,10 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        linksBlock?: T | LinksBlockSelect<T>;
+        heroLayout?: T | HeroLayoutBlockTypeSelect<T>;
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
         multiRowLayout?: T | MultiRowLayoutBlockSelect<T>;
+        linksBlock?: T | LinksBlockSelect<T>;
       };
   meta?:
     | T
@@ -954,34 +920,30 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LinksBlock_select".
+ * via the `definition` "HeroLayoutBlockType_select".
  */
-export interface LinksBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  cards?:
+export interface HeroLayoutBlockTypeSelect<T extends boolean = true> {
+  nested?: T;
+  blocks?:
     | T
     | {
-        title?: T;
-        description?: T;
-        image?: T;
-        link?: T | LinkSelect<T>;
-        id?: T;
+        titleBlock?: T | TitleBlockSelect<T>;
+        twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
       };
   id?: T;
   blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link_select".
+ * via the `definition` "TitleBlock_select".
  */
-export interface LinkSelect<T extends boolean = true> {
-  type?: T;
-  newTab?: T;
-  reference?: T;
-  url?: T;
-  label?: T;
-  appearance?: T;
+export interface TitleBlockSelect<T extends boolean = true> {
+  heading?: T;
+  alignment?: T;
+  title?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1043,6 +1005,16 @@ export interface LinkGroupSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Link_select".
+ */
+export interface LinkSelect<T extends boolean = true> {
+  type?: T;
+  newTab?: T;
+  reference?: T;
+  url?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RichTextBlock_select".
  */
 export interface RichTextBlockSelect<T extends boolean = true> {
@@ -1084,8 +1056,7 @@ export interface MultiRowLayoutBlockSelect<T extends boolean = true> {
         titleBlock?: T | TitleBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
-        updateCards?: T | UpdateCardsTypeSelect<T>;
-        resourceCards?: T | ResourceCardsTypeSelect<T>;
+        cards?: T | CardsBlockTypeSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
       };
   id?: T;
@@ -1093,32 +1064,34 @@ export interface MultiRowLayoutBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TitleBlock_select".
+ * via the `definition` "CardsBlockType_select".
  */
-export interface TitleBlockSelect<T extends boolean = true> {
-  heading?: T;
+export interface CardsBlockTypeSelect<T extends boolean = true> {
+  cardType?: T;
+  showAll?: T;
+  updates?: T;
+  resources?: T;
+  showLink?: T;
+  link?: T | LinkSelect<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinksBlock_select".
+ */
+export interface LinksBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "UpdateCardsType_select".
- */
-export interface UpdateCardsTypeSelect<T extends boolean = true> {
-  allUpdates?: T;
-  updates?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ResourceCardsType_select".
- */
-export interface ResourceCardsTypeSelect<T extends boolean = true> {
-  allResources?: T;
-  resources?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        link?: T | LinkSelect<T>;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1158,18 +1131,6 @@ export interface ResourcesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events_select".
- */
-export interface EventsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  date?: T;
-  location?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

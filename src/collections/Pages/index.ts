@@ -16,10 +16,11 @@ import {
 import { Links } from '@/blocks/Links/config'
 import { superAdmin } from '@/access/superAdmin'
 import { baseUrl } from '@/utilities/baseUrl'
-import { MultiRowLayout } from '@/blocks/MultiRowLayout/config'
-import { TwoColumnLayout } from '@/blocks/TwoColumnLayout/config'
+import { MultiRowLayout } from '@/blocks/layouts/MultiRowLayout/config'
+import { TwoColumnLayout } from '@/blocks/layouts/TwoColumnLayout/config'
 import { revalidateDelete } from './hooks/revalidateDelete'
 import { editorOrHigher } from '@/access/editorOrHigher'
+import { HeroLayout } from '@/blocks/layouts/HeroLayout/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -58,7 +59,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Links, TwoColumnLayout, MultiRowLayout],
+              blocks: [HeroLayout, TwoColumnLayout, MultiRowLayout, Links],
               required: true,
             },
           ],
