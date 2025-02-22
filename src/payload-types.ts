@@ -74,10 +74,12 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     pages: Page;
     updates: Update;
     resources: Resource;
+    sponsors: Sponsor;
     tournaments: Tournament;
     media: Media;
     users: User;
@@ -93,6 +95,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     updates: UpdatesSelect<false> | UpdatesSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     tournaments: TournamentsSelect<false> | TournamentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -624,10 +627,11 @@ export interface MultiRowLayoutBlock {
  * via the `definition` "CardsBlockType".
  */
 export interface CardsBlockType {
-  cardType: 'updates' | 'resources';
+  cardType: 'updates' | 'resources' | 'sponsors';
   showAll: boolean;
   updates?: (string | Update)[] | null;
   resources?: (string | Resource)[] | null;
+  sponsors?: (string | Sponsor)[] | null;
   showLink: boolean;
   link?: Link;
   id?: string | null;
@@ -679,6 +683,20 @@ export interface Update {
  * via the `definition` "resources".
  */
 export interface Resource {
+  id: string;
+  title: string;
+  description?: string | null;
+  image?: (string | null) | Media;
+  link: Link;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
   id: string;
   title: string;
   description?: string | null;
@@ -823,6 +841,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'resources';
         value: string | Resource;
+      } | null)
+    | ({
+        relationTo: 'sponsors';
+        value: string | Sponsor;
       } | null)
     | ({
         relationTo: 'tournaments';
@@ -1078,6 +1100,7 @@ export interface CardsBlockTypeSelect<T extends boolean = true> {
   showAll?: T;
   updates?: T;
   resources?: T;
+  sponsors?: T;
   showLink?: T;
   link?: T | LinkSelect<T>;
   id?: T;
@@ -1131,6 +1154,19 @@ export interface UpdatesSelect<T extends boolean = true> {
  * via the `definition` "resources_select".
  */
 export interface ResourcesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  link?: T | LinkSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors_select".
+ */
+export interface SponsorsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;

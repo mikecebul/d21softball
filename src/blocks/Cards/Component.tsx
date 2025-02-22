@@ -1,6 +1,7 @@
 import {
   Card,
   CardContent,
+  CardDescription,
   CardDescriptionDiv,
   CardFooter,
   CardHeader,
@@ -9,7 +10,7 @@ import {
 import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import RichText from '@/components/RichText'
-import { CardsBlockType, Resource, Update } from '@/payload-types'
+import { CardsBlockType, Resource, Sponsor, Update } from '@/payload-types'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
@@ -18,7 +19,7 @@ import configPromise from '@payload-config'
 import { CMSLink } from '@/components/Link'
 import { LinkCard } from '@/components/Cards/LinkCard'
 
-export const CardsBlock = async ({ cardType, updates, showAll, resources, showLink, link }: CardsBlockType) => {
+export const CardsBlock = async ({ cardType, sponsors, updates, resources, showAll, showLink, link }: CardsBlockType) => {
   const payload = await getPayload({ config: configPromise })
   const { docs: fetchedCards } = await payload.find({
     collection: cardType,
@@ -31,17 +32,18 @@ export const CardsBlock = async ({ cardType, updates, showAll, resources, showLi
         equals: 'published',
       },
     },
+    sort: "-createdAt",
   })
 
-  const cards = showAll ? fetchedCards : updates ?? resources
+  const cards = showAll ? fetchedCards : updates || resources || sponsors
 
   return (
     <section className="space-y-12">
-      <div className="grid gap-12 lg:grid-cols-2 2xl:grid-cols-3">
+      <div className="grid gap-12 lg:grid-cols-2 xl:grid-cols-3">
         {cards &&
           cards.map((card: any) => {
             if (typeof card !== 'object') return null
-            if (cardType === 'resources') {
+            if (cardType === 'resources' || cardType === 'sponsors') {
               return <LinkCard key={card.id} card={card} />
             }
             if (cardType === 'updates') {

@@ -13,8 +13,8 @@ export const LinkCard = ({ card }: { card: LinkCardType | Resource }) => {
         <CardContent className="overflow-hidden rounded-t-lg p-0">
           {typeof card.image === 'object' && (
             <Image
-              src={card.image.url ?? ''}
-              alt={card.image.alt ?? ''}
+              src={card.image?.url ?? ''}
+              alt={card.image?.alt ?? ''}
               width={800}
               height={800}
               className="max-h-60 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"

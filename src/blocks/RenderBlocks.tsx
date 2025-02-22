@@ -32,7 +32,7 @@ const blockComponents = {
   cta: CTA,
   titleBlock: TitleBlock,
   cards: CardsBlock,
-  heroLayout: HeroLayoutBlock
+  heroLayout: HeroLayoutBlock,
 }
 
 export const RenderBlocks: React.FC<{

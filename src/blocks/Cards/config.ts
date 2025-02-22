@@ -21,6 +21,10 @@ export const Cards: Block = {
           label: 'Resources',
           value: 'resources',
         },
+        {
+          label: 'Sponsors',
+          value: 'sponsors',
+        },
       ],
       defaultValue: 'updates',
       required: true,
@@ -48,6 +52,15 @@ export const Cards: Block = {
       hasMany: true,
       admin: {
         condition: (_, siblingData) => siblingData?.cardType === 'resources' && !siblingData?.showAll,
+      }
+    },
+    {
+      name: 'sponsors',
+      type: 'relationship',
+      relationTo: 'sponsors',
+      hasMany: true,
+      admin: {
+        condition: (_, siblingData) => siblingData?.cardType === 'sponsors' && !siblingData?.showAll,
       }
     },
     {
