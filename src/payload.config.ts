@@ -48,6 +48,7 @@ import { authenticated } from './access/authenticated'
 import { Updates } from './collections/Updates'
 import { Resources } from './collections/Resources'
 import { Sponsors } from './collections/Sponsors'
+import { defaultLexical } from './fields/defaultLexical'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -111,46 +112,7 @@ export default buildConfig({
     },
   },
   // This config helps us configure global or default features that the other editors can inherit
-  editor: lexicalEditor({
-    features: () => {
-      return [
-        FixedToolbarFeature(),
-        InlineToolbarFeature(),
-        ParagraphFeature(),
-        HeadingFeature({ enabledHeadingSizes: ['h1', 'h2'] }),
-        UnderlineFeature(),
-        BoldFeature(),
-        ItalicFeature(),
-        UnorderedListFeature(),
-        OrderedListFeature(),
-        BlocksFeature({
-          blocks: [MediaBlock],
-        }),
-        LinkFeature({
-          enabledCollections: ['pages', 'media'],
-          fields: ({ defaultFields }) => {
-            const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              if ('name' in field && field.name === 'url') return false
-              return true
-            })
-
-            return [
-              ...defaultFieldsWithoutUrl,
-              {
-                name: 'url',
-                type: 'text',
-                admin: {
-                  condition: ({ linkType }) => linkType !== 'internal',
-                },
-                label: ({ t }) => t('fields:enterURL'),
-                required: true,
-              },
-            ]
-          },
-        }),
-      ]
-    },
-  }),
+  editor: defaultLexical,
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),

@@ -10,7 +10,6 @@ import { HeroLayoutBlock } from './layouts/HeroLayout/Component'
 import { MultiRowLayoutBlock } from '@/blocks/layouts/MultiRowLayout/Component'
 import { TwoColumnLayoutBlock } from '@/blocks/layouts/TwoColumnLayout/Component'
 
-import { CardsBlock } from './Cards/Component'
 import { CTA } from './CTA/Component'
 import { FormBlock } from './Form/Component'
 import { LinksBlock } from './Links/Component'
@@ -19,20 +18,27 @@ import { RichTextBlock } from './RichText/Component'
 import { TitleBlock } from './Title/Component'
 import { TournamentsBlock } from './TournamentsBlock/Component'
 import { TournamentsPageBlock } from './TournamentsPage/Component'
+import { TournamentCardsBlock } from './TournamentCards/Component'
+import { UpdateCardsBlock } from './Cards/UpdateCards/Component'
+import { SponsorCardsBlock } from './Cards/SponsorCards/Component'
+import { ResourceCardsBlock } from './Cards/ResourceCards/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
   linksBlock: LinksBlock,
   tournaments: TournamentsBlock,
   tournamentsPage: TournamentsPageBlock,
+  tournamentCards: TournamentCardsBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   twoColumnLayout: TwoColumnLayoutBlock,
   multiRowLayout: MultiRowLayoutBlock,
   cta: CTA,
   titleBlock: TitleBlock,
-  cards: CardsBlock,
   heroLayout: HeroLayoutBlock,
+  resourceCards: ResourceCardsBlock,
+  updateCards: UpdateCardsBlock,
+  sponsorCards: SponsorCardsBlock,
 }
 
 export const RenderBlocks: React.FC<{

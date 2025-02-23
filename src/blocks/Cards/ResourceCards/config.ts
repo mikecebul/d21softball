@@ -1,28 +1,36 @@
+import { link } from '@/fields/link'
 import { Block } from 'payload'
 
 export const ResourceCards: Block = {
   slug: 'resourceCards',
+  interfaceName: 'ResourceCardsType',
   labels: {
     singular: 'Resource Cards',
     plural: 'Many Resource Cards',
   },
-  interfaceName: 'ResourceCardsType',
   fields: [
     {
-      name: 'allResources',
+      name: 'showAll',
       type: 'checkbox',
-      label: 'Use all published resources',
+      label: 'Use all published items',
       defaultValue: false,
-      required: true,
     },
     {
       name: 'resources',
       type: 'relationship',
       relationTo: 'resources',
       hasMany: true,
+      minRows: 1,
       admin: {
-        condition: (_, siblingData) => !siblingData.allResources,
-      },
+        condition: (_, siblingData) => !siblingData?.showAll,
+      }
     },
+    link({
+      overrides: {
+        admin: {
+          condition: (_, siblingData) => !siblingData.showAll,
+        },
+      },
+    }),
   ],
 }

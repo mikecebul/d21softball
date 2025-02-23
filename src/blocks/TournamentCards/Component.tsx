@@ -1,9 +1,12 @@
 import Container from '@/components/Container'
 import RichText from '@/components/RichText'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { buttonVariants } from '@/components/ui/button'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import type { TournamentCardsBlock as TournamentCardsBlockType } from '@/payload-types'
+import { cn } from '@/utilities/cn'
 import { format } from 'date-fns'
 import { CalendarIcon, MapPinIcon } from 'lucide-react'
+import Link from 'next/link'
 
 export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) => {
   return (
@@ -16,7 +19,7 @@ export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) 
               return null
             }
             return (
-              <Card key={tournament.id} className="col-span-1 bg-green-50/50">
+              <Card key={tournament.id} className="col-span-1">
                 <CardHeader className="">
                   <CardTitle>{tournament.title}</CardTitle>
                 </CardHeader>
@@ -34,6 +37,14 @@ export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) 
                   </div>
                   <RichText content={tournament.description} />
                 </CardContent>
+                <CardFooter>
+                  <Link
+                    href={`/`}
+                    className={cn('w-full', buttonVariants({ variant: 'brand' }))}
+                  >
+                    Register
+                  </Link>
+                </CardFooter>
               </Card>
             )
           })}

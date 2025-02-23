@@ -177,7 +177,6 @@ export interface Page {
  * via the `definition` "HeroLayoutBlockType".
  */
 export interface HeroLayoutBlockType {
-  nested?: boolean | null;
   blocks?: (TitleBlock | TwoColumnLayoutBlock)[] | null;
   id?: string | null;
   blockName?: string | null;
@@ -616,27 +615,33 @@ export interface Form {
  * via the `definition` "MultiRowLayoutBlock".
  */
 export interface MultiRowLayoutBlock {
-  nested?: boolean | null;
-  blocks?: (TitleBlock | RichTextBlock | TwoColumnLayoutBlock | CardsBlockType | LinksBlock)[] | null;
+  blocks?:
+    | (
+        | TitleBlock
+        | RichTextBlock
+        | TwoColumnLayoutBlock
+        | UpdateCardsType
+        | SponsorCardsType
+        | ResourceCardsType
+        | LinksBlock
+        | TournamentCardsBlock
+      )[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'multiRowLayout';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CardsBlockType".
+ * via the `definition` "UpdateCardsType".
  */
-export interface CardsBlockType {
-  cardType: 'updates' | 'resources' | 'sponsors';
+export interface UpdateCardsType {
   showAll: boolean;
   updates?: (string | Update)[] | null;
-  resources?: (string | Resource)[] | null;
-  sponsors?: (string | Sponsor)[] | null;
-  showLink: boolean;
   link?: Link;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'cards';
+  blockType: 'updateCards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -680,9 +685,19 @@ export interface Update {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "resources".
+ * via the `definition` "SponsorCardsType".
  */
-export interface Resource {
+export interface SponsorCardsType {
+  sponsors?: (string | Sponsor)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'sponsorCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
   id: string;
   title: string;
   description?: string | null;
@@ -694,9 +709,21 @@ export interface Resource {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sponsors".
+ * via the `definition` "ResourceCardsType".
  */
-export interface Sponsor {
+export interface ResourceCardsType {
+  showAll?: boolean | null;
+  resources?: (string | Resource)[] | null;
+  link?: Link;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resourceCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources".
+ */
+export interface Resource {
   id: string;
   title: string;
   description?: string | null;
@@ -725,6 +752,16 @@ export interface LinksBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'linksBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TournamentCardsBlock".
+ */
+export interface TournamentCardsBlock {
+  tournaments?: (string | Tournament)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tournamentCards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -950,7 +987,6 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "HeroLayoutBlockType_select".
  */
 export interface HeroLayoutBlockTypeSelect<T extends boolean = true> {
-  nested?: T;
   blocks?:
     | T
     | {
@@ -1078,30 +1114,48 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "MultiRowLayoutBlock_select".
  */
 export interface MultiRowLayoutBlockSelect<T extends boolean = true> {
-  nested?: T;
   blocks?:
     | T
     | {
         titleBlock?: T | TitleBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
-        cards?: T | CardsBlockTypeSelect<T>;
+        updateCards?: T | UpdateCardsTypeSelect<T>;
+        sponsorCards?: T | SponsorCardsTypeSelect<T>;
+        resourceCards?: T | ResourceCardsTypeSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
+        tournamentCards?: T | TournamentCardsBlockSelect<T>;
       };
   id?: T;
   blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CardsBlockType_select".
+ * via the `definition` "UpdateCardsType_select".
  */
-export interface CardsBlockTypeSelect<T extends boolean = true> {
-  cardType?: T;
+export interface UpdateCardsTypeSelect<T extends boolean = true> {
   showAll?: T;
   updates?: T;
-  resources?: T;
+  link?: T | LinkSelect<T>;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SponsorCardsType_select".
+ */
+export interface SponsorCardsTypeSelect<T extends boolean = true> {
   sponsors?: T;
-  showLink?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceCardsType_select".
+ */
+export interface ResourceCardsTypeSelect<T extends boolean = true> {
+  showAll?: T;
+  resources?: T;
   link?: T | LinkSelect<T>;
   id?: T;
   blockName?: T;
@@ -1122,6 +1176,15 @@ export interface LinksBlockSelect<T extends boolean = true> {
         link?: T | LinkSelect<T>;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TournamentCardsBlock_select".
+ */
+export interface TournamentCardsBlockSelect<T extends boolean = true> {
+  tournaments?: T;
   id?: T;
   blockName?: T;
 }

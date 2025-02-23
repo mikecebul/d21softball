@@ -10,11 +10,6 @@ export const HeroLayout: Block = {
     },
     fields: [
         {
-            name: 'nested',
-            type: 'checkbox',
-            defaultValue: false,
-        },
-        {
             name: 'blocks',
             type: 'blocks',
             maxRows: 1,

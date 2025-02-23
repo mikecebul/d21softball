@@ -9,7 +9,7 @@ import { Resource } from '@/payload-types'
 export const LinkCard = ({ card }: { card: LinkCardType | Resource }) => {
   return (
     <CMSLink {...card.link} appearance="card">
-      <Card className="group flex h-full max-w-lg flex-col bg-accent/60 px-0 py-0 text-left shadow hover:bg-accent">
+      <Card className="group flex h-full max-w-xs flex-col bg-accent/60 px-0 py-0 text-left shadow hover:bg-accent">
         <CardContent className="overflow-hidden rounded-t-lg p-0">
           {typeof card.image === 'object' && (
             <Image

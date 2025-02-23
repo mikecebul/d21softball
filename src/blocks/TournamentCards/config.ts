@@ -13,11 +13,14 @@ export const TournamentCards: Block = {
       type: 'relationship',
       relationTo: 'tournaments',
       hasMany: true,
-      minRows: 3,
-      maxRows: 3,
-      admin: {
-        description: 'Select up to 3 Tournaments to display',
-      },
+      minRows: 1,
+      filterOptions: () => {
+        const date = new Date(new Date().getFullYear(), 0, 1) // January 1st of the current year
+        return {
+          // Filter out tournaments that happened before the current year
+          startDate: { greater_than_equal: date },
+        }
+      }
     },
   ],
 }

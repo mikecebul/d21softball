@@ -1,6 +1,7 @@
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { editorOrHigher } from '@/access/editorOrHigher'
 import { superAdmin } from '@/access/superAdmin'
+import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { CollectionConfig } from 'payload'
 
 export const Tournaments: CollectionConfig = {
@@ -66,6 +67,15 @@ export const Tournaments: CollectionConfig = {
       name: 'description',
       type: 'richText',
       required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => {
+          return [
+            ...defaultFeatures,
+            FixedToolbarFeature(),
+            HeadingFeature({ enabledHeadingSizes: ['h3', 'h4'] }),
+          ]
+        },
+      }),
     },
     {
       name: 'price',
