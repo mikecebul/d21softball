@@ -251,11 +251,6 @@ export interface Link {
         value: string | Media;
       } | null);
   url?: string | null;
-  label: string;
-  /**
-   * Choose how the link should be rendered.
-   */
-  appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -714,7 +709,7 @@ export interface Sponsor {
   title: string;
   description?: string | null;
   image?: (string | null) | Media;
-  link: Link;
+  link?: Link;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1080,8 +1075,6 @@ export interface LinkSelect<T extends boolean = true> {
   newTab?: T;
   reference?: T;
   url?: T;
-  label?: T;
-  appearance?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

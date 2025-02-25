@@ -33,9 +33,12 @@ export const Sponsors: CollectionConfig = {
     {
       name: 'image',
       type: 'upload',
-      relationTo: 'media'
+      relationTo: 'media',
     },
-    link(),
+    link({
+      disableLabel: true,
+      appearances: false,
+    }),
   ],
   versions: {
     drafts: {
