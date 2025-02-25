@@ -153,7 +153,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout: (HeroLayoutBlockType | TwoColumnLayoutBlock | MultiRowLayoutBlock | LinksBlock)[];
+  layout: (HeroLayoutBlockType | TwoColumnLayoutBlock | MultiRowLayoutBlock | LinksBlock | TournamentsPageType)[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -797,8 +797,64 @@ export interface Tournament {
     [k: string]: unknown;
   };
   price: number;
+  teams?:
+    | {
+        name: string;
+        isPaid?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    hideFromSearchEngines?: boolean | null;
+    metadata?: {
+      title?: string | null;
+      /**
+       * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+       */
+      image?: (string | null) | Media;
+      description?: string | null;
+    };
+  };
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TournamentsPageType".
+ */
+export interface TournamentsPageType {
+  title: string;
+  description?: string | null;
+  showAll?: boolean | null;
+  tournaments?: (string | Tournament)[] | null;
+  announcements?:
+    | {
+        title: string;
+        description: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tournamentsPage';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -969,6 +1025,7 @@ export interface PagesSelect<T extends boolean = true> {
         twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
         multiRowLayout?: T | MultiRowLayoutBlockSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
+        tournamentsPage?: T | TournamentsPageTypeSelect<T>;
       };
   meta?:
     | T
@@ -1197,6 +1254,25 @@ export interface TournamentCardsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TournamentsPageType_select".
+ */
+export interface TournamentsPageTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  showAll?: T;
+  tournaments?: T;
+  announcements?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "updates_select".
  */
 export interface UpdatesSelect<T extends boolean = true> {
@@ -1257,8 +1333,31 @@ export interface TournamentsSelect<T extends boolean = true> {
   endDate?: T;
   description?: T;
   price?: T;
+  teams?:
+    | T
+    | {
+        name?: T;
+        isPaid?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        hideFromSearchEngines?: T;
+        metadata?:
+          | T
+          | {
+              title?: T;
+              image?: T;
+              description?: T;
+            };
+      };
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
