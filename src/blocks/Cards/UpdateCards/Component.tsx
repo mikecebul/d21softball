@@ -9,7 +9,7 @@ import {
 import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import RichText from '@/components/RichText'
-import { UpdateCardsType } from '@/payload-types'
+import { Update, UpdateCardsType } from '@/payload-types'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
@@ -41,32 +41,7 @@ export const UpdateCardsBlock = async ({ showAll, updates, link }: UpdateCardsTy
     <CardGrid>
       {cards && cards.map((card) => {
         if (typeof card === 'string') return null
-        const { description, content, title, updatedAt, slug } = card
-        return (
-          <Card className="flex w-full max-w-xl flex-col shadow-lg" key={card.id}>
-            <CardHeader className="">
-              <CardTitle className="text-3xl">{title}</CardTitle>
-              <CardDescriptionDiv>
-                <p>{description}</p>
-                <div className="mt-1 flex items-center">
-                  <CalendarIcon className="mr-1 h-4 w-4" />
-                  {format(updatedAt, 'MMMM d, yyyy')}
-                </div>
-              </CardDescriptionDiv>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <RichText content={content} className="" truncateLines />
-            </CardContent>
-            <CardFooter>
-              <Link
-                href={`/updates/${slug}`}
-                className={cn('w-full', buttonVariants({ variant: 'outline' }))}
-              >
-                Read Entire Update
-              </Link>
-            </CardFooter>
-          </Card>
-        )
+        return <UpdateCard key={card.id} {...card} />
       })}
       {(!showAll && link) && (
         <div className='flex w-full items-center justify-center'>
@@ -74,5 +49,33 @@ export const UpdateCardsBlock = async ({ showAll, updates, link }: UpdateCardsTy
         </div>
       )}
     </CardGrid>
+  )
+}
+
+export const UpdateCard = ({description, content, title, updatedAt, slug, id}: Update) => {
+  return (
+    <Card className="flex w-full max-w-xl flex-col shadow-lg" key={id}>
+      <CardHeader className="">
+        <CardTitle className="text-3xl">{title}</CardTitle>
+        <CardDescriptionDiv>
+          <p>{description}</p>
+          <div className="mt-1 flex items-center">
+            <CalendarIcon className="mr-1 h-4 w-4" />
+            {format(updatedAt, 'MMMM d, yyyy')}
+          </div>
+        </CardDescriptionDiv>
+      </CardHeader>
+      <CardContent className="flex-1">
+        <RichText content={content} className="" truncateLines />
+      </CardContent>
+      <CardFooter>
+        <Link
+          href={`/updates/${slug}`}
+          className={cn('w-full', buttonVariants({ variant: 'outline' }))}
+        >
+          Read Entire Update
+        </Link>
+      </CardFooter>
+    </Card>
   )
 }

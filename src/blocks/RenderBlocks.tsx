@@ -5,6 +5,7 @@ import type {
   TwoColumnLayoutBlock as TwoColumnLayoutBlockType,
   MultiRowLayoutBlock as MultiRowLayoutBlockType,
   HeroLayoutBlockType,
+  UpdateSectionType,
 } from '@/payload-types'
 import { HeroLayoutBlock } from './layouts/HeroLayout/Component'
 import { MultiRowLayoutBlock } from '@/blocks/layouts/MultiRowLayout/Component'
@@ -22,6 +23,7 @@ import { TournamentCardsBlock } from './TournamentCards/Component'
 import { UpdateCardsBlock } from './Cards/UpdateCards/Component'
 import { SponsorCardsBlock } from './Cards/SponsorCards/Component'
 import { ResourceCardsBlock } from './Cards/ResourceCards/Component'
+import { UpdateSectionBlock } from './UpdateSection/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
@@ -39,13 +41,14 @@ const blockComponents = {
   resourceCards: ResourceCardsBlock,
   updateCards: UpdateCardsBlock,
   sponsorCards: SponsorCardsBlock,
+  updateSection: UpdateSectionBlock,
 }
 
 export const RenderBlocks: React.FC<{
   blocks:
   | Page['layout'][number][]
-  | TwoColumnLayoutBlockType['columnOne']
-  | TwoColumnLayoutBlockType['columnTwo']
+  | TwoColumnLayoutBlockType['columns']
+  | UpdateSectionType
   | MultiRowLayoutBlockType['blocks']
   | HeroLayoutBlockType['blocks']
   nested?: boolean

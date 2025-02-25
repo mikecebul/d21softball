@@ -1,4 +1,5 @@
 import { cn } from '@/utilities/cn'
+import RichText from '../RichText'
 
 export function HeroMedium({
   title,

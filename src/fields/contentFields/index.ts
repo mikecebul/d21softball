@@ -1,4 +1,5 @@
 import { linkGroup } from '@/fields/link/linkGroup'
+import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor, ParagraphFeature } from '@payloadcms/richtext-lexical'
 import type { Field } from 'payload'
 
 export const contentFields: Field[] = [
@@ -69,7 +70,6 @@ export const contentFields: Field[] = [
     name: 'description',
     label: 'Description',
     type: 'textarea',
-    required: true,
   },
   linkGroup({
     overrides: {

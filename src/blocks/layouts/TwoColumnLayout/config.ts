@@ -3,6 +3,7 @@ import { FormBlock } from '@/blocks/Form/config'
 import { CTA } from '@/blocks/CTA/config'
 import { RichText } from '@/blocks/RichText/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { UpdateSection } from '@/blocks/UpdateSection/config'
 
 export const TwoColumnLayout: Block = {
   slug: 'twoColumnLayout',
@@ -12,6 +13,19 @@ export const TwoColumnLayout: Block = {
       name: 'nested',
       type: 'checkbox',
       defaultValue: false,
+      hidden: true
+    },
+    {
+      name: 'direction',
+      type: 'radio',
+      defaultValue: 'ltr',
+      options: [
+        { label: 'Left to Right', value: 'ltr' },
+        { label: 'Right to Left', value: 'rtl' },
+      ],
+      admin: {
+        description: 'The direction of the layout on desktop',
+      },
     },
     {
       name: 'breakpoint',
@@ -28,16 +42,10 @@ export const TwoColumnLayout: Block = {
       },
     },
     {
-      name: 'columnOne',
+      name: 'columns',
       type: 'blocks',
-      blocks: [CTA, RichText, MediaBlock, FormBlock],
-      maxRows: 1,
-    },
-    {
-      name: 'columnTwo',
-      type: 'blocks',
-      blocks: [MediaBlock, FormBlock, CTA, RichText],
-      maxRows: 1,
-    },
+      blocks: [CTA, RichText, MediaBlock, FormBlock, UpdateSection],
+      maxRows: 2,
+    }
   ],
 }

@@ -24,6 +24,8 @@ const buttonVariants = cva(
         brandSecondary: 'bg-brand-secondary text-primary-foreground hover:bg-brand-secondary/90',
         brandOutline:
           'border border-brand border-2 bg-background font-semibold text-brand hover:bg-card hover:text-accent-foreground',
+        brandSecondaryOutline:
+          'border border-brand-secondary border-2 bg-background font-semibold text-brand-secondary hover:bg-card hover:text-accent-foreground',
         default: 'bg-primary text-primary-foreground hover:bg-primary/90 w-full lg:w-auto min-w-64',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'hover:bg-card hover:text-accent-foreground',

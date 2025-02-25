@@ -19,9 +19,10 @@ export type NodeTypes = DefaultNodeTypes | SerializedBlockNode<MediaBlockType>
 
 type Props = {
   nodes: NodeTypes[]
+  variant: 'description' | 'default'
 }
 
-export function serializeLexical({ nodes }: Props): JSX.Element {
+export function serializeLexical({ nodes, variant }: Props): JSX.Element {
   return (
     <Fragment>
       {nodes?.map((node, index): JSX.Element | null => {
@@ -80,7 +81,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 }
               }
             }
-            return serializeLexical({ nodes: node.children as NodeTypes[] })
+            return serializeLexical({ nodes: node.children as NodeTypes[], variant: 'default' })
           }
         }
 
@@ -123,7 +124,10 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             }
             case 'paragraph': {
               return (
-                <p className="prose col-start-2 text-pretty text-base" key={index}>
+                <p className={cn("prose col-start-2 text-pretty text-base", {
+                  'text-lg': variant === 'description'
+                }
+                )} key={index}>
                   {serializedChildren}
                 </p>
               )

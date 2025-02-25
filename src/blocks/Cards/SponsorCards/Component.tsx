@@ -18,7 +18,7 @@ export const SponsorCardsBlock = async ({ sponsors }: SponsorCardsType) => {
         if (typeof card === 'string') return null
         const { description, image, link, title } = card
         return (
-          <CMSLink {...link} appearance="card">
+          <CMSLink key={card.id} {...link} appearance="card">
             <Card className="group flex h-full max-w-xs flex-col bg-accent/60 px-0 py-0 text-left shadow hover:bg-accent">
               <CardContent className="overflow-hidden rounded-t-lg p-0">
                 {typeof image === 'object' && (

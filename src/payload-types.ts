@@ -202,11 +202,14 @@ export interface TitleBlock {
 export interface TwoColumnLayoutBlock {
   nested?: boolean | null;
   /**
+   * The direction of the layout on desktop
+   */
+  direction?: ('ltr' | 'rtl') | null;
+  /**
    * The breakpoint at which the layout switches to a two column layout
    */
   breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
-  columnOne?: (CTABlock | RichTextBlock | MediaBlock | FormBlock)[] | null;
-  columnTwo?: (MediaBlock | FormBlock | CTABlock | RichTextBlock)[] | null;
+  columns?: (CTABlock | RichTextBlock | MediaBlock | FormBlock | UpdateSectionType)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'twoColumnLayout';
@@ -216,7 +219,6 @@ export interface TwoColumnLayoutBlock {
  * via the `definition` "CTABlock".
  */
 export interface CTABlock {
-  verticalAlignment?: ('top' | 'center' | 'bottom') | null;
   cta: {
     hasSubtitle?: boolean | null;
     subtitle?: {
@@ -225,7 +227,7 @@ export interface CTABlock {
     };
     title: string;
     heading?: ('h1' | 'h2') | null;
-    description: string;
+    description?: string | null;
     links?: LinkGroup;
   };
   id?: string | null;
@@ -253,7 +255,7 @@ export interface Link {
   /**
    * Choose how the link should be rendered.
    */
-  appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary') | null;
+  appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -612,36 +614,13 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MultiRowLayoutBlock".
+ * via the `definition` "UpdateSectionType".
  */
-export interface MultiRowLayoutBlock {
-  blocks?:
-    | (
-        | TitleBlock
-        | RichTextBlock
-        | TwoColumnLayoutBlock
-        | UpdateCardsType
-        | SponsorCardsType
-        | ResourceCardsType
-        | LinksBlock
-        | TournamentCardsBlock
-      )[]
-    | null;
+export interface UpdateSectionType {
+  update: string | Update;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'multiRowLayout';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "UpdateCardsType".
- */
-export interface UpdateCardsType {
-  showAll: boolean;
-  updates?: (string | Update)[] | null;
-  link?: Link;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'updateCards';
+  blockType: 'updateSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -682,6 +661,39 @@ export interface Update {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MultiRowLayoutBlock".
+ */
+export interface MultiRowLayoutBlock {
+  blocks?:
+    | (
+        | TitleBlock
+        | RichTextBlock
+        | TwoColumnLayoutBlock
+        | UpdateCardsType
+        | SponsorCardsType
+        | ResourceCardsType
+        | LinksBlock
+        | TournamentCardsBlock
+      )[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'multiRowLayout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UpdateCardsType".
+ */
+export interface UpdateCardsType {
+  showAll: boolean;
+  updates?: (string | Update)[] | null;
+  link?: Link;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'updateCards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1014,22 +1026,16 @@ export interface TitleBlockSelect<T extends boolean = true> {
  */
 export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
   nested?: T;
+  direction?: T;
   breakpoint?: T;
-  columnOne?:
+  columns?:
     | T
     | {
         cta?: T | CTABlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
-      };
-  columnTwo?:
-    | T
-    | {
-        mediaBlock?: T | MediaBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-        cta?: T | CTABlockSelect<T>;
-        richText?: T | RichTextBlockSelect<T>;
+        updateSection?: T | UpdateSectionTypeSelect<T>;
       };
   id?: T;
   blockName?: T;
@@ -1039,7 +1045,6 @@ export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
  * via the `definition` "CTABlock_select".
  */
 export interface CTABlockSelect<T extends boolean = true> {
-  verticalAlignment?: T;
   cta?:
     | T
     | {
@@ -1106,6 +1111,15 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UpdateSectionType_select".
+ */
+export interface UpdateSectionTypeSelect<T extends boolean = true> {
+  update?: T;
   id?: T;
   blockName?: T;
 }

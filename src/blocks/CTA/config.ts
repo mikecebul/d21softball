@@ -10,20 +10,6 @@ export const CTA: Block = {
   interfaceName: 'CTABlock',
   fields: [
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'verticalAlignment',
-          type: 'select',
-          options: ['top', 'center', 'bottom'],
-          defaultValue: 'center',
-          admin: {
-            width: '25%',
-          },
-        },
-      ],
-    },
-    {
       name: 'cta',
       label: 'Call to Action',
       type: 'group',

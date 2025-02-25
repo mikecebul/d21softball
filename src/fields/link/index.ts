@@ -3,7 +3,7 @@ import type { Field, Where } from 'payload'
 import deepMerge from '@/utilities/deepMerge'
 import { addHTTPS } from '@/hooks/addHTTPS'
 
-export type LinkAppearances = 'default' | 'outline' | 'brand' | 'brandSecondary' | 'brandOutline'
+export type LinkAppearances = 'default' | 'outline' | 'brand' | 'brandSecondary' | 'brandOutline' | 'brandSecondaryOutline'
 
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
   default: {
@@ -25,6 +25,10 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
   brandSecondary: {
     label: 'Brand Secondary',
     value: 'brandSecondary',
+  },
+  brandSecondaryOutline: {
+    label: 'Brand Outline Secondary',
+    value: 'brandSecondaryOutline',
   },
 }
 
@@ -147,7 +151,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
   }
 
   if (appearances !== false) {
-    let appearanceOptionsToUse = [appearanceOptions.default, appearanceOptions.outline, appearanceOptions.brand, appearanceOptions.brandOutline, appearanceOptions.brandSecondary]
+    let appearanceOptionsToUse = [appearanceOptions.default, appearanceOptions.outline, appearanceOptions.brand, appearanceOptions.brandOutline, appearanceOptions.brandSecondary, appearanceOptions.brandSecondaryOutline]
 
     if (appearances) {
       appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance])

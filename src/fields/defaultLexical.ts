@@ -19,18 +19,18 @@ import { MediaBlock } from '@/blocks/MediaBlock/config'
 export const defaultLexical: Config['editor'] = lexicalEditor({
   features: () => {
     return [
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-            ParagraphFeature(),
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2'] }),
-            UnderlineFeature(),
-            BoldFeature(),
-            ItalicFeature(),
-            UnorderedListFeature(),
-            OrderedListFeature(),
-            BlocksFeature({
-              blocks: [MediaBlock],
-            }),
+      FixedToolbarFeature(),
+      InlineToolbarFeature(),
+      ParagraphFeature(),
+      HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3'] }),
+      UnderlineFeature(),
+      BoldFeature(),
+      ItalicFeature(),
+      UnorderedListFeature(),
+      OrderedListFeature(),
+      BlocksFeature({
+        blocks: [MediaBlock],
+      }),
       LinkFeature({
         enabledCollections: ['pages', 'media'],
         fields: ({ defaultFields }) => {

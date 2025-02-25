@@ -9,6 +9,7 @@ type Props = {
   enableGutter?: boolean
   enableProse?: boolean
   truncateLines?: boolean
+  variant?: 'description' | 'default'
 }
 
 const RichText: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const RichText: React.FC<Props> = ({
   enableGutter = false,
   enableProse = true,
   truncateLines = false,
+  variant = 'default'
 }) => {
   if (!content) {
     return null
@@ -38,7 +40,7 @@ const RichText: React.FC<Props> = ({
         !Array.isArray(content) &&
         typeof content === 'object' &&
         'root' in content &&
-        serializeLexical({ nodes: content?.root?.children })}
+        serializeLexical({ nodes: content?.root?.children, variant })}
     </div>
   )
 }
