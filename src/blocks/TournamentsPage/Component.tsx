@@ -2,12 +2,12 @@ import Container from '@/components/Container'
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardDescriptionDiv,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { CalendarIcon, MapPinIcon } from 'lucide-react'
+import { CalendarIcon, CreditCardIcon, MapPinIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import RichText from '@/components/RichText'
 import { Description, Title } from '@/components/Hero/HeroMedium'
@@ -66,10 +66,10 @@ export const TournamentsPageBlock = async ({
               }
               const hasUnpaidTeams = tournament.teams?.some((team) => !team.isPaid)
               return (
-                <Card key={tournament.id} className="col-span-1">
+                <Card key={tournament.id} className="flex flex-col h-full col-span-1">
                   <CardHeader className="">
                     <CardTitle>{tournament.title}</CardTitle>
-                    <div className="pt-4 text-muted-foreground">
+                    <CardDescriptionDiv className='pt-2'>
                       <span className="flex items-center gap-2">
                         <CalendarIcon className="size-4" />
                         <span>{format(tournament.startDate, 'MMMM dd, yyyy')}</span> -{' '}
@@ -79,41 +79,19 @@ export const TournamentsPageBlock = async ({
                         <MapPinIcon className="size-4" />
                         <span>{tournament.location}</span>
                       </span>
-                    </div>
+                      <span className={cn("flex items-center gap-2", { 'opacity-0 select-none': !hasUnpaidTeams })}>
+                        <CreditCardIcon className="size-4" />
+                        <span className='text-brand'>{`Registration ${hasUnpaidTeams ? 'open' : 'closed'}`}</span>
+                      </span>
+                    </CardDescriptionDiv>
                   </CardHeader>
-                  <CardContent>
-                    {tournament.teams && tournament.teams.length > 0 ? (
-                      <div>
-                        <p className="font-semibold">Teams left to register:</p>
-                        <ul className="list-disc pl-5">
-                          {tournament.teams.map((team) => (
-                            <li
-                              key={team.name}
-                              className={cn('py-1', {
-                                'text-muted-foreground line-through': team.isPaid,
-                              })}
-                            >
-                              {team.name}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ) : (
-                      <RichText content={tournament.description} truncateLines />
-                    )}
+                  <CardContent className="flex-1">
+                    <RichText content={tournament.description} className="line-clamp-5" />
                   </CardContent>
-                  <CardFooter className="flex gap-4">
-                    {hasUnpaidTeams && (
-                      <Link
-                        href={`/tournaments/${tournament.slug}`}
-                        className={cn('w-full', buttonVariants({ variant: 'brand' }))}
-                      >
-                        Register Your Team
-                      </Link>
-                    )}
+                  <CardFooter className="mt-auto">
                     <Link
                       href={`/tournaments/${tournament.slug}`}
-                      className={cn('w-full', buttonVariants({ variant: 'brandOutline' }))}
+                      className={cn('w-full', buttonVariants({ variant: 'brandSecondaryOutline' }))}
                     >
                       View Tournament
                     </Link>

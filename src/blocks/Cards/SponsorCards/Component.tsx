@@ -13,20 +13,20 @@ export const SponsorCardsBlock = async ({ sponsors }: SponsorCardsType) => {
           const { description, image, link, title } = card
           return (
             <CMSLink key={card.id} {...link} appearance="card">
-              <Card className="group flex h-full max-w-xs flex-col bg-accent/60 px-0 py-0 text-left shadow hover:bg-accent">
-                <CardContent className="overflow-hidden rounded-t-lg p-0">
+              <Card className="flex flex-col h-full max-w-xs px-0 py-0 text-left shadow group bg-accent/60 hover:bg-accent">
+                <CardContent className="flex flex-col items-center justify-center p-0 overflow-hidden rounded-t-lg h-60 bg-background">
                   {typeof image === 'object' && (
                     <Image
                       src={image?.url ?? '/placeholder.svg'}
                       alt={image?.alt ?? ''}
                       width={800}
                       height={800}
-                      className="h-60 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                      className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                     />
                   )}
                 </CardContent>
                 <CardHeader>
-                  <CardTitle className="text-pretty pb-1 capitalize">{title}</CardTitle>
+                  <CardTitle className="pb-1 capitalize text-pretty">{title}</CardTitle>
                   {description ? (
                     <CardDescription className="">{description}</CardDescription>
                   ) : null}
