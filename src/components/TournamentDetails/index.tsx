@@ -7,13 +7,34 @@ import { Button } from "../ui/button";
 import Container from "../Container";
 import RichText from "../RichText";
 import { format } from "date-fns";
+import { Title } from "../Hero/HeroMedium";
+import RichTextCarousel from "@/blocks/RichText/RichTextCarousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import Image from "next/image";
+
+const images = [
+  {
+    id: "f243",
+    url: "/placeholder.svg",
+    alt: "Image 1",
+    width: 960,
+    height: 640,
+  },
+  {
+    id: "2f34f4",
+    url: "/placeholder.svg",
+    alt: "Image 2",
+    width: 960,
+    height: 640,
+  },
+]
 
 export default function TournamentDetails(details: Tournament) {
   return (
-    <Container className="pt-12 pb-24">
+    <Container className="max-w-5xl pt-12 pb-24 mx-auto">
       <div className="py-8 sm:py-12">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">{details.title}</h1>
-        <div className="flex flex-col gap-2 mt-4 text-muted-foreground sm:flex-row sm:items-center sm:gap-6">
+        <Title text={details.title} heading="h1" />
+        <div className="flex flex-col gap-4 mt-4 text-muted-foreground sm:flex-row sm:items-center sm:gap-6">
           <div className="flex items-center gap-2">
             <CalendarDays className="w-5 h-5" />
             <span>{format(details.startDate, 'MMM dd, yyyy')} - {format(details.endDate, 'MMM dd, yyyy')}</span>
@@ -25,15 +46,16 @@ export default function TournamentDetails(details: Tournament) {
         </div>
       </div>
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 lg:w-[400px]">
-          <TabsTrigger value="info">Tournament Info</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
+          <TabsTrigger value="info" >Tournament Info</TabsTrigger>
           <TabsTrigger value="results">Results</TabsTrigger>
+          <TabsTrigger value="gallery">Gallery</TabsTrigger>
         </TabsList>
 
         <TabsContent value="info" className="space-y-6">
           {/* Tournament Details */}
           <div className="grid gap-6 md:grid-cols-2">
-            <Card>
+            <Card className="">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Trophy className="w-5 h-5" />
@@ -69,14 +91,14 @@ export default function TournamentDetails(details: Tournament) {
             </Card>
 
             {/* Registration Card */}
-            <Card>
+            <Card className="flex flex-col h-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
                   Register Your Team
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="flex-1 space-y-4">
                 <div className="space-y-2">
                   <h3 className="font-semibold">Select Team</h3>
                   <Select>
@@ -92,13 +114,15 @@ export default function TournamentDetails(details: Tournament) {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button className="w-full bg-red-600 hover:bg-red-700">Continue Registration</Button>
+              </CardContent>
+              <CardContent className="mt-auto">
+                <Button className="lg:w-full" variant="brand">Continue To Registration</Button>
               </CardContent>
             </Card>
           </div>
 
           {/* Additional Info */}
-          <Card>
+          <Card className="">
             <CardHeader>
               <CardTitle>About the Tournament</CardTitle>
             </CardHeader>
@@ -132,6 +156,30 @@ export default function TournamentDetails(details: Tournament) {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="gallery">
+          <Carousel
+            className='w-full max-w-3xl mx-auto'
+          >
+            {/* Needs better type checking system */}
+            <CarouselContent className=''>
+              {images.map((image) => (
+                <CarouselItem key={image.id}>
+                  <Image
+                    className="object-cover rounded-lg shadow-lg ring-1 ring-gray-400/10 max-h-96"
+                    src={image.url ?? ''}
+                    alt={image.alt}
+                    width={image.width ?? 960}
+                    height={image.height ?? 640}
+                    priority={true}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </TabsContent>
       </Tabs>
     </Container>

@@ -13,7 +13,7 @@ const buttonVariants = cva(
     variants: {
       size: {
         clear: '',
-        default: 'h-10 px-4 py-2',
+        default: 'h-10 px-4 py-2 w-full md:w-auto min-w-64',
         icon: 'size-10',
         lg: 'h-11 px-8',
         sm: 'h-9 px-3',
@@ -26,7 +26,7 @@ const buttonVariants = cva(
           'border border-brand border-2 bg-background font-semibold text-brand hover:bg-card hover:text-accent-foreground',
         brandSecondaryOutline:
           'border border-brand-secondary border-2 bg-background font-semibold text-brand-secondary hover:bg-card hover:text-accent-foreground',
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90 w-full lg:w-auto min-w-64',
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'hover:bg-card hover:text-accent-foreground',
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
