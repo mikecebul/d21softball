@@ -15,10 +15,9 @@ type Props = {
 const RichText: React.FC<Props> = ({
   className,
   content,
-  enableGutter = false,
   enableProse = true,
   truncateLines = false,
-  variant = 'default'
+  variant = 'default',
 }) => {
   if (!content) {
     return null
@@ -28,8 +27,6 @@ const RichText: React.FC<Props> = ({
     <div
       className={cn(
         {
-          container: enableGutter,
-          'max-w-none': !enableGutter,
           'prose dark:prose-invert': enableProse,
           'line-clamp-10': truncateLines,
         },

@@ -11,7 +11,7 @@ import Link from 'next/link'
 export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) => {
   return (
     <Container>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Array.isArray(tournaments) &&
           tournaments.length > 0 &&
           tournaments.map((tournament) => {
@@ -24,7 +24,7 @@ export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) 
                   <CardTitle>{tournament.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="font-semibold pb-4">
+                  <div className="pb-4 font-semibold">
                     <span className="flex items-center gap-2">
                       <CalendarIcon className="size-4" />
                       <span>{format(tournament.startDate, 'MMMM do, yyyy')}</span> -{' '}
@@ -40,7 +40,7 @@ export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) 
                 <CardFooter>
                   <Link
                     href={`/`}
-                    className={cn('w-full', buttonVariants({ variant: 'brand' }))}
+                    className={cn('w-full', buttonVariants({ variant: 'brand', size: 'default' }))}
                   >
                     Register
                   </Link>

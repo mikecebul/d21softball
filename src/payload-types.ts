@@ -837,9 +837,10 @@ export interface Team {
   title: string;
   city?: string | null;
   tournaments?: {
-    docs?: (string | Tournament)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Tournament)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }

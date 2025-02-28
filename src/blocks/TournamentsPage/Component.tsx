@@ -66,10 +66,10 @@ export const TournamentsPageBlock = async ({
               }
               const hasUnpaidTeams = tournament.teams?.some((team) => !team.isPaid)
               return (
-                <Card key={tournament.id} className="flex flex-col h-full col-span-1">
+                <Card key={tournament.id} className="col-span-1 flex h-full flex-col">
                   <CardHeader className="">
                     <CardTitle>{tournament.title}</CardTitle>
-                    <CardDescriptionDiv className='pt-2'>
+                    <CardDescriptionDiv className="pt-2">
                       <span className="flex items-center gap-2">
                         <CalendarIcon className="size-4" />
                         <span>{format(tournament.startDate, 'MMMM dd, yyyy')}</span> -{' '}
@@ -79,9 +79,13 @@ export const TournamentsPageBlock = async ({
                         <MapPinIcon className="size-4" />
                         <span>{tournament.location}</span>
                       </span>
-                      <span className={cn("flex items-center gap-2", { 'opacity-0 select-none': !hasUnpaidTeams })}>
+                      <span
+                        className={cn('flex items-center gap-2', {
+                          'select-none opacity-0': !hasUnpaidTeams,
+                        })}
+                      >
                         <CreditCardIcon className="size-4" />
-                        <span className='text-brand'>{`Registration ${hasUnpaidTeams ? 'open' : 'closed'}`}</span>
+                        <span className="text-brand">{`Registration ${hasUnpaidTeams ? 'open' : 'closed'}`}</span>
                       </span>
                     </CardDescriptionDiv>
                   </CardHeader>
@@ -91,7 +95,10 @@ export const TournamentsPageBlock = async ({
                   <CardFooter className="mt-auto">
                     <Link
                       href={`/tournaments/${tournament.slug}`}
-                      className={cn('w-full', buttonVariants({ variant: 'brandSecondaryOutline' }))}
+                      className={cn(
+                        buttonVariants({ variant: 'brandSecondaryOutline' }),
+                        'md:w-full',
+                      )}
                     >
                       View Tournament
                     </Link>
