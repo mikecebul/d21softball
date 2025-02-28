@@ -8,7 +8,6 @@ import Container from "../Container";
 import RichText from "../RichText";
 import { format } from "date-fns";
 import { Title } from "../Hero/HeroMedium";
-import RichTextCarousel from "@/blocks/RichText/RichTextCarousel";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import Image from "next/image";
 
@@ -34,7 +33,7 @@ export default function TournamentDetails(details: Tournament) {
     <Container className="max-w-5xl pt-12 pb-24 mx-auto">
       <div className="py-8 sm:py-12">
         <Title text={details.title} heading="h1" />
-        <div className="flex flex-col gap-4 mt-4 text-muted-foreground sm:flex-row sm:items-center sm:gap-6">
+        <div className="flex flex-col gap-1 mt-4 text-muted-foreground sm:flex-row sm:items-center sm:gap-6">
           <div className="flex items-center gap-2">
             <CalendarDays className="w-5 h-5" />
             <span>{format(details.startDate, 'MMM dd, yyyy')} - {format(details.endDate, 'MMM dd, yyyy')}</span>
@@ -106,11 +105,14 @@ export default function TournamentDetails(details: Tournament) {
                       <SelectValue placeholder="Choose your team" />
                     </SelectTrigger>
                     <SelectContent>
-                      {details.teams?.map((team) => (
-                        <SelectItem key={team.id} value={team.name.toLowerCase()}>
-                          {team.name}
-                        </SelectItem>
-                      ))}
+                      {details.teams?.map(({ team }) => {
+                        if (typeof team === 'string') return null;
+                        return (
+                          <SelectItem key={team?.id} value={team?.title.toLowerCase()}>
+                            {team?.title}
+                          </SelectItem>
+                        )
+                      })}
                     </SelectContent>
                   </Select>
                 </div>
@@ -126,8 +128,8 @@ export default function TournamentDetails(details: Tournament) {
             <CardHeader>
               <CardTitle>About the Tournament</CardTitle>
             </CardHeader>
-            <CardContent className="prose-sm prose max-w-none">
-              <RichText content={details.description} />
+            <CardContent>
+              <RichText content={details.description} enableProse={false} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -182,6 +184,6 @@ export default function TournamentDetails(details: Tournament) {
           </Carousel>
         </TabsContent>
       </Tabs>
-    </Container>
+    </Container >
   )
 }

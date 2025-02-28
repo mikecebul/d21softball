@@ -81,6 +81,7 @@ export interface Config {
     resources: Resource;
     sponsors: Sponsor;
     tournaments: Tournament;
+    teams: Team;
     media: Media;
     users: User;
     forms: Form;
@@ -90,13 +91,18 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    teams: {
+      tournaments: 'tournaments';
+    };
+  };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     updates: UpdatesSelect<false> | UpdatesSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     tournaments: TournamentsSelect<false> | TournamentsSelect<true>;
+    teams: TeamsSelect<false> | TeamsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -799,7 +805,7 @@ export interface Tournament {
   price: number;
   teams?:
     | {
-        name: string;
+        team: string | Team;
         isPaid?: boolean | null;
         id?: string | null;
       }[]
@@ -821,6 +827,21 @@ export interface Tournament {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams".
+ */
+export interface Team {
+  id: string;
+  title: string;
+  city?: string | null;
+  tournaments?: {
+    docs?: (string | Tournament)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -949,6 +970,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tournaments';
         value: string | Tournament;
+      } | null)
+    | ({
+        relationTo: 'teams';
+        value: string | Team;
       } | null)
     | ({
         relationTo: 'media';
@@ -1336,7 +1361,7 @@ export interface TournamentsSelect<T extends boolean = true> {
   teams?:
     | T
     | {
-        name?: T;
+        team?: T;
         isPaid?: T;
         id?: T;
       };
@@ -1358,6 +1383,17 @@ export interface TournamentsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams_select".
+ */
+export interface TeamsSelect<T extends boolean = true> {
+  title?: T;
+  city?: T;
+  tournaments?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

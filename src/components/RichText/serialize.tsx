@@ -124,7 +124,7 @@ export function serializeLexical({ nodes, variant }: Props): JSX.Element {
             }
             case 'paragraph': {
               return (
-                <p className={cn("prose col-start-2 text-pretty text-base", {
+                <p className={cn("col-start-2 text-pretty text-base", {
                   'text-lg': variant === 'description'
                 }
                 )} key={index}>

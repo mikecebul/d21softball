@@ -10,7 +10,6 @@ import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
 //import { GoogleMap } from './GoogleMap'
 import Image from 'next/image'
-import { label } from '@/blocks/Form/blocks'
 
 export async function Footer() {
   const payload = await getPayload({ config: payloadConfig })
@@ -22,19 +21,19 @@ export async function Footer() {
 
   const { contact, social, hours } = await payload.findGlobal({
     slug: 'company-info',
-    depth: 1,
+    depth: 2,
   })
 
   return (
     <footer>
       <Container className="py-0">
-        <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-3">
           {/* PageLinks */}
           {pageLinks && pageLinks.length > 0 && (
-            <div className="col-span-1 flex flex-col">
+            <div className="flex flex-col col-span-1">
               <p className="text-lg font-bold">Website</p>
               <Separator className="my-4" />
-              <ul className="mb-8 flex flex-col space-y-4 font-medium text-gray-500">
+              <ul className="flex flex-col mb-8 space-y-4 font-medium text-gray-500">
                 {pageLinks.map(({ link }, id) => {
                   return (
                     <li key={id}>
@@ -47,18 +46,18 @@ export async function Footer() {
           )}
           {/* Contact Info */}
           {showContact && contact && (
-            <div className="col-span-1 flex flex-col">
+            <div className="flex flex-col col-span-1">
               <p className="text-lg font-bold">Contact</p>
               <Separator className="my-4" />
-              <ul className="mb-8 flex flex-col space-y-4 text-gray-500">
+              <ul className="flex flex-col mb-8 space-y-4 text-gray-500">
                 {typeof contact.phone === 'string' && contact.phone.length > 0 && (
                   <li key={contact.phone} className="group">
                     <CMSLink
                       appearance='footerNav'
                       url={`tel:${contact.phone.replace(/\D/g, '')}`}
                       label={
-                        <div className="inline-flex justify-start items-center">
-                          <Phone className="mr-2 flex-shrink-0" size={20} />
+                        <div className="inline-flex items-center justify-start">
+                          <Phone className="flex-shrink-0 mr-2" size={20} />
                           {contact.phone}
                         </div>
                       }
@@ -71,8 +70,8 @@ export async function Footer() {
                       url={`mailto:${contact.email}`}
                       appearance="footerNav"
                       label={
-                        <div className="inline-flex justify-start items-center">
-                          <Mail className="mr-2 flex-shrink-0" size={20} />
+                        <div className="inline-flex items-center justify-start">
+                          <Mail className="flex-shrink-0 mr-2" size={20} />
                           {contact.email}
                         </div>
                       }
@@ -95,8 +94,8 @@ export async function Footer() {
                       url={contact.physicalAddress.googleMapLink ?? null}
                       newTab
                       label={
-                        <div className='inline-flex justify-start items-center'>
-                          <Navigation className="mr-2 flex-shrink-0" size={20} />
+                        <div className='inline-flex items-center justify-start'>
+                          <Navigation className="flex-shrink-0 mr-2" size={20} />
                           {contact.mailingAddress?.street ? (
                             // Show both addresses if mailing address exists
                             <ul>
@@ -127,12 +126,12 @@ export async function Footer() {
                 {/* Social Links */}
                 {!!social &&
                   social?.map(({ link }) => (
-                    <li key={link.label} className="group">
+                    <li key={link.url} className="group">
                       <CMSLink
                         {...link}
                         appearance="footerNav"
                         label={
-                          <div className="inline-flex justify-start items-center">
+                          <div className="inline-flex items-center justify-start">
                             <Facebook className="mr-2" size={20} />
                             {link.label}
                           </div>
@@ -189,9 +188,9 @@ export async function Footer() {
 
         <Separator />
         <div className="flex items-center justify-center">
-          <span className="block text-center text-sm text-gray-500">
+          <span className="block text-sm text-center text-gray-500">
             © {new Date().getFullYear()}{' '}
-            <Link href="/" className={cn(buttonVariants({ variant: 'ghost' }), 'p-0')}>
+            <Link href="/" className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'p-0')}>
               District 21 Softball
             </Link>
             . All Rights Reserved.

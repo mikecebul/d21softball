@@ -51,6 +51,7 @@ export const Tournaments: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
+          label: 'Content',
           fields: [
             {
               name: 'title',
@@ -123,8 +124,10 @@ export const Tournaments: CollectionConfig = {
               },
               fields: [
                 {
-                  name: 'name',
-                  type: 'text',
+                  name: 'team',
+                  type: 'relationship',
+                  relationTo: 'teams',
+                  hasMany: false,
                   required: true,
                 },
                 {
@@ -136,7 +139,6 @@ export const Tournaments: CollectionConfig = {
               ],
             },
           ],
-          label: 'Content',
         },
         {
           name: 'meta',

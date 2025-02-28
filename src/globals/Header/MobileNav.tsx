@@ -24,17 +24,18 @@ export function MobileNav({ navItems, companyName }: { navItems: NavItem[]; comp
         <SheetTrigger asChild>
           <Button
             variant="ghost"
-            className="h-8 w-8 bg-secondary p-0 text-primary hover:bg-muted-foreground/20"
+            size='clear'
+            className="p-0 size-8 bg-secondary text-primary hover:bg-muted-foreground/20"
             onClick={() => setOpen(!open)}
           >
             {open ? (
-              <Icons.closeMenu className="h-8 w-8" />
+              <Icons.closeMenu className="size-8" />
             ) : (
-              <Icons.openMenu className="h-8 w-8" />
+              <Icons.openMenu className="size-8" />
             )}
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-72 p-8 sm:w-1/2">
+        <SheetContent side="right" className="p-8 w-72 sm:w-1/2">
           <SheetHeader>
             <SheetTitle>
               {/* <span className="sr-only">{companyName}</span> */}

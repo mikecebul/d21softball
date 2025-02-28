@@ -63,6 +63,7 @@ const queryUpdateBySlug = cache(async ({ slug }: { slug: string }) => {
     collection: 'tournaments',
     draft,
     limit: 1,
+    depth: 5,
     overrideAccess: true,
     where: {
       slug: {

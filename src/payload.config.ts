@@ -49,6 +49,7 @@ import { Updates } from './collections/Updates'
 import { Resources } from './collections/Resources'
 import { Sponsors } from './collections/Sponsors'
 import { defaultLexical } from './fields/defaultLexical'
+import { Teams } from './collections/Teams'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -116,7 +117,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  collections: [Pages, Updates, Resources, Sponsors, Tournaments, Media, Users],
+  collections: [Pages, Updates, Resources, Sponsors, Tournaments, Teams, Media, Users],
   cors: [baseUrl].filter(Boolean),
   csrf: [baseUrl].filter(Boolean),
   // email: nodemailerAdapter({
