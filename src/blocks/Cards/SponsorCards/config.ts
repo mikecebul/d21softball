@@ -1,4 +1,3 @@
-import { link } from '@/fields/link'
 import { Block } from 'payload'
 
 export const SponsorCards: Block = {

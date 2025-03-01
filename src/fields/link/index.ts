@@ -1,4 +1,4 @@
-import type { Field, Where } from 'payload'
+import type { Field, GroupField } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
 import { addHTTPS } from '@/hooks/addHTTPS'
@@ -39,10 +39,9 @@ type LinkType = (options?: {
 }) => Field
 
 export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
-  const linkResult: Field = {
+  const linkResult: GroupField = {
     name: 'link',
     type: 'group',
-    interfaceName: 'Link',
     admin: {
       hideGutter: true,
     },

@@ -12,7 +12,27 @@
  */
 export type LinkGroup =
   | {
-      link: Link;
+      link: {
+        type?: ('reference' | 'custom') | null;
+        newTab?: boolean | null;
+        reference?:
+          | ({
+              relationTo: 'pages';
+              value: string | Page;
+            } | null)
+          | ({
+              relationTo: 'media';
+              value: string | Media;
+            } | null);
+        url?: string | null;
+        label: string;
+        /**
+         * Choose how the link should be rendered.
+         */
+        appearance?:
+          | ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline')
+          | null;
+      };
       id?: string | null;
     }[]
   | null;
@@ -239,24 +259,6 @@ export interface CTABlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link".
- */
-export interface Link {
-  type?: ('reference' | 'custom') | null;
-  newTab?: boolean | null;
-  reference?:
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null);
-  url?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -691,7 +693,25 @@ export interface MultiRowLayoutBlock {
 export interface UpdateCardsType {
   showAll: boolean;
   updates?: (string | Update)[] | null;
-  link?: Link;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: string | Media;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline') | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'updateCards';
@@ -715,7 +735,20 @@ export interface Sponsor {
   title: string;
   description?: string | null;
   image?: (string | null) | Media;
-  link?: Link;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: string | Media;
+        } | null);
+    url?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -727,7 +760,25 @@ export interface Sponsor {
 export interface ResourceCardsType {
   showAll?: boolean | null;
   resources?: (string | Resource)[] | null;
-  link?: Link;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: string | Media;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline') | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'resourceCards';
@@ -741,7 +792,25 @@ export interface Resource {
   title: string;
   description?: string | null;
   image?: (string | null) | Media;
-  link: Link;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: string | Media;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline') | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -758,7 +827,27 @@ export interface LinksBlock {
         title: string;
         description?: string | null;
         image: string | Media;
-        link: Link;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: string | Media;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?:
+            | ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline')
+            | null;
+        };
         id?: string | null;
       }[]
     | null;
@@ -837,10 +926,9 @@ export interface Team {
   title: string;
   city?: string | null;
   tournaments?: {
-    docs?: (string | Tournament)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
+    docs?: (string | Tournament)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1146,18 +1234,17 @@ export interface CTABlockSelect<T extends boolean = true> {
  * via the `definition` "LinkGroup_select".
  */
 export interface LinkGroupSelect<T extends boolean = true> {
-  link?: T | LinkSelect<T>;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
   id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link_select".
- */
-export interface LinkSelect<T extends boolean = true> {
-  type?: T;
-  newTab?: T;
-  reference?: T;
-  url?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1226,7 +1313,16 @@ export interface MultiRowLayoutBlockSelect<T extends boolean = true> {
 export interface UpdateCardsTypeSelect<T extends boolean = true> {
   showAll?: T;
   updates?: T;
-  link?: T | LinkSelect<T>;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1246,7 +1342,16 @@ export interface SponsorCardsTypeSelect<T extends boolean = true> {
 export interface ResourceCardsTypeSelect<T extends boolean = true> {
   showAll?: T;
   resources?: T;
-  link?: T | LinkSelect<T>;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1263,7 +1368,16 @@ export interface LinksBlockSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         image?: T;
-        link?: T | LinkSelect<T>;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
         id?: T;
       };
   id?: T;
@@ -1329,7 +1443,16 @@ export interface ResourcesSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
-  link?: T | LinkSelect<T>;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1342,7 +1465,14 @@ export interface SponsorsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
-  link?: T | LinkSelect<T>;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1746,7 +1876,21 @@ export interface Header {
   id: string;
   navItems?:
     | {
-        link: Link;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: string | Media;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
         id?: string | null;
       }[]
     | null;
@@ -1761,7 +1905,21 @@ export interface Footer {
   id: string;
   pageLinks?:
     | {
-        link: Link;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: string | Media;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
         id?: string | null;
       }[]
     | null;
@@ -1797,7 +1955,21 @@ export interface CompanyInfo {
   social?:
     | {
         platform?: string | null;
-        link: Link;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: string | Media;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
         id?: string | null;
       }[]
     | null;
@@ -1821,7 +1993,15 @@ export interface HeaderSelect<T extends boolean = true> {
   navItems?:
     | T
     | {
-        link?: T | LinkSelect<T>;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
         id?: T;
       };
   updatedAt?: T;
@@ -1836,7 +2016,15 @@ export interface FooterSelect<T extends boolean = true> {
   pageLinks?:
     | T
     | {
-        link?: T | LinkSelect<T>;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
         id?: T;
       };
   showContact?: T;
@@ -1875,7 +2063,15 @@ export interface CompanyInfoSelect<T extends boolean = true> {
     | T
     | {
         platform?: T;
-        link?: T | LinkSelect<T>;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
         id?: T;
       };
   hours?:
