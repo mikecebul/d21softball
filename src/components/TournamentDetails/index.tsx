@@ -16,10 +16,10 @@ import {
   CarouselPrevious,
 } from '../ui/carousel'
 import Image from 'next/image'
-import { RegisterButton } from './RegisterButton'
 import { cn } from '@/utilities/cn'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { Button } from '../ui/button'
+import { useEffect, useState } from 'react'
 
 const images = [
   {
@@ -40,13 +40,28 @@ const images = [
 
 export default function TournamentDetails(details: Tournament) {
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
-  const tab = searchParams.get('tab') || 'info'
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'info')
+
+  // Listen for URL changes and update tab state
+  useEffect(() => {
+    const tab = searchParams.get('tab') || 'info'
+    setActiveTab(tab)
+  }, [searchParams])
 
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
-    params.set('tab', value)
-    router.replace(`?${params.toString()}`, { scroll: false })
+    if (value === 'info') {
+      params.delete('tab') // Remove tab param for default tab
+    } else {
+      params.set('tab', value)
+    }
+
+    // Use push instead of replace to add to browser history
+    const queryString = params.toString()
+    const newUrl = queryString ? `${pathname}?${queryString}` : pathname
+    router.push(newUrl, { scroll: false })
   }
 
   const handlePayment = (teamName: string) => {
@@ -72,7 +87,7 @@ export default function TournamentDetails(details: Tournament) {
           </div>
         </div>
       </div>
-      <Tabs defaultValue={tab} className="space-y-6" onValueChange={handleTabChange}>
+      <Tabs value={activeTab} className="space-y-6" onValueChange={handleTabChange}>
         <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
           <TabsTrigger value="info">Tournament Info</TabsTrigger>
           <TabsTrigger value="results">Results</TabsTrigger>
