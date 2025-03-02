@@ -57,7 +57,7 @@ export async function Footer() {
                       url={`tel:${contact.phone.replace(/\D/g, '')}`}
                       label={
                         <div className="inline-flex items-center justify-start">
-                          <Phone className="flex-shrink-0 mr-2" size={20} />
+                          <Phone className="shrink-0 mr-2" size={20} />
                           {contact.phone}
                         </div>
                       }
@@ -71,7 +71,7 @@ export async function Footer() {
                       appearance="footerNav"
                       label={
                         <div className="inline-flex items-center justify-start">
-                          <Mail className="flex-shrink-0 mr-2" size={20} />
+                          <Mail className="shrink-0 mr-2" size={20} />
                           {contact.email}
                         </div>
                       }
@@ -95,7 +95,7 @@ export async function Footer() {
                       newTab
                       label={
                         <div className='inline-flex items-center justify-start'>
-                          <Navigation className="flex-shrink-0 mr-2" size={20} />
+                          <Navigation className="shrink-0 mr-2" size={20} />
                           {contact.mailingAddress?.street ? (
                             // Show both addresses if mailing address exists
                             <ul>

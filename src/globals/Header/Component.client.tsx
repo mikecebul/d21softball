@@ -19,7 +19,7 @@ export const HeaderClient = ({
   const { phone, name: companyName } = contact || {}
 
   return (
-    <header className="sticky top-0 z-40 flex w-full py-3 overflow-clip bg-background/50 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 flex w-full py-3 overflow-clip bg-background/50 backdrop-blur-xs">
       <div className="flex items-center w-full px-4 2xl:container md:px-8 2xl:px-0">
         <Logo name={companyName ?? 'District 21 Softball'} />
         <MainNav navItems={navItems} />
