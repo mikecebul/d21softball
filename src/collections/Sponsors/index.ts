@@ -17,8 +17,9 @@ export const Sponsors: CollectionConfig = {
     plural: 'Sponsors',
   },
   admin: {
-    useAsTitle: 'title',
+    group: 'Content',
     hideAPIURL: !superAdmin,
+    useAsTitle: 'title',
   },
   fields: [
     {

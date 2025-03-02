@@ -16,8 +16,9 @@ export const Teams: CollectionConfig = {
     plural: 'Teams',
   },
   admin: {
-    useAsTitle: 'title',
+    group: 'Softball',
     hideAPIURL: !superAdmin,
+    useAsTitle: 'title',
   },
   fields: [
     {

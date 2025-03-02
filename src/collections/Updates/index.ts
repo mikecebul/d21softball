@@ -24,8 +24,10 @@ export const Updates: CollectionConfig = {
     update: editorOrHigher,
   },
   admin: {
-    useAsTitle: 'title',
+
+    group: 'Content',
     hideAPIURL: !superAdmin,
+    useAsTitle: 'title',
   },
   fields: [
     {

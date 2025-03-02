@@ -11,7 +11,10 @@ export const Footer: GlobalConfig = {
     read: authenticated,
     update: editorOrHigher,
   },
-  admin: { hideAPIURL: !superAdmin },
+  admin: {
+    group: 'Website Builder',
+    hideAPIURL: !superAdmin
+  },
   fields: [
     {
       name: 'pageLinks',

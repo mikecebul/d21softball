@@ -11,7 +11,10 @@ export const Header: GlobalConfig = {
     read: authenticated,
     update: editorOrHigher,
   },
-  admin: { hideAPIURL: true },
+  admin: {
+    group: 'Website Builder',
+    hideAPIURL: true
+  },
   fields: [
     {
       name: 'navItems',

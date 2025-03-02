@@ -899,6 +899,24 @@ export interface Tournament {
         id?: string | null;
       }[]
     | null;
+  games?:
+    | {
+        date?: string | null;
+        opponents?:
+          | {
+              team: string | Team;
+              /**
+               * Location determines which dugout the team will use
+               */
+              location: 'home' | 'visitor';
+              score?: number | null;
+              isWinner?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -1494,6 +1512,21 @@ export interface TournamentsSelect<T extends boolean = true> {
     | {
         team?: T;
         isPaid?: T;
+        id?: T;
+      };
+  games?:
+    | T
+    | {
+        date?: T;
+        opponents?:
+          | T
+          | {
+              team?: T;
+              location?: T;
+              score?: T;
+              isWinner?: T;
+              id?: T;
+            };
         id?: T;
       };
   meta?:

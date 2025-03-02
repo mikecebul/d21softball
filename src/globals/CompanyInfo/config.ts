@@ -14,6 +14,7 @@ export const CompanyInfo: GlobalConfig = {
   },
   admin: {
     hideAPIURL: !superAdmin,
+    group: 'Website Builder',
   },
   hooks: {
     afterChange: [

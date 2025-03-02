@@ -33,6 +33,7 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    group: 'Website Builder',
     hideAPIURL: !superAdmin,
     livePreview: {
       url: ({ data }) => {

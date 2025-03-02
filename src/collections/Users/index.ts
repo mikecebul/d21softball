@@ -20,6 +20,7 @@ const Users: CollectionConfig = {
   admin: {
     hideAPIURL: !superAdmin,
     defaultColumns: ['name', 'email', 'role'],
+    group: 'Admin',
     useAsTitle: 'name',
   },
   auth: {

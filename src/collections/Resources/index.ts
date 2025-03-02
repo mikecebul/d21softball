@@ -17,8 +17,9 @@ export const Resources: CollectionConfig = {
     plural: 'Resources',
   },
   admin: {
-    useAsTitle: 'title',
+    group: 'Content',
     hideAPIURL: !superAdmin,
+    useAsTitle: 'title',
   },
   fields: [
     {

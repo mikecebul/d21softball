@@ -2,7 +2,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { editorOrHigher } from '@/access/editorOrHigher'
 import { superAdmin } from '@/access/superAdmin'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { CollectionConfig } from 'payload'
+import { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
@@ -16,7 +16,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { baseUrl } from '@/utilities/baseUrl'
-import { TwoColumnLayout } from '@/blocks/layouts/TwoColumnLayout/config'
+import { Tournament } from '@/payload-types'
 
 export const Tournaments: CollectionConfig = {
   slug: 'tournaments',
@@ -31,8 +31,9 @@ export const Tournaments: CollectionConfig = {
     update: editorOrHigher,
   },
   admin: {
-    useAsTitle: 'title',
+    group: 'Softball',
     hideAPIURL: !superAdmin,
+    useAsTitle: 'title',
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
@@ -116,10 +117,11 @@ export const Tournaments: CollectionConfig = {
             },
             {
               name: 'teams',
+              label: 'Participating Teams',
               type: 'array',
               admin: {
                 components: {
-                  RowLabel: '@/components/RowLabel/RowLabelForTeam',
+                  RowLabel: '@/collections/Tournaments/RowLabels/RowLabelForTeam',
                 },
               },
               fields: [
@@ -135,6 +137,81 @@ export const Tournaments: CollectionConfig = {
                   type: 'checkbox',
                   label: 'Paid',
                   defaultValue: false,
+                },
+              ],
+            },
+            {
+              name: 'games',
+              type: 'array',
+              fields: [
+                {
+                  name: 'date',
+                  type: 'date',
+                  admin: {
+                    date: {
+                      pickerAppearance: 'dayAndTime',
+                    },
+                  },
+                },
+                {
+                  name: 'opponents',
+                  type: 'array',
+                  maxRows: 2,
+                  minRows: 2,
+                  admin: {
+                    components: {
+                      RowLabel: '@/collections/Tournaments/rowLabels/RowLabelForOpponent',
+                    },
+                  },
+                  validate: (value) => {
+                    if (!Array.isArray(value) || value.length !== 2) return true
+                    const hasHome = value.some(
+                      (v: { location?: 'home' | 'visitor' }) => v.location === 'home',
+                    )
+                    const hasVisitor = value.some(
+                      (v: { location?: 'home' | 'visitor' }) => v.location === 'visitor',
+                    )
+                    if (!hasHome || !hasVisitor) {
+                      return 'One team must be home and one must be visitor'
+                    }
+                    const bothWinners = value.every(
+                      (v: { isWinner?: boolean }) => v.isWinner === true,
+                    )
+                    if (bothWinners) {
+                      return 'There only can be one winner'
+                    }
+                    return true
+                  },
+                  fields: [
+                    {
+                      name: 'team',
+                      type: 'relationship',
+                      relationTo: 'teams',
+                      hasMany: false,
+                      required: true,
+                    },
+                    {
+                      name: 'location',
+                      type: 'radio',
+                      required: true,
+                      options: [
+                        { label: 'Home (1st base dugout)', value: 'home' },
+                        { label: 'Visitor (3rd base dugout)', value: 'visitor' },
+                      ],
+                      admin: {
+                        description: 'Location determines which dugout the team will use',
+                      },
+                    },
+                    {
+                      name: 'score',
+                      type: 'number',
+                      min: 0,
+                    },
+                    {
+                      name: 'isWinner',
+                      type: 'checkbox',
+                    },
+                  ],
                 },
               ],
             },

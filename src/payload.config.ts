@@ -191,6 +191,9 @@ export default buildConfig({
           update: editorOrHigher,
           read: authenticated,
         },
+        admin: {
+          group: 'Form Builder',
+        },
         hooks: {
           afterChange: [() => revalidatePath('/register')],
         },
@@ -221,6 +224,7 @@ export default buildConfig({
           read: authenticated,
         },
         admin: {
+          group: 'Form Builder',
           useAsTitle: 'title',
         },
         labels: {
@@ -282,6 +286,9 @@ export default buildConfig({
           delete: superAdmin,
           update: superAdmin,
           create: superAdmin,
+        },
+        admin: {
+          group: 'Admin',
         },
         // @ts-expect-error
         fields: ({ defaultFields }) => {

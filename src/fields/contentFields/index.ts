@@ -1,5 +1,4 @@
 import { linkGroup } from '@/fields/link/linkGroup'
-import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor, ParagraphFeature } from '@payloadcms/richtext-lexical'
 import type { Field } from 'payload'
 
 export const contentFields: Field[] = [
