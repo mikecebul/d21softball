@@ -1,9 +1,9 @@
-import { CalendarDays, CheckCircle, DollarSign, MapPin, Trophy, Users } from 'lucide-react'
+'use client'
+
+import { CalendarDays, CheckCircle, MapPin, Trophy, Users } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Tournament } from '@/payload-types'
-import { Button } from '../ui/button'
 import Container from '../Container'
 import RichText from '../RichText'
 import { format } from 'date-fns'
@@ -18,6 +18,8 @@ import {
 import Image from 'next/image'
 import { RegisterButton } from './RegisterButton'
 import { cn } from '@/utilities/cn'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Button } from '../ui/button'
 
 const images = [
   {
@@ -37,6 +39,21 @@ const images = [
 ]
 
 export default function TournamentDetails(details: Tournament) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab') || 'info'
+
+  const handleTabChange = (value: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set('tab', value)
+    router.replace(`?${params.toString()}`, { scroll: false })
+  }
+
+  const handlePayment = (teamName: string) => {
+    console.log(`Forwarding to Stripe Checkout for team: ${teamName}`)
+    alert(`Redirecting to Stripe Checkout for ${teamName}`)
+  }
+
   return (
     <Container className="mx-auto max-w-5xl pb-24 pt-12">
       <div className="py-8 sm:py-12">
@@ -55,7 +72,7 @@ export default function TournamentDetails(details: Tournament) {
           </div>
         </div>
       </div>
-      <Tabs defaultValue="info" className="space-y-6">
+      <Tabs defaultValue={tab} className="space-y-6" onValueChange={handleTabChange}>
         <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
           <TabsTrigger value="info">Tournament Info</TabsTrigger>
           <TabsTrigger value="results">Results</TabsTrigger>
@@ -114,28 +131,38 @@ export default function TournamentDetails(details: Tournament) {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {details.teams?.map(({ team, isPaid }) => {
-                    if (typeof team === 'string') return null
-                    return (
-                      <li
-                        key={team.id}
-                        className="flex items-center justify-between text-pretty rounded-lg bg-brand-secondary p-3 transition-colors hover:bg-brand-secondary/90"
-                      >
-                        <span className="font-medium text-primary-foreground">
-                          {team.title}
-                          {team.city ? <p>{team.city}</p> : null}
-                        </span>
-                        {isPaid ? (
-                          <span className="flex items-center rounded-full bg-green-500 px-3 py-1 text-sm font-medium text-white">
-                            <CheckCircle className="mr-1 h-4 w-4" />
-                            Paid
+                  {details.teams && details.teams.length > 1 ? (
+                    details.teams?.map(({ team, isPaid }) => {
+                      if (typeof team === 'string') return null
+                      return (
+                        <li
+                          key={team.id}
+                          className="flex items-center justify-between text-pretty rounded-lg bg-brand-secondary p-3 transition-colors hover:bg-brand-secondary/90"
+                        >
+                          <span className="font-medium text-primary-foreground">
+                            {team.title}
+                            {team.city ? <p>{team.city}</p> : null}
                           </span>
-                        ) : (
-                          <RegisterButton teamName={team.title} />
-                        )}
-                      </li>
-                    )
-                  })}
+                          {isPaid ? (
+                            <span className="flex items-center rounded-full bg-green-500 px-3 py-1 text-sm font-medium text-white">
+                              <CheckCircle className="mr-1 h-4 w-4" />
+                              Paid
+                            </span>
+                          ) : (
+                            <Button
+                              onClick={() => handlePayment(team.title)}
+                              variant="brand"
+                              size="fit"
+                            >
+                              Pay ${details.price}
+                            </Button>
+                          )}
+                        </li>
+                      )
+                    })
+                  ) : (
+                    <p className="text-xl text-muted-foreground">TBD</p>
+                  )}
                 </ul>
               </CardContent>
             </Card>

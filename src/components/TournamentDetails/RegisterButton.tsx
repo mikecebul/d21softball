@@ -3,7 +3,7 @@
 import { DollarSign } from 'lucide-react'
 import { Button } from '../ui/button'
 
-export const RegisterButton = ({ teamName }: { teamName: string }) => {
+export const RegisterButton = ({ teamName, price }: { teamName: string; price: number }) => {
   const handlePayment = (teamName: string) => {
     console.log(`Forwarding to Stripe Checkout for team: ${teamName}`)
     alert(`Redirecting to Stripe Checkout for ${teamName}`)
@@ -11,8 +11,7 @@ export const RegisterButton = ({ teamName }: { teamName: string }) => {
 
   return (
     <Button onClick={() => handlePayment(teamName)} variant="brand" size="fit">
-      <DollarSign className="mr-1 h-4 w-4" />
-      Pay $500
+      Pay ${price}
     </Button>
   )
 }
