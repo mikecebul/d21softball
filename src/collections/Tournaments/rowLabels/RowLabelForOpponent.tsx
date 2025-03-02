@@ -28,7 +28,6 @@ const RowLabelForOpponent = () => {
       <span className="font-medium">{teamData.title}</span>
       <span className="text-muted-foreground">({data.location})</span>
       {typeof data.score === 'number' && <span className="font-bold">{data.score}</span>}
-      {data.isWinner && <Trophy className="h-4 w-4 text-yellow-500" />}
     </div>
   )
 }

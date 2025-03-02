@@ -33,7 +33,6 @@ import { SuperscriptFeatureClient as SuperscriptFeatureClient_e70f5e05f09f93e00b
 import { SubscriptFeatureClient as SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_a53036ea82309f27b6595032712fef62 } from '@/collections/Tournaments/RowLabels/RowLabelForTeam'
-import { default as default_72ca579dbd37c390fc0522105986e50e } from '@/collections/Tournaments/rowLabels/RowLabelForOpponent'
 import { default as default_f4047b1a8a90d344d3f09d570ca929c0 } from '@/collections/Users/RoleCell'
 import { RoleSelectClient as RoleSelectClient_1e331338c38abbd719becfa9518165eb } from '@/collections/Users/RoleSelect.client'
 import { DynamicFieldSelector as DynamicFieldSelector_fcc98597230ed7571a28f97c55b16e63 } from '@payloadcms/plugin-form-builder/client'
@@ -80,7 +79,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#SubscriptFeatureClient": SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#StrikethroughFeatureClient": StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/collections/Tournaments/RowLabels/RowLabelForTeam#default": default_a53036ea82309f27b6595032712fef62,
-  "@/collections/Tournaments/rowLabels/RowLabelForOpponent#default": default_72ca579dbd37c390fc0522105986e50e,
   "@/collections/Users/RoleCell#default": default_f4047b1a8a90d344d3f09d570ca929c0,
   "@/collections/Users/RoleSelect.client#RoleSelectClient": RoleSelectClient_1e331338c38abbd719becfa9518165eb,
   "@payloadcms/plugin-form-builder/client#DynamicFieldSelector": DynamicFieldSelector_fcc98597230ed7571a28f97c55b16e63,

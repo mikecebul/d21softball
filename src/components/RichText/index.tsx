@@ -37,7 +37,7 @@ const RichText: React.FC<Props> = ({
         !Array.isArray(content) &&
         typeof content === 'object' &&
         'root' in content &&
-        serializeLexical({ nodes: content?.root?.children, variant })}
+        serializeLexical({ nodes: content?.root?.children })}
     </div>
   )
 }

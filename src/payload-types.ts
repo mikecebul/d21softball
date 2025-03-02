@@ -902,21 +902,70 @@ export interface Tournament {
   games?:
     | {
         date?: string | null;
-        opponents?:
-          | {
-              team: string | Team;
-              /**
-               * Location determines which dugout the team will use
-               */
-              location: 'home' | 'visitor';
-              score?: number | null;
-              isWinner?: boolean | null;
-              id?: string | null;
-            }[]
-          | null;
+        homeTeam: {
+          team: string | Team;
+          /**
+           * Home team score
+           */
+          score?: number | null;
+        };
+        visitorTeam: {
+          team: string | Team;
+          /**
+           * Visitor team score
+           */
+          score?: number | null;
+        };
+        highlights?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         id?: string | null;
       }[]
     | null;
+  results?: {
+    standings?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    awards?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
   meta?: {
     hideFromSearchEngines?: boolean | null;
     metadata?: {
@@ -944,9 +993,10 @@ export interface Team {
   title: string;
   city?: string | null;
   tournaments?: {
-    docs?: (string | Tournament)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Tournament)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1518,16 +1568,26 @@ export interface TournamentsSelect<T extends boolean = true> {
     | T
     | {
         date?: T;
-        opponents?:
+        homeTeam?:
           | T
           | {
               team?: T;
-              location?: T;
               score?: T;
-              isWinner?: T;
-              id?: T;
             };
+        visitorTeam?:
+          | T
+          | {
+              team?: T;
+              score?: T;
+            };
+        highlights?: T;
         id?: T;
+      };
+  results?:
+    | T
+    | {
+        standings?: T;
+        awards?: T;
       };
   meta?:
     | T

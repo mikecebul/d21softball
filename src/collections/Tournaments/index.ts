@@ -16,7 +16,6 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { baseUrl } from '@/utilities/baseUrl'
-import { Tournament } from '@/payload-types'
 
 export const Tournaments: CollectionConfig = {
   slug: 'tournaments',
@@ -140,6 +139,11 @@ export const Tournaments: CollectionConfig = {
                 },
               ],
             },
+          ],
+        },
+        {
+          label: 'Games',
+          fields: [
             {
               name: 'games',
               type: 'array',
@@ -154,34 +158,8 @@ export const Tournaments: CollectionConfig = {
                   },
                 },
                 {
-                  name: 'opponents',
-                  type: 'array',
-                  maxRows: 2,
-                  minRows: 2,
-                  admin: {
-                    components: {
-                      RowLabel: '@/collections/Tournaments/rowLabels/RowLabelForOpponent',
-                    },
-                  },
-                  validate: (value) => {
-                    if (!Array.isArray(value) || value.length !== 2) return true
-                    const hasHome = value.some(
-                      (v: { location?: 'home' | 'visitor' }) => v.location === 'home',
-                    )
-                    const hasVisitor = value.some(
-                      (v: { location?: 'home' | 'visitor' }) => v.location === 'visitor',
-                    )
-                    if (!hasHome || !hasVisitor) {
-                      return 'One team must be home and one must be visitor'
-                    }
-                    const bothWinners = value.every(
-                      (v: { isWinner?: boolean }) => v.isWinner === true,
-                    )
-                    if (bothWinners) {
-                      return 'There only can be one winner'
-                    }
-                    return true
-                  },
+                  name: 'homeTeam',
+                  type: 'group',
                   fields: [
                     {
                       name: 'team',
@@ -189,31 +167,77 @@ export const Tournaments: CollectionConfig = {
                       relationTo: 'teams',
                       hasMany: false,
                       required: true,
-                    },
-                    {
-                      name: 'location',
-                      type: 'radio',
-                      required: true,
-                      options: [
-                        { label: 'Home (1st base dugout)', value: 'home' },
-                        { label: 'Visitor (3rd base dugout)', value: 'visitor' },
-                      ],
-                      admin: {
-                        description: 'Location determines which dugout the team will use',
+                      filterOptions: ({ data }) => {
+                        // Get the list of participating team IDs from the tournament
+                        const participatingTeamIds = data?.teams?.map((t) => t.team) || []
+                        return {
+                          id: {
+                            in: participatingTeamIds,
+                          },
+                        }
                       },
                     },
                     {
                       name: 'score',
                       type: 'number',
                       min: 0,
-                    },
-                    {
-                      name: 'isWinner',
-                      type: 'checkbox',
+                      admin: {
+                        description: 'Home team score',
+                      },
                     },
                   ],
                 },
+                {
+                  name: 'visitorTeam',
+                  type: 'group',
+                  fields: [
+                    {
+                      name: 'team',
+                      type: 'relationship',
+                      relationTo: 'teams',
+                      hasMany: false,
+                      required: true,
+                      filterOptions: ({ data }) => {
+                        // Get the list of participating team IDs from the tournament
+                        const participatingTeamIds = data?.teams?.map((t) => t.team) || []
+
+                        return {
+                          id: {
+                            in: participatingTeamIds,
+                          },
+                        }
+                      },
+                    },
+                    {
+                      name: 'score',
+                      type: 'number',
+                      min: 0,
+                      admin: {
+                        description: 'Visitor team score',
+                      },
+                    },
+                  ],
+                },
+                {
+                  name: 'highlights',
+                  type: 'richText',
+                  label: 'Game Highlights',
+                },
               ],
+            },
+          ],
+        },
+        {
+          name: 'results',
+          label: 'Tournament Results',
+          fields: [
+            {
+              name: 'standings',
+              type: 'richText',
+            },
+            {
+              name: 'awards',
+              type: 'richText',
             },
           ],
         },

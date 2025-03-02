@@ -20,6 +20,8 @@ import { cn } from '@/utilities/cn'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { Button } from '../ui/button'
 import { useEffect, useState } from 'react'
+import { Separator } from '../ui/separator'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordian'
 
 const images = [
   {
@@ -90,7 +92,7 @@ export default function TournamentDetails(details: Tournament) {
       <Tabs value={activeTab} className="space-y-6" onValueChange={handleTabChange}>
         <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
           <TabsTrigger value="info">Tournament Info</TabsTrigger>
-          <TabsTrigger value="results">Results</TabsTrigger>
+          <TabsTrigger value="games">Games</TabsTrigger>
           <TabsTrigger value="gallery">Gallery</TabsTrigger>
         </TabsList>
 
@@ -194,62 +196,78 @@ export default function TournamentDetails(details: Tournament) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="results">
+        <TabsContent value="games">
           <Card>
             <CardHeader>
-              <CardTitle>Tournament Results</CardTitle>
+              <CardTitle>Games</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {details.games?.map((game, index) => {
-                const homeTeam = game.opponents?.find((team) => team.location === 'home')
-                const visitorTeam = game.opponents?.find((team) => team.location === 'visitor')
-
-                return (
-                  <div key={game.id} className="rounded-lg border p-4">
-                    <div className="mb-2 flex items-center justify-between">
-                      <span className="font-semibold">Game {index + 1}</span>
-                      <span className="text-sm text-muted-foreground">
-                        {game.date ? format(new Date(game.date), 'MMM d, h:mm a') : 'TBD'}
+              {details.games?.map(({ id, date, homeTeam, visitorTeam, highlights }, index) => (
+                <div key={id} className="rounded-lg border p-4">
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="font-semibold">Game {index + 1}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {date ? format(new Date(date), 'MMM d, h:mm a') : 'TBD'}
+                    </span>
+                  </div>
+                  <div className="flex items-end gap-4 space-y-3 lg:gap-8">
+                    <div className="flex flex-1 flex-col items-center justify-between gap-4 rounded-md bg-muted/50 p-3">
+                      <span className="text-pretty text-center font-semibold leading-5 lg:text-lg">
+                        {typeof homeTeam?.team === 'object' ? homeTeam.team.title : 'TBD'}
                       </span>
+                      {homeTeam?.score !== undefined && (
+                        <span
+                          className={cn(
+                            'text-lg font-semibold lg:mt-2',
+                            homeTeam.score &&
+                              visitorTeam.score &&
+                              homeTeam.score > visitorTeam.score &&
+                              'text-green-600',
+                          )}
+                        >
+                          {homeTeam.score}
+                        </span>
+                      )}
                     </div>
-                    <div className="space-y-3 lg:flex lg:items-center lg:gap-4 lg:space-y-0">
-                      <div className="flex flex-1 items-center justify-between gap-4 rounded-md bg-muted/50 p-3 lg:flex-col lg:items-center">
-                        <span className="font-medium">
-                          {typeof homeTeam?.team === 'object' ? homeTeam.team.title : 'TBD'}
-                        </span>
-                        {homeTeam?.score !== undefined && (
-                          <span
-                            className={cn(
-                              'text-lg font-bold lg:mt-2',
-                              homeTeam.isWinner && 'text-green-600',
-                            )}
-                          >
-                            {homeTeam.score}
-                          </span>
-                        )}
-                      </div>
-                      <span className="block text-center text-sm font-medium text-muted-foreground lg:text-base">
-                        VS
+                    <div className="flex flex-1 flex-col items-center justify-between gap-4 rounded-md bg-muted/50 p-3">
+                      <span className="text-pretty text-center font-semibold leading-5 lg:text-lg">
+                        {typeof visitorTeam?.team === 'object' ? visitorTeam.team.title : 'TBD'}
                       </span>
-                      <div className="flex flex-1 items-center justify-between gap-4 rounded-md bg-muted/50 p-3 lg:flex-col lg:items-center">
-                        <span className="font-medium">
-                          {typeof visitorTeam?.team === 'object' ? visitorTeam.team.title : 'TBD'}
+                      {visitorTeam?.score !== undefined && (
+                        <span
+                          className={cn(
+                            'text-lg font-semibold lg:mt-2',
+                            homeTeam.score &&
+                              visitorTeam.score &&
+                              homeTeam.score < visitorTeam.score &&
+                              'text-green-600',
+                          )}
+                        >
+                          {visitorTeam.score}
                         </span>
-                        {visitorTeam?.score !== undefined && (
-                          <span
-                            className={cn(
-                              'text-lg font-bold lg:mt-2',
-                              visitorTeam.isWinner && 'text-green-600',
-                            )}
-                          >
-                            {visitorTeam.score}
-                          </span>
-                        )}
-                      </div>
+                      )}
                     </div>
                   </div>
-                )
-              })}
+                  <div className="-mt-6 block text-center text-sm font-medium text-muted-foreground lg:text-base">
+                    VS
+                  </div>
+                  <div>
+                    {highlights ? (
+                      <>
+                        <Separator className="my-4" />
+                        <Accordion type="single" collapsible>
+                          <AccordionItem value="item-1" className="border-none">
+                            <AccordionTrigger>View Highlights</AccordionTrigger>
+                            <AccordionContent>
+                              <RichText content={highlights} enableProse={false} />
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </TabsContent>
