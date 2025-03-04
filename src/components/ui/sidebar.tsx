@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/sheet'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { CompanyInfo, Header } from '@/payload-types'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -149,11 +150,15 @@ function Sidebar({
   collapsible = 'offcanvas',
   className,
   children,
+  contact,
+  navItems,
   ...props
 }: React.ComponentProps<'div'> & {
   side?: 'left' | 'right'
   variant?: 'sidebar' | 'floating' | 'inset'
   collapsible?: 'offcanvas' | 'icon' | 'none'
+  contact?: CompanyInfo['contact']
+  navItems: Header['navItems']
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
 
@@ -291,15 +296,17 @@ function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {
 
 function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
   return (
-    <main
-      data-slot="sidebar-inset"
-      className={cn(
-        'bg-background relative flex w-full flex-1 flex-col',
-        'md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
-        className,
-      )}
-      {...props}
-    />
+    <>
+      <main
+        data-slot="sidebar-inset"
+        className={cn(
+          'bg-background relative flex w-full flex-1 flex-col',
+          'md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
+          className,
+        )}
+        {...props}
+      />
+    </>
   )
 }
 

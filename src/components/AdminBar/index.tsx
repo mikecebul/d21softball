@@ -8,6 +8,7 @@ import { PayloadAdminBar } from 'payload-admin-bar'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { baseUrl } from '@/utilities/baseUrl'
+import Container from '../Container'
 
 const collectionLabels = {
   pages: {
@@ -41,12 +42,12 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn('py-2 bg-black text-white', {
+      className={cn('bg-black py-2 text-white', {
         block: show,
         hidden: !show,
       })}
     >
-      <div className="container">
+      <Container>
         <PayloadAdminBar
           {...adminBarProps}
           className="py-2 text-white"
@@ -76,7 +77,7 @@ export const AdminBar: React.FC<{
             zIndex: 'unset',
           }}
         />
-      </div>
+      </Container>
     </div>
   )
 }
