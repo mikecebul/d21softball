@@ -22,6 +22,7 @@ import { revalidateDelete } from './hooks/revalidateDelete'
 import { editorOrHigher } from '@/access/editorOrHigher'
 import { HeroLayout } from '@/blocks/layouts/HeroLayout/config'
 import { TournamentsPage } from '@/blocks/TournamentsPage/config'
+import { FormConfig } from '@/blocks/Form/formConfig'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -61,7 +62,14 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [HeroLayout, TwoColumnLayout, MultiRowLayout, Links, TournamentsPage],
+              blocks: [
+                HeroLayout,
+                TwoColumnLayout,
+                MultiRowLayout,
+                Links,
+                TournamentsPage,
+                FormConfig,
+              ],
               required: true,
             },
           ],

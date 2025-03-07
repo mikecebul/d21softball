@@ -14,6 +14,7 @@ import { ParagraphFeatureClient as ParagraphFeatureClient_e70f5e05f09f93e00b997e
 import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { FixedToolbarFeatureClient as FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_408b2ce35de6900fd0448b93f24844c8 } from '@/components/RowLabel/RowLabelWithTitle'
+import { default as default_5f40f342efab5525218eed7dec93f5fb } from '@/blocks/Form/FormLabel'
 import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -32,11 +33,9 @@ import { InlineCodeFeatureClient as InlineCodeFeatureClient_e70f5e05f09f93e00b99
 import { SuperscriptFeatureClient as SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { SubscriptFeatureClient as SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { default as default_a53036ea82309f27b6595032712fef62 } from '@/collections/Tournaments/RowLabels/RowLabelForTeam'
+import { default as default_d77f69f8f4b4395e097a6b04b089bee2 } from '@/collections/Tournaments/rowLabels/RowLabelForTeam'
 import { default as default_f4047b1a8a90d344d3f09d570ca929c0 } from '@/collections/Users/RoleCell'
 import { RoleSelectClient as RoleSelectClient_1e331338c38abbd719becfa9518165eb } from '@/collections/Users/RoleSelect.client'
-import { DynamicFieldSelector as DynamicFieldSelector_fcc98597230ed7571a28f97c55b16e63 } from '@payloadcms/plugin-form-builder/client'
-import { DynamicPriceSelector as DynamicPriceSelector_fcc98597230ed7571a28f97c55b16e63 } from '@payloadcms/plugin-form-builder/client'
 import { default as default_f7e72fa773e9b4414610130d772b9a9e } from '@/plugins/form-builder/FormData'
 import { default as default_9734ea5d74b781c5b6e952c2aa41414f } from '@/globals/CompanyInfo/SocialRowLabel'
 import { default as default_3ffd8082d3e9477cf001d7760082c496 } from '@/globals/CompanyInfo/HoursRowLabel'
@@ -60,6 +59,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#InlineToolbarFeatureClient": InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#FixedToolbarFeatureClient": FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/RowLabel/RowLabelWithTitle#default": default_408b2ce35de6900fd0448b93f24844c8,
+  "@/blocks/Form/FormLabel#default": default_5f40f342efab5525218eed7dec93f5fb,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
@@ -78,11 +78,9 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#SuperscriptFeatureClient": SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#SubscriptFeatureClient": SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#StrikethroughFeatureClient": StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "@/collections/Tournaments/RowLabels/RowLabelForTeam#default": default_a53036ea82309f27b6595032712fef62,
+  "@/collections/Tournaments/rowLabels/RowLabelForTeam#default": default_d77f69f8f4b4395e097a6b04b089bee2,
   "@/collections/Users/RoleCell#default": default_f4047b1a8a90d344d3f09d570ca929c0,
   "@/collections/Users/RoleSelect.client#RoleSelectClient": RoleSelectClient_1e331338c38abbd719becfa9518165eb,
-  "@payloadcms/plugin-form-builder/client#DynamicFieldSelector": DynamicFieldSelector_fcc98597230ed7571a28f97c55b16e63,
-  "@payloadcms/plugin-form-builder/client#DynamicPriceSelector": DynamicPriceSelector_fcc98597230ed7571a28f97c55b16e63,
   "@/plugins/form-builder/FormData#default": default_f7e72fa773e9b4414610130d772b9a9e,
   "@/globals/CompanyInfo/SocialRowLabel#default": default_9734ea5d74b781c5b6e952c2aa41414f,
   "@/globals/CompanyInfo/HoursRowLabel#default": default_3ffd8082d3e9477cf001d7760082c496,

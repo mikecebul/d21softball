@@ -24,6 +24,7 @@ import { UpdateCardsBlock } from './Cards/UpdateCards/Component'
 import { SponsorCardsBlock } from './Cards/SponsorCards/Component'
 import { ResourceCardsBlock } from './Cards/ResourceCards/Component'
 import { UpdateSectionBlock } from './UpdateSection/Component'
+import { RegisterForm } from './Form/FormComponent'
 
 const blockComponents = {
   richText: RichTextBlock,
@@ -42,15 +43,16 @@ const blockComponents = {
   updateCards: UpdateCardsBlock,
   sponsorCards: SponsorCardsBlock,
   updateSection: UpdateSectionBlock,
+  formConfig: RegisterForm,
 }
 
 export const RenderBlocks: React.FC<{
   blocks:
-  | Page['layout'][number][]
-  | TwoColumnLayoutBlockType['columns']
-  | UpdateSectionType
-  | MultiRowLayoutBlockType['blocks']
-  | HeroLayoutBlockType['blocks']
+    | Page['layout'][number][]
+    | TwoColumnLayoutBlockType['columns']
+    | UpdateSectionType
+    | MultiRowLayoutBlockType['blocks']
+    | HeroLayoutBlockType['blocks']
   nested?: boolean
 }> = (props) => {
   const { blocks, nested = false } = props

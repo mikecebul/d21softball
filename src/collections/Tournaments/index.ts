@@ -120,7 +120,7 @@ export const Tournaments: CollectionConfig = {
               type: 'array',
               admin: {
                 components: {
-                  RowLabel: '@/collections/Tournaments/RowLabels/RowLabelForTeam',
+                  RowLabel: '@/collections/Tournaments/rowLabels/RowLabelForTeam',
                 },
               },
               fields: [

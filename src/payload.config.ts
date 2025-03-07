@@ -22,7 +22,7 @@ import {
 import sharp from 'sharp' // editor-import
 import { UnderlineFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, Field } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { Pages } from './collections/Pages'
@@ -50,6 +50,7 @@ import { Resources } from './collections/Resources'
 import { Sponsors } from './collections/Sponsors'
 import { defaultLexical } from './fields/defaultLexical'
 import { Teams } from './collections/Teams'
+import { SelectField } from '@payloadcms/plugin-form-builder/types'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -197,23 +198,24 @@ export default buildConfig({
         hooks: {
           afterChange: [() => revalidatePath('/register')],
         },
-        fields: ({ defaultFields }) => [
-          ...defaultFields.map((field) => {
-            if ('name' in field && field.name === 'confirmationMessage') {
-              return {
-                ...field,
-                editor: lexicalEditor({
-                  features: ({ defaultFeatures }) => [
-                    ...defaultFeatures,
-                    FixedToolbarFeature(),
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                  ],
-                }),
-              }
-            }
-            return field
-          }),
-        ],
+        fields: ({ defaultFields }) => {
+          const titleField = defaultFields.find((field) =>
+            'name' in field && field.name === 'title' ? field : null,
+          )
+          const formField: Field = {
+            name: 'form',
+            type: 'select',
+            defaultValue: 'contact',
+            options: [
+              { label: 'Contact', value: 'contact' },
+              { label: 'Register', value: 'register' },
+            ],
+          }
+          const rest = defaultFields.filter((field) =>
+            'name' in field ? field.name !== 'title' && field.name !== 'fields' : true,
+          )
+          return [...(titleField ? [titleField] : []), formField, ...rest]
+        },
       },
       formSubmissionOverrides: {
         access: {

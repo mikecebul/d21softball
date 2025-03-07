@@ -80,7 +80,7 @@ const Sidebar = ({
             preview: draft,
           }}
         />
-        <Container>
+        <div className="animate-fadeIn max-w-full overflow-clip px-4 md:px-8 2xl:container">
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2">
               <SidebarTrigger className="-ml-1" />
@@ -98,7 +98,7 @@ const Sidebar = ({
               </Breadcrumb>
             </div>
           </header>
-        </Container>
+        </div>
         {children}
       </SidebarInset>
     </SidebarProvider>
