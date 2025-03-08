@@ -382,7 +382,6 @@ export interface Form {
   id: string;
   title: string;
   form?: ('contact' | 'register') | null;
-  submitButtonLabel?: string | null;
   /**
    * Choose whether to display an on-page message or redirect to a different page after they submit the form.
    */
@@ -1533,7 +1532,6 @@ export interface UsersSelect<T extends boolean = true> {
 export interface FormsSelect<T extends boolean = true> {
   title?: T;
   form?: T;
-  submitButtonLabel?: T;
   confirmationType?: T;
   confirmationMessage?: T;
   redirect?:

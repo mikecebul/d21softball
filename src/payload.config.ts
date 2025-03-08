@@ -6,21 +6,7 @@ import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { S3_PLUGIN_CONFIG } from './plugins/s3'
-import {
-  BoldFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  ItalicFeature,
-  LinkFeature,
-  UnorderedListFeature,
-  OrderedListFeature,
-  lexicalEditor,
-  BlocksFeature,
-  ParagraphFeature,
-} from '@payloadcms/richtext-lexical'
 import sharp from 'sharp' // editor-import
-import { UnderlineFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig, Field } from 'payload'
 import { fileURLToPath } from 'url'
@@ -50,7 +36,8 @@ import { Resources } from './collections/Resources'
 import { Sponsors } from './collections/Sponsors'
 import { defaultLexical } from './fields/defaultLexical'
 import { Teams } from './collections/Teams'
-import { SelectField } from '@payloadcms/plugin-form-builder/types'
+import { render } from '@react-email/render'
+import FormSubmissionEmail from './emails/notification'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -147,42 +134,27 @@ export default buildConfig({
       logs: false,
     }),
     formBuilderPlugin({
-      defaultToEmail: 'info@cvxjrgolf.org',
-      fields: {
-        array: ArrayBlock,
-        dateOfBirth: DateOfBirth,
-        payment: true,
-      },
-      beforeEmail: (emailsToSend, beforeChangeParams) => {
+      defaultToEmail: 'info@d21softball.org',
+      beforeEmail: async (emailsToSend, beforeChangeParams) => {
         const { data } = beforeChangeParams
         const formData = data.submissionData as Record<string, any[]>
 
-        let additionalContent = '<hr style="margin: 30px 0; border: 1px solid #eee;">'
-        additionalContent += '<h2 style="color: #333;">Registration Details</h2>'
-
-        const arrayFields = Object.entries(formData).filter(([_, value]) => Array.isArray(value))
-
-        arrayFields.forEach(([fieldName, items]) => {
-          additionalContent += `<h3 style="margin-top: 20px; color: #333;">${fieldName.toUpperCase()}</h3>`
-
-          items.forEach((item, index) => {
-            additionalContent += `<div style="margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 4px;">`
-            Object.entries(item).forEach(([key, value]) => {
-              const formattedKey = key
-                .split(/(?=[A-Z])|_|\s/)
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ')
-              additionalContent += `<p><strong>${formattedKey}:</strong> ${value}</p>`
-            })
-            additionalContent += '</div>'
+        const promises = emailsToSend.map(async (email) => {
+          const emailComponent = FormSubmissionEmail({
+            username: 'Admin',
+            formData: formData,
+            title: data.title,
           })
+
+          // Render React component to HTML string
+          const html = await render(emailComponent)
+          email.html = html
+
+          return email
         })
 
-        emailsToSend.forEach((email) => {
-          email.html = `${email.html || ''}${additionalContent}`
-        })
-
-        return emailsToSend
+        // Wait for all emails to be processed
+        return Promise.all(promises)
       },
       formOverrides: {
         access: {
@@ -211,8 +183,12 @@ export default buildConfig({
               { label: 'Register', value: 'register' },
             ],
           }
-          const rest = defaultFields.filter((field) =>
-            'name' in field ? field.name !== 'title' && field.name !== 'fields' : true,
+          const rest = defaultFields.filter(
+            (field) =>
+              'name' in field &&
+              field.name !== 'title' &&
+              field.name !== 'fields' &&
+              field.name !== 'submitButtonLabel',
           )
           return [...(titleField ? [titleField] : []), formField, ...rest]
         },
