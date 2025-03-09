@@ -1,45 +1,29 @@
 services:
-  payload:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - ENV_FILE=.env.docker
-    restart: always
-    ports:
-      - '3000:3000'
-    volumes:
-      - payload-public:/app/public
-    networks:
-      - app-network
-    depends_on:
-      mongo:
-        condition: service_healthy
-    environment:
-      - NODE_ENV=production
-    env_file: .env.docker
-
-  # Ensure your DATABASE_URI uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
   mongo:
-    image: mongo:latest
+    image: mongo
+    container_name: mongo-payload
+    restart: unless-stopped
     ports:
-      - '27017:27017'
-    command:
-      - --storageEngine=wiredTiger
+      - "27017:27017"
     volumes:
-      - mongo-data:/data/db
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - mongo_data:/data/db
+    command: mongod --bind_ip_all --quiet
+
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
 volumes:
-  mongo-data:
-  payload-public:
-
-networks:
-  app-network:
-    driver: bridge
+  mongo_data:
+    driver: local

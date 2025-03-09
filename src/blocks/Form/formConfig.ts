@@ -2,16 +2,13 @@ import { Block } from 'payload'
 
 export const FormConfig: Block = {
   slug: 'formConfig',
-  interfaceName: 'FormConfigBlock',
+  interfaceName: 'FormConfigType',
   fields: [
     {
-      name: 'label',
-      type: 'ui',
-      admin: {
-        components: {
-          Field: '@/blocks/Form/FormLabel',
-        },
-      },
+      name: 'form',
+      type: 'relationship',
+      relationTo: 'forms',
+      required: true,
     },
   ],
 }

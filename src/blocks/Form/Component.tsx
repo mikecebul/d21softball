@@ -15,13 +15,11 @@ import { baseUrl } from '@/utilities/baseUrl'
 import { Card } from '@/components/ui/card'
 import { format } from 'date-fns'
 
-export type Value = unknown
-
 export interface Property {
-  [key: string]: Value
+  [key: string]: unknown
 }
 
-interface FormData {
+export interface FormData {
   parents: Array<{
     firstName: string
     lastName: string

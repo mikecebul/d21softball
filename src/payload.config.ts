@@ -2,6 +2,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { imageSearchPlugin } from '@payload-bites/image-search'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
@@ -22,9 +23,7 @@ import { CompanyInfo } from './globals/CompanyInfo/config'
 import { superAdmin } from './access/superAdmin'
 import { Tournaments } from './collections/Tournaments'
 import { Media } from './collections/Media'
-import { MediaBlock } from './blocks/MediaBlock/config'
 import { baseUrl } from './utilities/baseUrl'
-import { ArrayBlock, DateOfBirth } from './blocks/Form/blocks'
 import { checkoutSessionCompleted } from './plugins/stripe/webhooks/checkoutSessionCompleted'
 import { revalidatePath } from 'next/cache'
 import { editorOrHigher } from './access/editorOrHigher'
@@ -108,18 +107,18 @@ export default buildConfig({
   collections: [Pages, Updates, Resources, Sponsors, Tournaments, Teams, Media, Users],
   cors: [baseUrl].filter(Boolean),
   csrf: [baseUrl].filter(Boolean),
-  // email: nodemailerAdapter({
-  //   defaultFromAddress: process.env.EMAIL_SMTP_USER || 'website@d21softball.org',
-  //   defaultFromName: 'D21 Softball',
-  //   transportOptions: {
-  //     host: process.env.EMAIL_SMTP_HOST,
-  //     port: process.env.EMAIL_SMTP_PORT,
-  //     auth: {
-  //       user: process.env.EMAIL_SMTP_USER,
-  //       pass: process.env.EMAIL_SMTP_PASS,
-  //     },
-  //   },
-  // }),
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.EMAIL_SMTP_USER || 'website@d21softball.org',
+    defaultFromName: 'D21 Softball',
+    transportOptions: {
+      host: process.env.EMAIL_SMTP_HOST,
+      port: process.env.EMAIL_SMTP_PORT,
+      auth: {
+        user: process.env.EMAIL_SMTP_USER,
+        pass: process.env.EMAIL_SMTP_PASS,
+      },
+    },
+  }),
   endpoints: [],
   globals: [Header, Footer, CompanyInfo],
   plugins: [
@@ -137,13 +136,11 @@ export default buildConfig({
       defaultToEmail: 'info@d21softball.org',
       beforeEmail: async (emailsToSend, beforeChangeParams) => {
         const { data } = beforeChangeParams
-        const formData = data.submissionData as Record<string, any[]>
 
         const promises = emailsToSend.map(async (email) => {
           const emailComponent = FormSubmissionEmail({
-            username: 'Admin',
-            formData: formData,
-            title: data.title,
+            email: data.email,
+            name: data.name,
           })
 
           // Render React component to HTML string
@@ -205,10 +202,6 @@ export default buildConfig({
           group: 'Form Builder',
           useAsTitle: 'title',
         },
-        labels: {
-          singular: 'Registration',
-          plural: 'Registrations',
-        },
         fields: ({ defaultFields }) => {
           const formField = defaultFields.find((field) => 'name' in field && field.name === 'form')
 
@@ -226,30 +219,6 @@ export default buildConfig({
                   Field: '@/plugins/form-builder/FormData',
                 },
               },
-            },
-            {
-              name: 'payment',
-              type: 'group',
-              admin: {
-                position: 'sidebar',
-              },
-              fields: [
-                {
-                  name: 'amount',
-                  type: 'number',
-                },
-                {
-                  name: 'status',
-                  type: 'select',
-                  defaultValue: 'pending',
-                  options: [
-                    { label: 'Pending', value: 'pending' },
-                    { label: 'Paid', value: 'paid' },
-                    { label: 'Cancelled', value: 'cancelled' },
-                    { label: 'Refunded', value: 'refunded' },
-                  ],
-                },
-              ],
             },
           ]
         },

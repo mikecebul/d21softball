@@ -1,3 +1,4 @@
+import { FormValues } from '@/blocks/Form/FormComponent'
 import { baseUrl as importedBaseUrl } from '@/utilities/baseUrl'
 import {
   Body,
@@ -12,25 +13,15 @@ import {
 } from '@react-email/components'
 import * as React from 'react'
 
-interface FormSubmissionEmailProps {
-  username?: string
-  formData?: Record<string, any[]>
-  title?: string
-}
-
 const baseUrl = importedBaseUrl ?? 'http://localhost:3000'
 
-export const FormSubmissionEmail = ({
-  username = 'Admin',
-  formData,
-  title,
-}: FormSubmissionEmailProps) => (
+export const FormSubmissionEmail = ({ email, name }: FormValues) => (
   <Html>
     <Head />
     <Body style={main}>
-      <Preview>New form submission: {title ?? "undefined"}</Preview>
+      <Preview>New form submission: {name ?? 'undefined'}</Preview>
       <Container style={container}>
-        <div className="flex flex-col items-start">
+        <Section style={logoSection}>
           <Img
             src={`${baseUrl}/header-usa-softball-logo.png`}
             alt="usa softball of michigan logo"
@@ -39,43 +30,18 @@ export const FormSubmissionEmail = ({
             style={logo}
           />
           <p style={logoTitle}>District 21</p>
-        </div>
+        </Section>
 
-        <Text style={formTitle}>New Form Submission: {title ?? "undefined"}</Text>
-
-        <Section style={section}>
-          <Text style={text}>
-            Hey <strong>{username}</strong>!
+        <Section style={listSection}>
+          <Text style={formTitle}>New Form Submission</Text>
+          <Text style={listItem}>
+            <strong>Name:</strong>
+            {` ${name}`}
           </Text>
-          <Text style={text}>A new form submission has been received.</Text>
-
-          {formData &&
-            Object.entries(formData)
-              .filter(([_, value]) => Array.isArray(value))
-              .map(([fieldName, items]) => (
-                <Section key={fieldName} style={listSection}>
-                  <Text style={{ ...text, fontWeight: 'bold' }}>{fieldName.toUpperCase()}</Text>
-                  {items.map((item, index) => (
-                    <div key={index} style={{ marginTop: '12px' }}>
-                      {Object.entries(item).map(([key, value]) => (
-                        <Text key={key} style={list}>
-                          <strong>
-                            {key
-                              .split(/(?=[A-Z])|_|\s/)
-                              .map(
-                                (word) =>
-                                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
-                              )
-                              .join(' ')}
-                          </strong>
-                          : {String(value)}
-                        </Text>
-                      ))}
-                    </div>
-                  ))}
-                </Section>
-              ))}
-
+          <Text style={listItem}>
+            <strong>Email:</strong>
+            {` ${email}`}
+          </Text>
           <Button href={`${baseUrl}/admin/collections/form-submissions`} style={button}>
             View Dashboard
           </Button>
@@ -88,12 +54,9 @@ export const FormSubmissionEmail = ({
 )
 
 FormSubmissionEmail.PreviewProps = {
-  username: 'Scott',
-  details: {
-    email: 'test@mikecebul.dev',
-    name: 'Mike Cebulski',
-  },
-} as FormSubmissionEmailProps
+  email: 'dev@mikecebul.dev',
+  name: 'Mike Cebulski',
+} as FormValues
 
 export default FormSubmissionEmail
 
@@ -110,6 +73,10 @@ const container = {
   padding: '20px 0 48px',
 }
 
+const logoSection = {
+  paddingBottom: '24px',
+}
+
 const logo = {
   height: '32px',
 }
@@ -123,43 +90,35 @@ const logoTitle = {
 }
 
 const formTitle = {
+  margin: '0 0 12px 0',
+  textAlign: 'left' as const,
   fontSize: '24px',
   lineHeight: 1.25,
-}
-
-const section = {
-  padding: '24px',
-  border: 'solid 1px #dedede',
-  borderRadius: '5px',
-  textAlign: 'center' as const,
-}
-
-const text = {
-  margin: '0 0 10px 0',
-  textAlign: 'left' as const,
+  fontWeight: 700,
 }
 
 const listSection = {
-  backgroundColor: 'hsl(215 20.2% 65.1%)',
+  backgroundColor: 'hsl(215 20.2% 90%)',
   border: 'solid 1px #dedede',
   borderRadius: '5px',
   marginBottom: '24px',
-  padding: '24px',
-  textAlign: 'center' as const,
+  padding: '12px',
+  textAlign: 'left' as const,
 }
 
-const list = {
+const listItem = {
   margin: '0',
   textAlign: 'left' as const,
 }
 
 const button = {
-  fontSize: '14px',
+  fontSize: '12px',
   backgroundColor: 'hsl(219.2 60% 25.5%)',
   color: '#fff',
   lineHeight: 1.5,
-  borderRadius: '0.5em',
-  padding: '12px 24px',
+  borderRadius: '5px',
+  padding: '6px 12px',
+  marginTop: '18px',
 }
 
 const footer = {

@@ -185,7 +185,7 @@ export interface Page {
     | MultiRowLayoutBlock
     | LinksBlock
     | TournamentsPageType
-    | FormConfigBlock
+    | FormConfigType
   )[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
@@ -860,9 +860,10 @@ export interface TournamentsPageType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormConfigBlock".
+ * via the `definition` "FormConfigType".
  */
-export interface FormConfigBlock {
+export interface FormConfigType {
+  form: string | Form;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formConfig';
@@ -906,10 +907,6 @@ export interface FormSubmission {
     | number
     | boolean
     | null;
-  payment?: {
-    amount?: number | null;
-    status?: ('pending' | 'paid' | 'cancelled' | 'refunded') | null;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1041,7 +1038,7 @@ export interface PagesSelect<T extends boolean = true> {
         multiRowLayout?: T | MultiRowLayoutBlockSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
         tournamentsPage?: T | TournamentsPageTypeSelect<T>;
-        formConfig?: T | FormConfigBlockSelect<T>;
+        formConfig?: T | FormConfigTypeSelect<T>;
       };
   meta?:
     | T
@@ -1315,9 +1312,10 @@ export interface TournamentsPageTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormConfigBlock_select".
+ * via the `definition` "FormConfigType_select".
  */
-export interface FormConfigBlockSelect<T extends boolean = true> {
+export interface FormConfigTypeSelect<T extends boolean = true> {
+  form?: T;
   id?: T;
   blockName?: T;
 }
@@ -1562,12 +1560,6 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
   form?: T;
   title?: T;
   submissionData?: T;
-  payment?:
-    | T
-    | {
-        amount?: T;
-        status?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
