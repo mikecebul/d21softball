@@ -185,7 +185,7 @@ export interface Page {
     | MultiRowLayoutBlock
     | LinksBlock
     | TournamentsPageType
-    | FormConfigType
+    | FormType
   )[];
   meta?: {
     hideFromSearchEngines?: boolean | null;
@@ -242,7 +242,7 @@ export interface TwoColumnLayoutBlock {
    * The breakpoint at which the layout switches to a two column layout
    */
   breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
-  columns?: (CTABlock | RichTextBlock | MediaBlock | FormBlock | UpdateSectionType)[] | null;
+  columns?: (CTABlock | RichTextBlock | MediaBlock | UpdateSectionType)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'twoColumnLayout';
@@ -347,97 +347,6 @@ export interface MediaBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock".
- */
-export interface FormBlock {
-  form: string | Form;
-  enableIntro?: boolean | null;
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'formBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "forms".
- */
-export interface Form {
-  id: string;
-  title: string;
-  form?: ('contact' | 'register') | null;
-  /**
-   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
-   */
-  confirmationType?: ('message' | 'redirect') | null;
-  confirmationMessage?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  redirect?: {
-    url: string;
-  };
-  /**
-   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
-   */
-  emails?:
-    | {
-        emailTo?: string | null;
-        cc?: string | null;
-        bcc?: string | null;
-        replyTo?: string | null;
-        emailFrom?: string | null;
-        subject: string;
-        /**
-         * Enter the message that should be sent in this email.
-         */
-        message?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -860,13 +769,77 @@ export interface TournamentsPageType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormConfigType".
+ * via the `definition` "FormType".
  */
-export interface FormConfigType {
+export interface FormType {
   form: string | Form;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'formConfig';
+  blockType: 'form';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms".
+ */
+export interface Form {
+  id: string;
+  form?: ('contact' | 'register') | null;
+  /**
+   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
+   */
+  confirmationType?: ('message' | 'redirect') | null;
+  confirmationMessage?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  redirect?: {
+    url: string;
+  };
+  /**
+   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
+   */
+  emails?:
+    | {
+        emailTo?: string | null;
+        cc?: string | null;
+        bcc?: string | null;
+        replyTo?: string | null;
+        emailFrom?: string | null;
+        subject: string;
+        /**
+         * Enter the message that should be sent in this email.
+         */
+        message?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -897,6 +870,7 @@ export interface User {
 export interface FormSubmission {
   id: string;
   form: string | Form;
+  formType?: string | null;
   title?: string | null;
   submissionData?:
     | {
@@ -1038,7 +1012,7 @@ export interface PagesSelect<T extends boolean = true> {
         multiRowLayout?: T | MultiRowLayoutBlockSelect<T>;
         linksBlock?: T | LinksBlockSelect<T>;
         tournamentsPage?: T | TournamentsPageTypeSelect<T>;
-        formConfig?: T | FormConfigTypeSelect<T>;
+        form?: T | FormTypeSelect<T>;
       };
   meta?:
     | T
@@ -1099,7 +1073,6 @@ export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
         cta?: T | CTABlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
         updateSection?: T | UpdateSectionTypeSelect<T>;
       };
   id?: T;
@@ -1162,17 +1135,6 @@ export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
   showCaption?: T;
   priority?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock_select".
- */
-export interface FormBlockSelect<T extends boolean = true> {
-  form?: T;
-  enableIntro?: T;
-  introContent?: T;
   id?: T;
   blockName?: T;
 }
@@ -1312,9 +1274,9 @@ export interface TournamentsPageTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormConfigType_select".
+ * via the `definition` "FormType_select".
  */
-export interface FormConfigTypeSelect<T extends boolean = true> {
+export interface FormTypeSelect<T extends boolean = true> {
   form?: T;
   id?: T;
   blockName?: T;
@@ -1528,7 +1490,6 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
-  title?: T;
   form?: T;
   confirmationType?: T;
   confirmationMessage?: T;
@@ -1558,6 +1519,7 @@ export interface FormsSelect<T extends boolean = true> {
  */
 export interface FormSubmissionsSelect<T extends boolean = true> {
   form?: T;
+  formType?: T;
   title?: T;
   submissionData?: T;
   updatedAt?: T;

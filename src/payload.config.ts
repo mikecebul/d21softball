@@ -37,6 +37,8 @@ import { defaultLexical } from './fields/defaultLexical'
 import { Teams } from './collections/Teams'
 import { render } from '@react-email/render'
 import FormSubmissionEmail from './emails/notification'
+import { subMilliseconds } from 'date-fns'
+import { ContactFormValues } from './blocks/Form/ContactForm'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -136,12 +138,21 @@ export default buildConfig({
       defaultToEmail: 'info@d21softball.org',
       beforeEmail: async (emailsToSend, beforeChangeParams) => {
         const { data } = beforeChangeParams
+        const { submissionData, formType } = data
 
         const promises = emailsToSend.map(async (email) => {
-          const emailComponent = FormSubmissionEmail({
-            email: data.email,
-            name: data.name,
-          })
+          let emailComponent
+          switch (formType) {
+            case 'contact':
+              emailComponent = FormSubmissionEmail({
+                email: submissionData.email,
+                name: submissionData.name,
+              })
+              break
+
+            default:
+              break
+          }
 
           // Render React component to HTML string
           const html = await render(emailComponent)
@@ -163,14 +174,12 @@ export default buildConfig({
         },
         admin: {
           group: 'Form Builder',
+          useAsTitle: 'form',
         },
         hooks: {
           afterChange: [() => revalidatePath('/register')],
         },
         fields: ({ defaultFields }) => {
-          const titleField = defaultFields.find((field) =>
-            'name' in field && field.name === 'title' ? field : null,
-          )
           const formField: Field = {
             name: 'form',
             type: 'select',
@@ -187,7 +196,7 @@ export default buildConfig({
               field.name !== 'fields' &&
               field.name !== 'submitButtonLabel',
           )
-          return [...(titleField ? [titleField] : []), formField, ...rest]
+          return [formField, ...rest]
         },
       },
       formSubmissionOverrides: {
@@ -202,14 +211,51 @@ export default buildConfig({
           group: 'Form Builder',
           useAsTitle: 'title',
         },
+        hooks: {
+          beforeValidate: [
+            async ({ data, req }) => {
+              // Get the form ID from the submission data
+              const formId = data?.form
+
+              if (typeof formId === 'string') {
+                try {
+                  // Fetch the form document to get its type
+                  const form = await req.payload.findByID({
+                    collection: 'forms',
+                    id: formId,
+                  })
+
+                  return {
+                    ...data,
+                    formType: form.form,
+                  }
+                } catch (error) {
+                  console.error('Error fetching form:', error)
+                  return data
+                }
+              }
+              return data
+            },
+          ],
+        },
         fields: ({ defaultFields }) => {
           const formField = defaultFields.find((field) => 'name' in field && field.name === 'form')
 
           return [
             ...(formField ? [formField] : []),
             {
+              name: 'formType',
+              type: 'text',
+              admin: {
+                hidden: true,
+              },
+            },
+            {
               name: 'title',
               type: 'text',
+              admin: {
+                readOnly: true,
+              },
             },
             {
               name: 'submissionData',

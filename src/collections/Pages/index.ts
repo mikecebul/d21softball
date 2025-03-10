@@ -22,7 +22,7 @@ import { revalidateDelete } from './hooks/revalidateDelete'
 import { editorOrHigher } from '@/access/editorOrHigher'
 import { HeroLayout } from '@/blocks/layouts/HeroLayout/config'
 import { TournamentsPage } from '@/blocks/TournamentsPage/config'
-import { FormConfig } from '@/blocks/Form/formConfig'
+import { FormConfig } from '@/blocks/Form/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',

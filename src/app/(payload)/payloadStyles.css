@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 
 /* @config '../../../tailwind.config.mjs'; */
-@custom-variant dark (&:is([data-theme=dark], [data-theme=dark] *));
+@custom-variant dark (&:is([data-theme=dark] *));
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -15,15 +15,15 @@
 */
 
 @layer base {
-  .twp {
-    /* @import 'tailwindcss/preflight.css'; */
+  /* .twp {
+    @import 'tailwindcss/preflight.css';
     * {
-      @apply border-border outline-ring/50;
+      @apply outline-ring/50 border-red-500;
     }
     body {
       @apply bg-background text-foreground;
     }
-  }
+  } */
 
   .no-twp {
     *,
@@ -86,7 +86,7 @@
     --error: hsl(10 100% 86%);
   }
 
-  .dark {
+  [data-theme='dark'] {
     --background: hsl(0 0% 0%);
     --foreground: hsl(210 40% 98%);
 

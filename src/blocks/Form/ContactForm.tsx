@@ -4,7 +4,7 @@ import Container from '@/components/Container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { FormConfigType } from '@/payload-types'
+import { FormType } from '@/payload-types'
 import { baseUrl } from '@/utilities/baseUrl'
 import { type AnyFieldApi, formOptions, useForm } from '@tanstack/react-form'
 import { z } from 'zod'
@@ -37,7 +37,7 @@ const formSchema = z.object({
   email: z.string().email(),
 })
 
-export type FormValues = z.infer<typeof formSchema>
+export type ContactFormValues = z.infer<typeof formSchema>
 
 const formOpts = formOptions({
   defaultValues: {
@@ -46,21 +46,25 @@ const formOpts = formOptions({
   },
 })
 
-export const RegisterForm = ({ form: formConfig }: FormConfigType) => {
-  const { confirmationMessage, confirmationType, redirect } =
-    typeof formConfig !== 'string' ? formConfig : {}
+export const ContactForm = ({ formConfig }: { formConfig: FormType['form'] }) => {
+  const {
+    confirmationMessage,
+    confirmationType,
+    redirect,
+    id: formId,
+  } = typeof formConfig !== 'string' ? formConfig : {}
   const [hasSubmitted, setHasSubmitted] = useState(false)
-  const [error, setError] = useState<{ message: string; status?: string } | undefined>()
+  const [postError, setPostError] = useState<{ message: string; status?: string } | undefined>()
   const router = useRouter()
 
   const form = useForm({
     ...formOpts,
     onSubmit: async ({ value }) => {
-      setError(undefined)
+      setPostError(undefined)
       try {
         const req = await fetch(`${baseUrl}/api/form-submissions`, {
           body: JSON.stringify({
-            form: typeof formConfig === 'string' ? formConfig : formConfig.id,
+            form: formId,
             title: value.email,
             submissionData: value,
           }),
@@ -73,7 +77,7 @@ export const RegisterForm = ({ form: formConfig }: FormConfigType) => {
         const res = await req.json()
 
         if (req.status >= 400) {
-          setError({
+          setPostError({
             message: res.errors?.[0]?.message || 'Internal Server Error',
             status: req.status.toString(),
           })
@@ -87,7 +91,7 @@ export const RegisterForm = ({ form: formConfig }: FormConfigType) => {
           router.push(redirect.url)
         }
       } catch (error) {
-        setError({
+        setPostError({
           message: 'Something went wrong.',
           status: '500',
         })
@@ -100,8 +104,8 @@ export const RegisterForm = ({ form: formConfig }: FormConfigType) => {
 
   return (
     <Container>
-      {error && (
-        <div className="text-destructive mb-4">{`${error.status || '500'}: ${error.message || ''}`}</div>
+      {postError && (
+        <div className="text-destructive mb-4">{`${postError.status || '500'}: ${postError.message || ''}`}</div>
       )}
       {!hasSubmitted || confirmationType !== 'message' ? (
         <form

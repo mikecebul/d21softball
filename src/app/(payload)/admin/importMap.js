@@ -40,6 +40,7 @@ import { default as default_9734ea5d74b781c5b6e952c2aa41414f } from '@/globals/C
 import { default as default_3ffd8082d3e9477cf001d7760082c496 } from '@/globals/CompanyInfo/HoursRowLabel'
 import { default as default_a8ed57560afaff4535f43ca83a9fecbd } from '@/graphics/Icon'
 import { default as default_1ceaa075bd8323ee72a35f935e6cfcf1 } from '@/components/Logo/Graphic'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 export const importMap = {
   "@/fields/iconSelect/Component#default": default_d19e4d519402fcd5af8b22307c04bcbe,
@@ -83,5 +84,6 @@ export const importMap = {
   "@/globals/CompanyInfo/SocialRowLabel#default": default_9734ea5d74b781c5b6e952c2aa41414f,
   "@/globals/CompanyInfo/HoursRowLabel#default": default_3ffd8082d3e9477cf001d7760082c496,
   "@/graphics/Icon#default": default_a8ed57560afaff4535f43ca83a9fecbd,
-  "@/components/Logo/Graphic#default": default_1ceaa075bd8323ee72a35f935e6cfcf1
+  "@/components/Logo/Graphic#default": default_1ceaa075bd8323ee72a35f935e6cfcf1,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }

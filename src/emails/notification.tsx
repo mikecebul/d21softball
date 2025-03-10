@@ -1,4 +1,4 @@
-import { FormValues } from '@/blocks/Form/FormComponent'
+import { ContactFormValues } from '@/blocks/Form/ContactForm'
 import { baseUrl as importedBaseUrl } from '@/utilities/baseUrl'
 import {
   Body,
@@ -15,7 +15,7 @@ import * as React from 'react'
 
 const baseUrl = importedBaseUrl ?? 'http://localhost:3000'
 
-export const FormSubmissionEmail = ({ email, name }: FormValues) => (
+export const FormSubmissionEmail = ({ email, name }: ContactFormValues) => (
   <Html>
     <Head />
     <Body style={main}>
@@ -56,7 +56,7 @@ export const FormSubmissionEmail = ({ email, name }: FormValues) => (
 FormSubmissionEmail.PreviewProps = {
   email: 'dev@mikecebul.dev',
   name: 'Mike Cebulski',
-} as FormValues
+} as ContactFormValues
 
 export default FormSubmissionEmail
 

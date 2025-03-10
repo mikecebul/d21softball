@@ -1,5 +1,4 @@
 import { Block } from 'payload'
-import { FormBlock } from '@/blocks/Form/config'
 import { CTA } from '@/blocks/CTA/config'
 import { RichText } from '@/blocks/RichText/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
@@ -13,7 +12,7 @@ export const TwoColumnLayout: Block = {
       name: 'nested',
       type: 'checkbox',
       defaultValue: false,
-      hidden: true
+      hidden: true,
     },
     {
       name: 'direction',
@@ -44,8 +43,8 @@ export const TwoColumnLayout: Block = {
     {
       name: 'columns',
       type: 'blocks',
-      blocks: [CTA, RichText, MediaBlock, FormBlock, UpdateSection],
+      blocks: [CTA, RichText, MediaBlock, UpdateSection],
       maxRows: 2,
-    }
+    },
   ],
 }

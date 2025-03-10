@@ -12,7 +12,6 @@ import { MultiRowLayoutBlock } from '@/blocks/layouts/MultiRowLayout/Component'
 import { TwoColumnLayoutBlock } from '@/blocks/layouts/TwoColumnLayout/Component'
 
 import { CTA } from './CTA/Component'
-import { FormBlock } from './Form/Component'
 import { LinksBlock } from './Links/Component'
 import { MediaBlock } from './MediaBlock/Component'
 import { RichTextBlock } from './RichText/Component'
@@ -24,7 +23,7 @@ import { UpdateCardsBlock } from './Cards/UpdateCards/Component'
 import { SponsorCardsBlock } from './Cards/SponsorCards/Component'
 import { ResourceCardsBlock } from './Cards/ResourceCards/Component'
 import { UpdateSectionBlock } from './UpdateSection/Component'
-import { RegisterForm } from './Form/FormComponent'
+import { FormComponent } from './Form/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
@@ -32,7 +31,6 @@ const blockComponents = {
   tournaments: TournamentsBlock,
   tournamentsPage: TournamentsPageBlock,
   tournamentCards: TournamentCardsBlock,
-  formBlock: FormBlock,
   mediaBlock: MediaBlock,
   twoColumnLayout: TwoColumnLayoutBlock,
   multiRowLayout: MultiRowLayoutBlock,
@@ -43,7 +41,7 @@ const blockComponents = {
   updateCards: UpdateCardsBlock,
   sponsorCards: SponsorCardsBlock,
   updateSection: UpdateSectionBlock,
-  formConfig: RegisterForm,
+  form: FormComponent,
 }
 
 export const RenderBlocks: React.FC<{
