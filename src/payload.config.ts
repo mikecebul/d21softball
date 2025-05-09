@@ -37,8 +37,6 @@ import { defaultLexical } from './fields/defaultLexical'
 import { Teams } from './collections/Teams'
 import { render } from '@react-email/render'
 import FormSubmissionEmail from './emails/notification'
-import { subMilliseconds } from 'date-fns'
-import { ContactFormValues } from './blocks/Form/ContactForm'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,9 +54,9 @@ const generateURL: GenerateURL<Page> = ({ doc }) => {
 }
 const generateImage: GenerateImage<Page> = ({ doc }) => {
   if (typeof doc.meta?.metadata?.image === 'object' && doc.meta?.metadata?.image) {
-    return doc.meta.metadata.image.url || '/golf-hero.jpg'
+    return doc.meta.metadata.image.url || '/sunset-at-waterfront.webp'
   }
-  return '/golf-hero.jpg'
+  return '/sunset-at-waterfront.webp'
 }
 
 export default buildConfig({
@@ -113,11 +111,11 @@ export default buildConfig({
     defaultFromAddress: process.env.EMAIL_SMTP_USER || 'website@d21softball.org',
     defaultFromName: 'D21 Softball',
     transportOptions: {
-      host: process.env.EMAIL_SMTP_HOST,
-      port: process.env.EMAIL_SMTP_PORT,
+      host: process.env.EMAIL_SMTP_HOST ?? 'localhost',
+      port: process.env.EMAIL_SMTP_PORT ?? '1025',
       auth: {
-        user: process.env.EMAIL_SMTP_USER,
-        pass: process.env.EMAIL_SMTP_PASS,
+        user: process.env.EMAIL_SMTP_USER ?? 'dev',
+        pass: process.env.EMAIL_SMTP_PASS ?? 'password',
       },
     },
   }),
