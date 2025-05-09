@@ -3,7 +3,7 @@
 import type { CompanyInfo, Header } from '@/payload-types'
 import type { ReactNode } from 'react'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '../ui/sidebar'
-import { AppSidebar } from '../app-sidebar'
+import { AppSidebar } from '../old-app-sidebar'
 import { AdminBar } from '../AdminBar'
 import { Separator } from '@radix-ui/react-separator'
 import {

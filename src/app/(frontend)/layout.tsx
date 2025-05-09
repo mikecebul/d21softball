@@ -3,24 +3,12 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import type { ReactNode } from 'react'
 
-import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/globals/Footer/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import './globals.css'
 import { draftMode } from 'next/headers'
 import { ThemeProvider } from 'next-themes'
 import { baseUrl } from '@/utilities/baseUrl'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/app-sidebar'
-import { Separator } from '@radix-ui/react-separator'
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
 import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
 import { CompanyInfo, Header } from '@/payload-types'
