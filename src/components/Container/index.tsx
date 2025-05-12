@@ -11,7 +11,7 @@ export default function Container({
   return (
     <section
       className={cn(
-        'animate-fadeIn relative max-w-full flex-1 flex-col overflow-clip px-4 md:px-8 2xl:container',
+        'animate-fadeIn relative max-w-full flex-1 flex-col overflow-clip px-4 md:px-8',
         className,
       )}
     >

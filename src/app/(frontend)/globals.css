@@ -154,6 +154,8 @@
   --animate-accordion-up: accordion-up 0.3s ease-out;
   --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
 
+  --breakpoint-2xl: 112rem;
+
   @keyframes accordion-down {
     from {
       height: 0;

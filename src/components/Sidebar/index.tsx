@@ -3,7 +3,7 @@
 import type { CompanyInfo, Header } from '@/payload-types'
 import type { ReactNode } from 'react'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '../ui/sidebar'
-import { AppSidebar } from '../old-app-sidebar'
+import { AppSidebar } from '../app-sidebar'
 import { AdminBar } from '../AdminBar'
 import { Separator } from '@radix-ui/react-separator'
 import {
@@ -28,7 +28,7 @@ export const Sidebar = ({
 }) => {
   return (
     <SidebarProvider>
-      <AppSidebar contact={contact} navItems={navItems} />
+      <AppSidebar />
       <SidebarInset>
         <AdminBar
           adminBarProps={{

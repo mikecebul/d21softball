@@ -1,9 +1,5 @@
 import type { ReactNode } from 'react'
 
 export const CardGrid = ({ children }: { children: ReactNode }) => {
-  return (
-    <div className="flex flex-wrap gap-8 mx-auto max-w-7xl justify-center">
-      {children}
-    </div>
-  )
+  return <div className="mx-auto flex flex-wrap justify-center gap-8">{children}</div>
 }

@@ -1,6 +1,13 @@
 import { UpdateSectionType } from '@/payload-types'
 import RichText from '@/components/RichText'
-import { Card, CardContent, CardDescriptionDiv, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescriptionDiv,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import Link from 'next/link'
@@ -8,7 +15,6 @@ import { cn } from '@/utilities/cn'
 import { buttonVariants } from '@/components/ui/button'
 
 export const UpdateSectionBlock = ({ update }: UpdateSectionType) => {
-
   if (typeof update === 'string') return null
 
   const { description, content, title, updatedAt, slug, id } = update
