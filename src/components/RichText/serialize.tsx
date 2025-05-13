@@ -123,7 +123,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             }
             case 'paragraph': {
               return (
-                <p className={cn('col-start-2 text-pretty text-base')} key={index}>
+                <p className={cn('col-start-2 max-w-prose text-base text-pretty')} key={index}>
                   {serializedChildren}
                 </p>
               )
@@ -131,7 +131,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'heading': {
               const Tag = node?.tag
               const textSizeMap = {
-                h1: 'text-6xl md:text-7xl font-bold tracking-tight text-balance max-w-prose', // 2rem
+                h1: 'text-6xl md:text-7xl font-bold tracking-tight text-balance max-w-3xl', // 2rem
                 h2: 'text-5xl font-bold tracking-tight text-balance max-w-prose', // 1.5rem
                 h3: 'text-4xl font-semibold tracking-tight text-balance max-w-prose', // 1rem
                 h4: 'text-3xl font-semibold tracking-tight text-balance max-w-prose', // 0.75rem

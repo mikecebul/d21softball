@@ -17,8 +17,8 @@ export const UpdateBlock = ({ update }: { update: Update }) => {
         ? description
         : false
   return (
-    <Container className="pb-36 pt-24">
-      <div className="prose flex flex-col gap-y-4">
+    <Container className="prose pt-24 pb-36">
+      <div className="flex flex-col gap-y-4">
         <Title text={title} heading="h1" />
         {!!updateDescription && <Description text={updateDescription} />}
       </div>

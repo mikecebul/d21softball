@@ -13,7 +13,7 @@ export function HeroMedium({
   return (
     <div
       className={cn(
-        'mx-auto flex max-w-prose flex-col justify-center gap-4 text-pretty text-left lg:text-center',
+        'mx-auto flex max-w-prose flex-col justify-center gap-4 text-left text-pretty lg:text-center',
         className,
       )}
     >
@@ -25,7 +25,7 @@ export function HeroMedium({
 
 export const Subtitle = ({ text }: { text: string }) => {
   return (
-    <h3 className="max-w-prose text-base font-semibold capitalize leading-7 text-brand">{text}</h3>
+    <h3 className="text-brand max-w-prose text-base leading-7 font-semibold capitalize">{text}</h3>
   )
 }
 export const Title = ({
@@ -41,7 +41,7 @@ export const Title = ({
     return (
       <h1
         className={cn(
-          'max-w-prose text-balance text-6xl font-bold tracking-tight md:text-7xl',
+          'max-w-4xl text-6xl font-bold tracking-tight text-balance md:text-7xl',
           className,
         )}
       >
@@ -51,14 +51,14 @@ export const Title = ({
   }
   if (heading === 'h2') {
     return (
-      <h2 className={cn('max-w-prose text-balance text-5xl font-bold tracking-tight', className)}>
+      <h2 className={cn('max-w-prose text-5xl font-bold tracking-tight text-balance', className)}>
         {text}
       </h2>
     )
   }
   if (heading === 'h3') {
     return (
-      <h3 className={cn('max-w-prose text-balance text-4xl font-bold tracking-tight', className)}>
+      <h3 className={cn('max-w-prose text-4xl font-bold tracking-tight text-balance', className)}>
         {text}
       </h3>
     )
@@ -66,7 +66,7 @@ export const Title = ({
 }
 export const Description = ({ text, className }: { text: string; className?: string }) => {
   return (
-    <p className={cn('max-w-prose text-pretty text-lg leading-7 text-muted-foreground', className)}>
+    <p className={cn('text-muted-foreground max-w-prose text-lg leading-7 text-pretty', className)}>
       {text}
     </p>
   )

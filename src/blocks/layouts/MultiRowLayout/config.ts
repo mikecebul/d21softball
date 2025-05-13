@@ -19,7 +19,16 @@ export const MultiRowLayout: Block = {
     {
       name: 'blocks',
       type: 'blocks',
-      blocks: [TitleBlock, RichText, TwoColumnLayout, UpdateCards, SponsorCards, ResourceCards, Links, TournamentCards],
+      blocks: [
+        TitleBlock,
+        RichText,
+        TwoColumnLayout,
+        UpdateCards,
+        SponsorCards,
+        ResourceCards,
+        Links,
+        TournamentCards,
+      ],
     },
   ],
 }
