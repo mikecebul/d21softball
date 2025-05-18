@@ -14,3 +14,7 @@ public/media/
 # sqlite db
 payload.db
 dump.sql
+
+# mailpit
+data
+data/mailpit*
