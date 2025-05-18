@@ -55,7 +55,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { layout } = page
 
   return (
-    <main>
+    <main className="@container">
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}

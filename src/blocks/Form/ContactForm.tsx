@@ -103,7 +103,7 @@ export const ContactForm = ({ formConfig }: { formConfig: FormType['form'] }) =>
   })
 
   return (
-    <Container>
+    <>
       {postError && (
         <div className="text-destructive mb-4">{`${postError.status || '500'}: ${postError.message || ''}`}</div>
       )}
@@ -164,6 +164,6 @@ export const ContactForm = ({ formConfig }: { formConfig: FormType['form'] }) =>
       ) : (
         confirmationMessage && <RichText content={confirmationMessage} />
       )}
-    </Container>
+    </>
   )
 }
