@@ -1,12 +1,13 @@
 'use client'
 
 import * as React from 'react'
-import { Trophy } from 'lucide-react'
+import { Mail, Phone, Trophy } from 'lucide-react'
 import type { CompanyInfo, Sidebar as SidebarType } from '@/payload-types'
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
@@ -92,6 +93,44 @@ export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <a href="mailto:scott@d21softball.org">
+              <SidebarMenuButton
+                tooltip="Email"
+                size="lg"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              >
+                <Mail />
+                <span
+                  className={cn('text-lg', {
+                    hidden: state === 'collapsed',
+                  })}
+                >
+                  scott@d21softball.org
+                </span>
+              </SidebarMenuButton>
+            </a>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <a href="tel:2315471144">
+              <SidebarMenuButton
+                tooltip="Phone"
+                size="lg"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              >
+                <Phone />
+                <span
+                  className={cn('text-lg', {
+                    hidden: state === 'collapsed',
+                  })}
+                >{`(231) 547-1144`}</span>
+              </SidebarMenuButton>
+            </a>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
