@@ -3,9 +3,9 @@
 import { CalendarDays, CheckCircle, MapPin, Trophy, Users } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { Tournament } from '@/payload-types'
+import type { Tournament } from '@/payload-types'
 import Container from '../Container'
-import RichText from '../RichText'
+import { RichText } from '../RichText'
 import { format } from 'date-fns'
 import { Title } from '../Hero/HeroMedium'
 import {
@@ -40,7 +40,7 @@ const images = [
   },
 ]
 
-export default function TournamentDetails(details: Tournament) {
+export default function TournamentDetails({ details }: { details: Tournament }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -140,7 +140,7 @@ export default function TournamentDetails(details: Tournament) {
                 <CardTitle>About the Tournament</CardTitle>
               </CardHeader>
               <CardContent>
-                <RichText content={details.description} enableProse={false} />
+                <RichText data={details.description} enableProse={false} />
               </CardContent>
             </Card>
 
@@ -265,7 +265,7 @@ export default function TournamentDetails(details: Tournament) {
                           <AccordionItem value="item-1" className="border-none">
                             <AccordionTrigger>View Highlights</AccordionTrigger>
                             <AccordionContent>
-                              <RichText content={highlights} enableProse={false} />
+                              <RichText data={highlights} enableProse={false} />
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
