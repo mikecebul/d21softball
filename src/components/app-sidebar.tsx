@@ -20,6 +20,7 @@ import { cn } from '@/utilities/cn'
 import { usePathname } from 'next/navigation'
 import { isActiveRoute } from '@/utilities/isActiveRoute'
 import { CMSLink } from '@/components/Link'
+import { Icon } from './Icons/Icon'
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   contact?: CompanyInfo['contact']
@@ -28,7 +29,14 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 
 export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
   const currentPathName = usePathname()
-  const { state } = useSidebar()
+  const { state, isMobile, setOpenMobile } = useSidebar()
+
+  const handleNavigation = React.useCallback(() => {
+    if (isMobile) {
+      setOpenMobile(false)
+    }
+  }, [isMobile, setOpenMobile])
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -52,15 +60,17 @@ export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
               const isActive = isActiveRoute(currentPathName as string, url)
               return (
                 <SidebarMenuItem key={item.id}>
-                  <CMSLink {...item.link} appearance="sidebar">
+                  <CMSLink {...item.link} appearance="sidebar" onClick={handleNavigation}>
                     <SidebarMenuButton
                       tooltip={item.link?.label}
                       size={'lg'}
                       isActive={isActive}
                       className={cn('cursor-pointer', { 'cursor-default': isActive })}
                     >
-                      {true && (
-                        <Trophy
+                      {item.link.icon && (
+                        <Icon
+                          name={item.link.icon}
+                          size={20}
                           className={cn('', {
                             'text-brand stroke-2': isActive,
                           })}

@@ -33,6 +33,9 @@ import {
   Trophy,
   LandPlot,
   Handshake,
+  NotebookPen,
+  Info,
+  Globe,
 } from 'lucide-react'
 import { ReactNode } from 'react'
 import { cn } from '@/utilities/cn'
@@ -105,13 +108,16 @@ export const lucideIcons = [
   { component: FlaskConical, label: 'Flask', value: 'FlaskConical' },
   { component: LandPlot, label: 'Golf', value: 'LandPlot' },
   { component: Glasses, label: 'Glasses', value: 'Glasses' },
+  { component: Globe, label: 'Globe', value: 'Globe' },
   { component: GraduationCap, label: 'Graduation Cap', value: 'GraduationCap' },
   { component: Users, label: 'Group', value: 'Users' },
   { component: Handshake, label: 'Handshake', value: 'Handshake' },
+  { component: Info, label: 'Info', value: 'Info' },
   { component: Tally4, label: 'Jail', value: 'Tally4' },
   { component: Mail, label: 'Mail', value: 'Mail' },
   { component: Menu, label: 'Menu', value: 'Menu' },
   { component: Navigation, label: 'Navigation', value: 'Navigation' },
+  { component: NotebookPen, label: 'Notebook & pen', value: 'NotebookPen' },
   { component: Pencil, label: 'Pencil', value: 'Pencil' },
   { component: Phone, label: 'Phone', value: 'Phone' },
   { component: PlusCircle, label: 'Plus Circle', value: 'PlusCircle' },
@@ -136,14 +142,14 @@ export const renderIcon = (iconValue: string, small?: 'small', component?: strin
 
   if (!IconComponent) {
     return (
-      <div className={`flex items-center justify-center ${containerSize} rounded-lg bg-brand`}>
+      <div className={`flex items-center justify-center ${containerSize} bg-brand rounded-lg`}>
         <User className={`${iconSize} text-white`} aria-hidden="true" />
       </div>
     )
   }
 
   return (
-    <div className={`flex items-center justify-center ${containerSize} rounded-lg bg-brand`}>
+    <div className={`flex items-center justify-center ${containerSize} bg-brand rounded-lg`}>
       <IconComponent className={`${iconSize} text-white`} aria-hidden="true" />
     </div>
   )
@@ -181,5 +187,8 @@ export const lucideIconArray = [
   GraduationCap,
   Handshake,
   Trophy,
+  NotebookPen,
+  Info,
+  Globe,
 ]
 export type LuicideIconArray = typeof lucideIconArray

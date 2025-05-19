@@ -7,7 +7,6 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
 export const ResourceCardsBlock = async ({ showAll, resources, link }: ResourceCardsType) => {
-
   const payload = await getPayload({ config: configPromise })
   const { docs: fetchedCards } = await payload.find({
     collection: 'resources',
@@ -20,43 +19,45 @@ export const ResourceCardsBlock = async ({ showAll, resources, link }: ResourceC
         equals: 'published',
       },
     },
-    sort: "-createdAt",
+    sort: '-createdAt',
   })
 
   const cards = showAll ? fetchedCards : resources
 
   return (
-    <section className='space-y-12'>
+    <section className="space-y-12">
       <CardGrid>
-        {cards && cards.map((card) => {
-          if (typeof card === 'string') return null
-          const { description, image, link, title } = card
-          return (
-            <CMSLink key={card.id} {...link} appearance="card">
-              <Card className="group flex h-full max-w-xs flex-col bg-accent/60 px-0 py-0 text-left shadow-sm hover:bg-accent">
-                <CardContent className="overflow-hidden rounded-t-lg p-0">
-                  {typeof image === 'object' && (
-                    <Image
-                      src={image?.url ?? ''}
-                      alt={image?.alt ?? ''}
-                      width={800}
-                      height={800}
-                      className="max-h-60 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                    />
-                  )}
-                </CardContent>
-                <CardHeader>
-                  <CardTitle className="text-pretty pb-1 capitalize">{title}</CardTitle>
-                  {description ? <CardDescription className="">{description}</CardDescription> : null}
-                </CardHeader>
-              </Card>
-            </CMSLink>
-          )
-        }
-        )}
+        {cards &&
+          cards.map((card) => {
+            if (typeof card === 'string') return null
+            const { description, image, link, title } = card
+            return (
+              <CMSLink key={card.id} {...link} appearance="card">
+                <Card className="group bg-accent/60 hover:bg-accent flex h-full w-full flex-col px-0 py-0 text-left shadow-sm @min-lg:max-w-xs">
+                  <CardContent className="overflow-hidden rounded-t-lg p-0">
+                    {typeof image === 'object' && (
+                      <Image
+                        src={image?.url ?? ''}
+                        alt={image?.alt ?? ''}
+                        width={800}
+                        height={800}
+                        className="max-h-60 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                      />
+                    )}
+                  </CardContent>
+                  <CardHeader>
+                    <CardTitle className="pb-1 text-pretty capitalize">{title}</CardTitle>
+                    {description ? (
+                      <CardDescription className="">{description}</CardDescription>
+                    ) : null}
+                  </CardHeader>
+                </Card>
+              </CMSLink>
+            )
+          })}
       </CardGrid>
-      {(!showAll && link) && (
-        <div className='flex w-full items-center justify-center'>
+      {!showAll && link && (
+        <div className="flex w-full items-center justify-center">
           <CMSLink {...link} size="xl" />
         </div>
       )}

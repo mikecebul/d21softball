@@ -27,6 +27,7 @@ export const Sidebar: GlobalConfig = {
       fields: [
         link({
           appearances: false,
+          icon: true,
         }),
       ],
       maxRows: 6,

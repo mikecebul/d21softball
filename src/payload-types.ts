@@ -1626,6 +1626,7 @@ export interface Sidebar {
               } | null);
           url?: string | null;
           label: string;
+          icon?: string | null;
         };
         id?: string | null;
       }[]
@@ -1737,6 +1738,7 @@ export interface SidebarSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              icon?: T;
             };
         id?: T;
       };

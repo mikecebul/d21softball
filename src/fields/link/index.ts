@@ -2,8 +2,15 @@ import type { Field, GroupField } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
 import { addHTTPS } from '@/hooks/addHTTPS'
+import { iconSelect } from '../iconSelect/config'
 
-export type LinkAppearances = 'default' | 'outline' | 'brand' | 'brandSecondary' | 'brandOutline' | 'brandSecondaryOutline'
+export type LinkAppearances =
+  | 'default'
+  | 'outline'
+  | 'brand'
+  | 'brandSecondary'
+  | 'brandOutline'
+  | 'brandSecondaryOutline'
 
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
   default: {
@@ -35,10 +42,16 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
   disableLabel?: boolean
+  icon?: boolean
   overrides?: Record<string, unknown>
 }) => Field
 
-export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
+export const link: LinkType = ({
+  appearances,
+  disableLabel = false,
+  icon = false,
+  overrides = {},
+} = {}) => {
   const linkResult: GroupField = {
     name: 'link',
     type: 'group',
@@ -149,8 +162,19 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     linkResult.fields = [...linkResult.fields, ...linkTypes]
   }
 
+  if (icon) {
+    linkResult.fields.push({ ...iconSelect })
+  }
+
   if (appearances !== false) {
-    let appearanceOptionsToUse = [appearanceOptions.default, appearanceOptions.outline, appearanceOptions.brand, appearanceOptions.brandOutline, appearanceOptions.brandSecondary, appearanceOptions.brandSecondaryOutline]
+    let appearanceOptionsToUse = [
+      appearanceOptions.default,
+      appearanceOptions.outline,
+      appearanceOptions.brand,
+      appearanceOptions.brandOutline,
+      appearanceOptions.brandSecondary,
+      appearanceOptions.brandSecondaryOutline,
+    ]
 
     if (appearances) {
       appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance])
