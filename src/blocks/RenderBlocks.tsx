@@ -16,7 +16,6 @@ import { LinksBlock } from './Links/Component'
 import { MediaBlock } from './MediaBlock/Component'
 import { RichTextBlock } from './RichText/Component'
 import { TitleBlock } from './Title/Component'
-import { TournamentsBlock } from './TournamentsBlock/Component'
 import { TournamentsPageBlock } from './TournamentsPage/Component'
 import { TournamentCardsBlock } from './Cards/TournamentCards/Component'
 import { UpdateCardsBlock } from './Cards/UpdateCards/Component'
@@ -24,11 +23,11 @@ import { SponsorCardsBlock } from './Cards/SponsorCards/Component'
 import { ResourceCardsBlock } from './Cards/ResourceCards/Component'
 import { UpdateSectionBlock } from './UpdateSection/Component'
 import { FormComponent } from './Form/Component'
+import { PitcherTable } from './PitcherTable/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
   linksBlock: LinksBlock,
-  tournaments: TournamentsBlock,
   tournamentsPage: TournamentsPageBlock,
   tournamentCards: TournamentCardsBlock,
   mediaBlock: MediaBlock,
@@ -42,6 +41,7 @@ const blockComponents = {
   sponsorCards: SponsorCardsBlock,
   updateSection: UpdateSectionBlock,
   form: FormComponent,
+  pitcherTable: PitcherTable,
 }
 
 export const RenderBlocks: React.FC<{
@@ -56,6 +56,7 @@ export const RenderBlocks: React.FC<{
   const { blocks, nested = false } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
+  console.log('blocks', blocks)
 
   if (hasBlocks) {
     return (

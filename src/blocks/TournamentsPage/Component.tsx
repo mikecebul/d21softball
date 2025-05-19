@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card'
 import { CalendarIcon, CreditCardIcon, MapPinIcon } from 'lucide-react'
 import { format } from 'date-fns'
-import RichText from '@/components/RichText'
+import {RichText} from '@/components/RichText'
 import { Description, Title } from '@/components/Hero/HeroMedium'
 import { TournamentsPageType } from '@/payload-types'
 import Link from 'next/link'
@@ -90,7 +90,7 @@ export const TournamentsPageBlock = async ({
                     </CardDescriptionDiv>
                   </CardHeader>
                   <CardContent className="flex-1">
-                    <RichText content={tournament.description} className="line-clamp-5" />
+                    <RichText data={tournament.description} className="line-clamp-5" />
                   </CardContent>
                   <CardFooter className="mt-auto">
                     <Link
@@ -121,7 +121,7 @@ export const TournamentsPageBlock = async ({
                   </CardHeader>
                   <CardContent>
                     <div className="">
-                      <RichText content={announcement.description} />
+                      <RichText data={announcement.description} />
                     </div>
                   </CardContent>
                 </Card>

@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 
 import { useField, Button, TextInput, FieldLabel, useFormFields } from '@payloadcms/ui'
 
@@ -36,16 +36,14 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
   })
 
   useEffect(() => {
-    if (checkboxValue) {
-      if (fieldToUseValue) {
-        const formattedSlug = formatSlug(fieldToUseValue)
-
-        if (value !== formattedSlug) setValue(formattedSlug)
-      } else {
-        if (value !== '') setValue('')
+    // Only update the slug when locked AND the source field changes
+    if (checkboxValue && fieldToUseValue) {
+      const formattedSlug = formatSlug(fieldToUseValue)
+      if (value !== formattedSlug) {
+        setValue(formattedSlug)
       }
     }
-  }, [fieldToUseValue, checkboxValue, setValue, value])
+  }, [fieldToUseValue, checkboxValue]) // Remove value from dependencies to prevent loop
 
   const handleLock = useCallback(
     (e) => {

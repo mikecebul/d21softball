@@ -1,5 +1,5 @@
 import { UpdateSectionType } from '@/payload-types'
-import RichText from '@/components/RichText'
+import {RichText} from '@/components/RichText'
 import {
   Card,
   CardContent,
@@ -31,7 +31,7 @@ export const UpdateSectionBlock = ({ update }: UpdateSectionType) => {
         </CardDescriptionDiv>
       </CardHeader>
       <CardContent className="flex-1">
-        <RichText content={content} className="" truncateLines />
+        <RichText data={content} className="" truncateLines />
       </CardContent>
       <CardFooter>
         <Link

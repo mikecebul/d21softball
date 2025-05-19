@@ -10,7 +10,7 @@ import { type AnyFieldApi, formOptions, useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import RichText from '@/components/RichText'
+import { RichText } from '@/components/RichText'
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
@@ -162,7 +162,7 @@ export const ContactForm = ({ formConfig }: { formConfig: FormType['form'] }) =>
           </div>
         </form>
       ) : (
-        confirmationMessage && <RichText content={confirmationMessage} />
+        confirmationMessage && <RichText data={confirmationMessage} />
       )}
     </>
   )

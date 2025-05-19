@@ -1,5 +1,4 @@
-import Container from '@/components/Container'
-import RichText from '@/components/RichText'
+import { RichText } from '@/components/RichText'
 import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import type { TournamentCardsBlock as TournamentCardsBlockType } from '@/payload-types'
@@ -34,7 +33,7 @@ export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) 
                     <span>{tournament.location}</span>
                   </span>
                 </div>
-                <RichText content={tournament.description} />
+                <RichText data={tournament.description} />
               </CardContent>
               <CardFooter>
                 <Link

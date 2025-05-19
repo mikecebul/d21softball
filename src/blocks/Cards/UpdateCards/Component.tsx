@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card'
 import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
-import RichText from '@/components/RichText'
+import { RichText } from '@/components/RichText'
 import { Update, UpdateCardsType } from '@/payload-types'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
@@ -66,7 +66,7 @@ export const UpdateCard = ({ description, content, title, updatedAt, slug, id }:
         </CardDescriptionDiv>
       </CardHeader>
       <CardContent className="flex-1">
-        <RichText content={content} className="" truncateLines />
+        <RichText data={content} className="" truncateLines />
       </CardContent>
       <CardFooter>
         <Link

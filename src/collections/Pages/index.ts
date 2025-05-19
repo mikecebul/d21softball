@@ -23,6 +23,7 @@ import { editorOrHigher } from '@/access/editorOrHigher'
 import { HeroLayout } from '@/blocks/layouts/HeroLayout/config'
 import { TournamentsPage } from '@/blocks/TournamentsPage/config'
 import { FormConfig } from '@/blocks/Form/config'
+import { PitcherTable } from '@/blocks/PitcherTable/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -69,6 +70,7 @@ export const Pages: CollectionConfig = {
                 Links,
                 TournamentsPage,
                 FormConfig,
+                PitcherTable,
               ],
               required: true,
             },

@@ -30,7 +30,7 @@ const navItems = [
   },
   {
     title: 'Pitchers',
-    url: '/pitchers',
+    url: '/pitcher-classification',
     icon: LoaderPinwheel,
   },
   {
