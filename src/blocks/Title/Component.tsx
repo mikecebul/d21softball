@@ -8,7 +8,7 @@ export const TitleBlock = ({ title, description, alignment, heading }: TitleBloc
       className={cn('flex flex-col gap-y-4', {
         'items-center text-center': alignment === 'center',
         'items-start text-left': alignment === 'left',
-        'items-end text-right': alignment === 'right',
+        'items-end text-left': alignment === 'right',
       })}
     >
       <Title text={title} heading={heading ?? 'h2'} />

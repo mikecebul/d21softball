@@ -27,20 +27,6 @@ export const TwoColumnLayout: Block = {
       },
     },
     {
-      name: 'breakpoint',
-      type: 'radio',
-      defaultValue: 'md',
-      options: [
-        { label: 'Small', value: 'sm' },
-        { label: 'Medium', value: 'md' },
-        { label: 'Large', value: 'lg' },
-        { label: 'Extra Large', value: 'xl' },
-      ],
-      admin: {
-        description: 'The breakpoint at which the layout switches to a two column layout',
-      },
-    },
-    {
       name: 'columns',
       type: 'blocks',
       blocks: [CTA, RichText, MediaBlock, UpdateSection],

@@ -37,7 +37,7 @@ const jsxConverters = (paragraphClassName?: string): JSXConvertersFunction<NodeT
         })
 
         return (
-          <p className={cn('text-primary max-w-prose pb-3 text-pretty', paragraphClassName)}>
+          <p className={cn('text-primary mb-3 max-w-prose text-pretty', paragraphClassName)}>
             {children}
           </p>
         )
@@ -199,16 +199,24 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export function RichText(props: Props) {
-  const { className, enableProse = true, enableGutter = true, paragraphClassName, ...rest } = props
+  const {
+    className,
+    enableProse = true,
+    enableGutter = false,
+    paragraphClassName,
+    truncateLines,
+    ...rest
+  } = props
   return (
     <ConvertRichText
       converters={jsxConverters(paragraphClassName)}
       className={cn(
-        'line-clamp-5',
+        '',
         {
           container: enableGutter,
           'max-w-none': !enableGutter,
-          'prose md:prose-md dark:prose-invert mx-auto': enableProse,
+          'prose md:prose-md dark:prose-invert': enableProse,
+          'line-clamp-6': truncateLines,
         },
         className,
       )}

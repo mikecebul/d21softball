@@ -8,7 +8,7 @@ import React from 'react'
 import type { Page, Media } from '@/payload-types'
 
 type CMSLinkType = {
-  appearance?: 'inline' | ButtonProps['variant']
+  appearance?: 'inline' | 'sidebar' | ButtonProps['variant']
   children?: React.ReactNode
   className?: string
   label?: string | null | React.ReactNode
@@ -50,6 +50,19 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   const size = appearance === 'link' ? 'clear' : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
+
+  /* Don't add any styling, just handle the link logic */
+  if (appearance === 'sidebar') {
+    return (
+      <Link
+        href={href || url || ''}
+        {...newTabProps}
+        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}
+      >
+        {children || label}
+      </Link>
+    )
+  }
 
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {

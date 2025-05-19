@@ -11,7 +11,6 @@ import { ThemeProvider } from 'next-themes'
 import { baseUrl } from '@/utilities/baseUrl'
 import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
-import { CompanyInfo, Header } from '@/payload-types'
 import { Sidebar } from '@/components/Sidebar'
 
 export const dynamic = 'force-static'
@@ -21,12 +20,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   const payload = await getPayload({ config: payloadConfig })
 
-  const { contact }: CompanyInfo = await payload.findGlobal({
+  const { contact } = await payload.findGlobal({
     slug: 'company-info',
     depth: 1,
   })
-  const { navItems }: Header = await payload.findGlobal({
-    slug: 'header',
+  const { navItems } = await payload.findGlobal({
+    slug: 'sidebar',
     depth: 1,
   })
 

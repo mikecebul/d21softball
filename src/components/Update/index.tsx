@@ -2,7 +2,7 @@ import { Update } from '@/payload-types'
 import Container from '../Container'
 import { Description, Title } from '../Hero/HeroMedium'
 import { Card, CardContent, CardFooter } from '../ui/card'
-import RichText from '../RichText'
+import { RichText } from '../RichText'
 import { cn } from '@/utilities/cn'
 import { buttonVariants } from '../ui/button'
 import Link from 'next/link'
@@ -24,7 +24,7 @@ export const UpdateBlock = ({ update }: { update: Update }) => {
       </div>
       <div className="pt-12">
         <CardContent className="grid px-0 pt-4 sm:gap-16">
-          <RichText content={content || []} />
+          <RichText data={content} />
         </CardContent>
       </div>
       <CardFooter className="flex justify-between p-0">

@@ -2,10 +2,10 @@ import type { GlobalAfterChangeHook } from 'payload'
 
 import { revalidatePath } from 'next/cache'
 
-export const revalidateHeader: GlobalAfterChangeHook = ({ doc, req }) => {
+export const revalidateSidebar: GlobalAfterChangeHook = ({ doc, req }) => {
   const { payload } = req
 
-  payload.logger.info(`Revalidating header`)
+  payload.logger.info(`Revalidating Sidebar`)
 
   if (req.headers['X-Payload-Migration'] !== 'true') {
     revalidatePath('/(payload)', 'layout')

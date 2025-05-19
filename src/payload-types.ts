@@ -137,12 +137,12 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
-    header: Header;
+    sidebar: Sidebar;
     footer: Footer;
     'company-info': CompanyInfo;
   };
   globalsSelect: {
-    header: HeaderSelect<false> | HeaderSelect<true>;
+    sidebar: SidebarSelect<false> | SidebarSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'company-info': CompanyInfoSelect<false> | CompanyInfoSelect<true>;
   };
@@ -289,10 +289,6 @@ export interface TwoColumnLayoutBlock {
    * The direction of the layout on desktop
    */
   direction?: ('ltr' | 'rtl') | null;
-  /**
-   * The breakpoint at which the layout switches to a two column layout
-   */
-  breakpoint?: ('sm' | 'md' | 'lg' | 'xl') | null;
   columns?: (CTABlock | RichTextBlock | MediaBlock | UpdateSectionType)[] | null;
   id?: string | null;
   blockName?: string | null;
@@ -1121,7 +1117,6 @@ export interface LinkGroupSelect<T extends boolean = true> {
 export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
   nested?: T;
   direction?: T;
-  breakpoint?: T;
   columns?:
     | T
     | {
@@ -1611,9 +1606,9 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
+ * via the `definition` "sidebar".
  */
-export interface Header {
+export interface Sidebar {
   id: string;
   navItems?:
     | {
@@ -1728,9 +1723,9 @@ export interface CompanyInfo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
+ * via the `definition` "sidebar_select".
  */
-export interface HeaderSelect<T extends boolean = true> {
+export interface SidebarSelect<T extends boolean = true> {
   navItems?:
     | T
     | {

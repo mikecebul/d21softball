@@ -1,7 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { Folder, Fuel, LoaderPinwheel, Medal, Scale, Trophy, Users } from 'lucide-react'
+import { Trophy } from 'lucide-react'
+import type { CompanyInfo, Sidebar as SidebarType } from '@/payload-types'
 
 import {
   Sidebar,
@@ -18,49 +19,14 @@ import { SideBarLogo } from './sidebar-logo'
 import { cn } from '@/utilities/cn'
 import { usePathname } from 'next/navigation'
 import { isActiveRoute } from '@/utilities/isActiveRoute'
-import Link from 'next/link'
+import { CMSLink } from '@/components/Link'
 
-// This is sample data.
-const navItems = [
-  {
-    title: 'Tournaments',
-    url: '/tournaments',
-    icon: Trophy,
-    isActive: true,
-  },
-  {
-    title: 'Pitchers',
-    url: '/pitcher-classification',
-    icon: LoaderPinwheel,
-  },
-  {
-    title: 'Archives',
-    url: '/archives',
-    icon: Folder,
-  },
-  {
-    title: 'Hall of Fame',
-    url: '/hall-of-fame',
-    icon: Medal,
-  },
-  {
-    title: 'Fuel/Motels',
-    url: '/fuel-motels',
-    icon: Fuel,
-  },
-  {
-    title: 'Leagues',
-    url: '/leagues',
-    icon: Users,
-  },
-  {
-    title: 'Umpires',
-    url: '/umpires',
-    icon: Scale,
-  },
-]
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  contact?: CompanyInfo['contact']
+  navItems: SidebarType['navItems']
+}
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
   const currentPathName = usePathname()
   const { state } = useSidebar()
   return (
@@ -71,19 +37,30 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {navItems.map((item) => {
-              const isActive = isActiveRoute(currentPathName as string, item.url)
+            {navItems?.map((item) => {
+              const url =
+                typeof item.link?.reference?.value === 'object'
+                  ? item.link.reference?.relationTo === 'pages' &&
+                    typeof (item.link.reference.value as any).slug === 'string'
+                    ? `/${(item.link.reference.value as any).slug}`
+                    : item.link.reference?.relationTo === 'media' &&
+                        typeof (item.link.reference.value as any).url === 'string'
+                      ? (item.link.reference.value as any).url
+                      : ''
+                  : item.link?.url || ''
+
+              const isActive = isActiveRoute(currentPathName as string, url)
               return (
-                <SidebarMenuItem key={item.title}>
-                  <Link href={item.url}>
+                <SidebarMenuItem key={item.id}>
+                  <CMSLink {...item.link} appearance="sidebar">
                     <SidebarMenuButton
-                      tooltip={item.title}
+                      tooltip={item.link?.label}
                       size={'lg'}
                       isActive={isActive}
                       className={cn('cursor-pointer', { 'cursor-default': isActive })}
                     >
-                      {item.icon && (
-                        <item.icon
+                      {true && (
+                        <Trophy
                           className={cn('', {
                             'text-brand stroke-2': isActive,
                           })}
@@ -95,10 +72,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           hidden: state === 'collapsed',
                         })}
                       >
-                        {item.title}
+                        {item.link?.label}
                       </span>
                     </SidebarMenuButton>
-                  </Link>
+                  </CMSLink>
                 </SidebarMenuItem>
               )
             })}

@@ -1,6 +1,6 @@
 'use client'
 
-import type { CompanyInfo, Header } from '@/payload-types'
+import type { CompanyInfo, Sidebar as SidebarType } from '@/payload-types'
 import type { ReactNode } from 'react'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '../ui/sidebar'
 import { AppSidebar } from '../app-sidebar'
@@ -24,11 +24,11 @@ export const Sidebar = ({
   children: ReactNode
   contact: CompanyInfo['contact']
   draft: boolean
-  navItems: Header['navItems']
+  navItems: SidebarType['navItems']
 }) => {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar contact={contact} navItems={navItems} />
       <SidebarInset>
         <AdminBar
           adminBarProps={{

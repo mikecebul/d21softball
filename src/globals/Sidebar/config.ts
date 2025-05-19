@@ -1,19 +1,19 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
-import { revalidateHeader } from './hooks/revalidateHeader'
+import { revalidateSidebar } from './hooks/revalidateSidebar'
 import { authenticated } from '@/access/authenticated'
 import { editorOrHigher } from '@/access/editorOrHigher'
 
-export const Header: GlobalConfig = {
-  slug: 'header',
+export const Sidebar: GlobalConfig = {
+  slug: 'sidebar',
   access: {
     read: authenticated,
     update: editorOrHigher,
   },
   admin: {
     group: 'Website Builder',
-    hideAPIURL: true
+    hideAPIURL: true,
   },
   fields: [
     {
@@ -33,6 +33,6 @@ export const Header: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateHeader],
+    afterChange: [revalidateSidebar],
   },
 }
