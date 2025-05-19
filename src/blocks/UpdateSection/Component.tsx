@@ -1,5 +1,5 @@
 import { UpdateSectionType } from '@/payload-types'
-import {RichText} from '@/components/RichText'
+import { RichText } from '@/components/RichText'
 import {
   Card,
   CardContent,
@@ -36,7 +36,7 @@ export const UpdateSectionBlock = ({ update }: UpdateSectionType) => {
       <CardFooter>
         <Link
           href={`/updates/${slug}`}
-          className={cn('w-full', buttonVariants({ variant: 'brandSecondaryOutline' }))}
+          className={cn('w-full', buttonVariants({ variant: 'brand' }))}
         >
           Read Entire Update
         </Link>

@@ -23,6 +23,10 @@ export type LinkGroup =
           | ({
               relationTo: 'media';
               value: string | Media;
+            } | null)
+          | ({
+              relationTo: 'updates';
+              value: string | Update;
             } | null);
         url?: string | null;
         label: string;
@@ -281,6 +285,46 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "updates".
+ */
+export interface Update {
+  id: string;
+  title: string;
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  dateOrDescription?: ('date' | 'description' | 'none') | null;
+  description?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  hideFromSearchEngines?: boolean | null;
+  metadata?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TwoColumnLayoutBlock".
  */
 export interface TwoColumnLayoutBlock {
@@ -345,46 +389,6 @@ export interface UpdateSectionType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "updates".
- */
-export interface Update {
-  id: string;
-  title: string;
-  publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  dateOrDescription?: ('date' | 'description' | 'none') | null;
-  description?: string | null;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  hideFromSearchEngines?: boolean | null;
-  metadata?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MultiRowLayoutBlock".
  */
 export interface MultiRowLayoutBlock {
@@ -435,6 +439,10 @@ export interface UpdateCardsType {
       | ({
           relationTo: 'media';
           value: string | Media;
+        } | null)
+      | ({
+          relationTo: 'updates';
+          value: string | Update;
         } | null);
     url?: string | null;
     label: string;
@@ -477,6 +485,10 @@ export interface Sponsor {
       | ({
           relationTo: 'media';
           value: string | Media;
+        } | null)
+      | ({
+          relationTo: 'updates';
+          value: string | Update;
         } | null);
     url?: string | null;
   };
@@ -502,6 +514,10 @@ export interface ResourceCardsType {
       | ({
           relationTo: 'media';
           value: string | Media;
+        } | null)
+      | ({
+          relationTo: 'updates';
+          value: string | Update;
         } | null);
     url?: string | null;
     label: string;
@@ -534,6 +550,10 @@ export interface Resource {
       | ({
           relationTo: 'media';
           value: string | Media;
+        } | null)
+      | ({
+          relationTo: 'updates';
+          value: string | Update;
         } | null);
     url?: string | null;
     label: string;
@@ -569,6 +589,10 @@ export interface LinksBlock {
             | ({
                 relationTo: 'media';
                 value: string | Media;
+              } | null)
+            | ({
+                relationTo: 'updates';
+                value: string | Update;
               } | null);
           url?: string | null;
           label: string;
@@ -1623,6 +1647,10 @@ export interface Sidebar {
             | ({
                 relationTo: 'media';
                 value: string | Media;
+              } | null)
+            | ({
+                relationTo: 'updates';
+                value: string | Update;
               } | null);
           url?: string | null;
           label: string;
@@ -1653,6 +1681,10 @@ export interface Footer {
             | ({
                 relationTo: 'media';
                 value: string | Media;
+              } | null)
+            | ({
+                relationTo: 'updates';
+                value: string | Update;
               } | null);
           url?: string | null;
           label: string;
@@ -1703,6 +1735,10 @@ export interface CompanyInfo {
             | ({
                 relationTo: 'media';
                 value: string | Media;
+              } | null)
+            | ({
+                relationTo: 'updates';
+                value: string | Update;
               } | null);
           url?: string | null;
           label: string;

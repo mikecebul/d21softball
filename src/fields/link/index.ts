@@ -1,4 +1,4 @@
-import type { Field, GroupField } from 'payload'
+import type { Field, GroupField, Where } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
 import { addHTTPS } from '@/hooks/addHTTPS'
@@ -106,7 +106,7 @@ export const link: LinkType = ({
       },
       label: 'Document to link to',
       maxDepth: 1,
-      relationTo: ['pages', 'media'],
+      relationTo: ['pages', 'media', 'updates'],
       required: true,
       filterOptions: ({ relationTo }) => {
         if (relationTo === 'media') {
@@ -115,6 +115,9 @@ export const link: LinkType = ({
           }
         }
         if (relationTo === 'pages') {
+          return true
+        }
+        if (relationTo === 'updates') {
           return true
         }
         return false

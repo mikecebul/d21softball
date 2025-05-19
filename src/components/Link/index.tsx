@@ -5,7 +5,7 @@ import { cn } from 'src/utilities/cn'
 import Link from 'next/link'
 import React from 'react'
 
-import type { Page, Media } from '@/payload-types'
+import type { Page, Media, Update } from '@/payload-types'
 
 type CMSLinkType = {
   appearance?: 'inline' | 'sidebar' | ButtonProps['variant']
@@ -15,8 +15,8 @@ type CMSLinkType = {
   newTab?: boolean | null
   onClick?: React.MouseEventHandler<HTMLAnchorElement> | React.MouseEventHandler<HTMLButtonElement>
   reference?: {
-    relationTo: 'pages' | 'media'
-    value: Page | Media | string | number
+    relationTo: 'pages' | 'media' | 'updates'
+    value: Page | Media | Update | string | number
   } | null
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
@@ -43,7 +43,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         ? reference.value.url // Use the URL from the Media object
         : reference?.relationTo === 'pages' && 'slug' in reference.value
           ? `/${reference.value.slug}` // Use the slug from the Page object
-          : null
+          : reference?.relationTo === 'updates' && 'slug' in reference.value
+            ? `/updates/${reference.value.slug}` // Use the slug from the Update object
+            : null
       : url
 
   if (!href) return null
