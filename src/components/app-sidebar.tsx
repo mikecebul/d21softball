@@ -71,40 +71,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {navItems.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <Link href={item.url}>
-                  <SidebarMenuButton
-                    tooltip={item.title}
-                    size={'lg'}
-                    isActive={isActiveRoute(currentPathName as string, item.url)}
-                    className="cursor-pointer"
-                  >
-                    {state !== 'collapsed' &&
-                      isActiveRoute(currentPathName as string, item.url) && (
-                        <p className="text-brand text-lg font-semibold">|</p>
-                      )}
-                    {item.icon && (
-                      <item.icon
-                        className={cn('', {
-                          'text-brand stroke-2': isActiveRoute(currentPathName as string, item.url),
-                        })}
-                      />
-                    )}
-                    <span
-                      className={cn('text-lg', {
-                        'text-brand font-semibold': isActiveRoute(
-                          currentPathName as string,
-                          item.url,
-                        ),
-                      })}
+            {navItems.map((item) => {
+              const isActive = isActiveRoute(currentPathName as string, item.url)
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <Link href={item.url}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      size={'lg'}
+                      isActive={isActive}
+                      className={cn('cursor-pointer', { 'cursor-default': isActive })}
                     >
-                      {item.title}
-                    </span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-            ))}
+                      {item.icon && (
+                        <item.icon
+                          className={cn('', {
+                            'text-brand stroke-2': isActive,
+                          })}
+                        />
+                      )}
+                      <span
+                        className={cn('text-lg', {
+                          'text-brand': isActive,
+                          hidden: state === 'collapsed',
+                        })}
+                      >
+                        {item.title}
+                      </span>
+                    </SidebarMenuButton>
+                  </Link>
+                </SidebarMenuItem>
+              )
+            })}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

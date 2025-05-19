@@ -70,7 +70,7 @@ export const RenderBlocks: React.FC<{
               return nested ? (
                 <Block key={index} {...(block as any)} nested={nested} />
               ) : (
-                <div key={index} className="py-24 last:pb-36">
+                <div key={index} className="py-24 first:pt-12">
                   <Block {...(block as any)} nested={nested} />
                 </div>
               )

@@ -1,6 +1,5 @@
 'use client'
 
-import { DollarSign } from 'lucide-react'
 import { Button } from '../ui/button'
 
 export const RegisterButton = ({ teamName, price }: { teamName: string; price: number }) => {

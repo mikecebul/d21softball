@@ -38,10 +38,10 @@ export const TournamentCardsBlock = ({ tournaments }: TournamentCardsBlockType) 
               </CardContent>
               <CardFooter>
                 <Link
-                  href={`/`}
-                  className={cn('w-full', buttonVariants({ variant: 'brand', size: 'default' }))}
+                  href={`/tournaments/${tournament.slug}`}
+                  className={cn('w-full', buttonVariants({ variant: 'brand', size: 'lg' }))}
                 >
-                  Register
+                  Details
                 </Link>
               </CardFooter>
             </Card>

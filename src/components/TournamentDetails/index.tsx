@@ -72,10 +72,10 @@ export default function TournamentDetails(details: Tournament) {
   }
 
   return (
-    <Container className="mx-auto max-w-5xl pb-24 pt-12">
+    <Container className="pb-16">
       <div className="py-8 sm:py-12">
         <Title text={details.title} heading="h1" />
-        <div className="mt-4 flex flex-col gap-1 text-muted-foreground sm:flex-row sm:items-center sm:gap-6">
+        <div className="text-muted-foreground mt-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-6">
           <div className="flex items-center gap-2">
             <CalendarDays className="h-5 w-5" />
             <span>
@@ -136,6 +136,12 @@ export default function TournamentDetails(details: Tournament) {
                   </div>
                 </div>
               </CardContent>
+              <CardHeader>
+                <CardTitle>About the Tournament</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RichText content={details.description} enableProse={false} />
+              </CardContent>
             </Card>
 
             {/* Registration Card */}
@@ -154,9 +160,9 @@ export default function TournamentDetails(details: Tournament) {
                       return (
                         <li
                           key={team.id}
-                          className="flex items-center justify-between text-pretty rounded-lg bg-brand-secondary p-3 transition-colors hover:bg-brand-secondary/90"
+                          className="bg-brand-secondary hover:bg-brand-secondary/90 flex items-center justify-between rounded-lg p-3 text-pretty transition-colors"
                         >
-                          <span className="font-medium text-primary-foreground">
+                          <span className="text-primary-foreground font-medium">
                             {team.title}
                             {team.city ? <p>{team.city}</p> : null}
                           </span>
@@ -178,7 +184,7 @@ export default function TournamentDetails(details: Tournament) {
                       )
                     })
                   ) : (
-                    <p className="text-xl text-muted-foreground">TBD</p>
+                    <p className="text-muted-foreground text-xl">TBD</p>
                   )}
                 </ul>
               </CardContent>
@@ -186,14 +192,14 @@ export default function TournamentDetails(details: Tournament) {
           </div>
 
           {/* Additional Info */}
-          <Card className="">
+          {/* <Card className="w-fit">
             <CardHeader>
               <CardTitle>About the Tournament</CardTitle>
             </CardHeader>
             <CardContent>
               <RichText content={details.description} enableProse={false} />
             </CardContent>
-          </Card>
+          </Card> */}
         </TabsContent>
 
         <TabsContent value="games">
@@ -206,13 +212,13 @@ export default function TournamentDetails(details: Tournament) {
                 <div key={id} className="rounded-lg border p-4">
                   <div className="mb-2 flex items-center justify-between">
                     <span className="font-semibold">Game {index + 1}</span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-muted-foreground text-sm">
                       {date ? format(new Date(date), 'MMM d, h:mm a') : 'TBD'}
                     </span>
                   </div>
                   <div className="flex items-end gap-4 space-y-3 lg:gap-8">
-                    <div className="flex flex-1 flex-col items-center justify-between gap-4 rounded-md bg-muted/50 p-3">
-                      <span className="text-pretty text-center font-semibold leading-5 lg:text-lg">
+                    <div className="bg-muted/50 flex flex-1 flex-col items-center justify-between gap-4 rounded-md p-3">
+                      <span className="text-center leading-5 font-semibold text-pretty lg:text-lg">
                         {typeof homeTeam?.team === 'object' ? homeTeam.team.title : 'TBD'}
                       </span>
                       {homeTeam?.score !== undefined && (
@@ -229,8 +235,8 @@ export default function TournamentDetails(details: Tournament) {
                         </span>
                       )}
                     </div>
-                    <div className="flex flex-1 flex-col items-center justify-between gap-4 rounded-md bg-muted/50 p-3">
-                      <span className="text-pretty text-center font-semibold leading-5 lg:text-lg">
+                    <div className="bg-muted/50 flex flex-1 flex-col items-center justify-between gap-4 rounded-md p-3">
+                      <span className="text-center leading-5 font-semibold text-pretty lg:text-lg">
                         {typeof visitorTeam?.team === 'object' ? visitorTeam.team.title : 'TBD'}
                       </span>
                       {visitorTeam?.score !== undefined && (
@@ -248,7 +254,7 @@ export default function TournamentDetails(details: Tournament) {
                       )}
                     </div>
                   </div>
-                  <div className="-mt-6 block text-center text-sm font-medium text-muted-foreground lg:text-base">
+                  <div className="text-muted-foreground -mt-6 block text-center text-sm font-medium lg:text-base">
                     VS
                   </div>
                   <div>
@@ -273,7 +279,7 @@ export default function TournamentDetails(details: Tournament) {
         </TabsContent>
 
         <TabsContent value="gallery">
-          <Carousel className="mx-auto w-full max-w-3xl">
+          <Carousel className="ml-12 w-full max-w-4xl">
             {/* Needs better type checking system */}
             <CarouselContent className="">
               {images.map((image) => (
