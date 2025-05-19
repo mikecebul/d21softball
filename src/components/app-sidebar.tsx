@@ -12,50 +12,57 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from '@/components/ui/sidebar'
 import { SideBarLogo } from './sidebar-logo'
+import { cn } from '@/utilities/cn'
+import { usePathname } from 'next/navigation'
+import { isActiveRoute } from '@/utilities/isActiveRoute'
+import Link from 'next/link'
 
 // This is sample data.
 const navItems = [
   {
     title: 'Tournaments',
-    url: '#',
+    url: '/tournaments',
     icon: Trophy,
     isActive: true,
   },
   {
     title: 'Pitchers',
-    url: '#',
+    url: '/pitchers',
     icon: LoaderPinwheel,
   },
   {
     title: 'Archives',
-    url: '#',
+    url: '/archives',
     icon: Folder,
   },
   {
     title: 'Hall of Fame',
-    url: '#',
+    url: '/hall-of-fame',
     icon: Medal,
   },
   {
     title: 'Fuel/Motels',
-    url: '#',
+    url: '/fuel-motels',
     icon: Fuel,
   },
   {
     title: 'Leagues',
-    url: '#',
+    url: '/leagues',
     icon: Users,
   },
   {
     title: 'Umpires',
-    url: '#',
+    url: '/umpires',
     icon: Scale,
   },
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const currentPathName = usePathname()
+  const { state } = useSidebar()
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -66,10 +73,36 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             {navItems.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                </SidebarMenuButton>
+                <Link href={item.url}>
+                  <SidebarMenuButton
+                    tooltip={item.title}
+                    size={'lg'}
+                    isActive={isActiveRoute(currentPathName as string, item.url)}
+                    className="cursor-pointer"
+                  >
+                    {state !== 'collapsed' &&
+                      isActiveRoute(currentPathName as string, item.url) && (
+                        <p className="text-brand text-lg font-semibold">|</p>
+                      )}
+                    {item.icon && (
+                      <item.icon
+                        className={cn('', {
+                          'text-brand stroke-2': isActiveRoute(currentPathName as string, item.url),
+                        })}
+                      />
+                    )}
+                    <span
+                      className={cn('text-lg', {
+                        'text-brand font-semibold': isActiveRoute(
+                          currentPathName as string,
+                          item.url,
+                        ),
+                      })}
+                    >
+                      {item.title}
+                    </span>
+                  </SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
             ))}
           </SidebarMenu>

@@ -13,6 +13,9 @@ export const TournamentCards: Block = {
       type: 'relationship',
       relationTo: 'tournaments',
       hasMany: true,
+      admin: {
+        appearance: 'drawer',
+      },
       minRows: 1,
       filterOptions: () => {
         const date = new Date(new Date().getFullYear(), 0, 1) // January 1st of the current year
@@ -20,7 +23,7 @@ export const TournamentCards: Block = {
           // Filter out tournaments that happened before the current year
           startDate: { greater_than_equal: date },
         }
-      }
+      },
     },
   ],
 }

@@ -33,7 +33,7 @@ export default async function UpdatePage({ params: paramsPromise }: Args) {
   if (!details) return <PayloadRedirects url={url} />
 
   return (
-    <main className="">
+    <main className="@container">
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       <TournamentDetails {...details} />
