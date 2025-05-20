@@ -36,6 +36,7 @@ import {
   NotebookPen,
   Info,
   Globe,
+  History,
 } from 'lucide-react'
 import { ReactNode } from 'react'
 import { cn } from '@/utilities/cn'
@@ -112,6 +113,7 @@ export const lucideIcons = [
   { component: GraduationCap, label: 'Graduation Cap', value: 'GraduationCap' },
   { component: Users, label: 'Group', value: 'Users' },
   { component: Handshake, label: 'Handshake', value: 'Handshake' },
+  { component: History, label: 'History', value: 'History' },
   { component: Info, label: 'Info', value: 'Info' },
   { component: Tally4, label: 'Jail', value: 'Tally4' },
   { component: Mail, label: 'Mail', value: 'Mail' },
@@ -190,5 +192,6 @@ export const lucideIconArray = [
   NotebookPen,
   Info,
   Globe,
+  History,
 ]
 export type LuicideIconArray = typeof lucideIconArray

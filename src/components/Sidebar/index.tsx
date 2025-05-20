@@ -32,7 +32,6 @@ export const Sidebar = ({
 }) => {
   const pathname = usePathname()
   const pathSegments = pathname.split('/').filter((segment) => segment !== '')
-  console.log('path segments', pathSegments)
 
   return (
     <SidebarProvider>

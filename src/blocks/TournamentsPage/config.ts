@@ -25,12 +25,21 @@ export const TournamentsPage: Block = {
       defaultValue: true,
     },
     {
+      name: 'archives',
+      type: 'checkbox',
+      label: 'Show Only Archives',
+      defaultValue: false,
+      admin: {
+        condition: (_, siblingData) => siblingData?.showAll === true,
+      },
+    },
+    {
       name: 'tournaments',
       type: 'relationship',
       relationTo: 'tournaments',
       hasMany: true,
       admin: {
-        condition: (_, siblingData) => !siblingData?.showAll,
+        condition: (_, siblingData) => siblingData?.showAll === false,
       },
     },
     {
@@ -42,6 +51,7 @@ export const TournamentsPage: Block = {
         components: {
           RowLabel: '@/components/RowLabel/RowLabelWithTitle',
         },
+        condition: (_, siblingData) => siblingData?.showAll === false,
       },
       fields: [
         {

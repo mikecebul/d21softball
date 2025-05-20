@@ -46,6 +46,7 @@ export const Tournaments: CollectionConfig = {
         path: `/tournaments/${typeof doc?.slug === 'string' ? doc.slug : ''}`,
       }),
   },
+  enableQueryPresets: true,
   fields: [
     {
       type: 'tabs',
@@ -280,6 +281,17 @@ export const Tournaments: CollectionConfig = {
           ],
         },
       ],
+    },
+    {
+      name: 'archived',
+      type: 'checkbox',
+      label: 'Archived',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        width: 'full',
+        description: 'If checked, this tournament will found at /archives.',
+      },
     },
     {
       name: 'publishedAt',

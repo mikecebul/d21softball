@@ -1,7 +1,6 @@
 import { CTALinks } from '@/components/CTALinks'
 import { Description, Title } from '@/components/Hero/HeroMedium'
 import { Icon } from '@/components/Icons/Icon'
-import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { CTABlock as CTABlockType } from '@/payload-types'
 import { cn } from '@/utilities/cn'

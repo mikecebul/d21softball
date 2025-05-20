@@ -16,7 +16,6 @@ export async function generateStaticParams() {
     limit: 1000,
     overrideAccess: true,
   })
-
   return details.docs?.map(({ slug }) => ({ slug })) || []
 }
 

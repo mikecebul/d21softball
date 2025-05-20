@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card'
 import { CalendarIcon, CreditCardIcon, MapPinIcon } from 'lucide-react'
 import { format } from 'date-fns'
-import {RichText} from '@/components/RichText'
+import { RichText } from '@/components/RichText'
 import { Description, Title } from '@/components/Hero/HeroMedium'
 import { TournamentsPageType } from '@/payload-types'
 import Link from 'next/link'
@@ -24,9 +24,8 @@ export const TournamentsPageBlock = async ({
   title,
   tournaments,
   showAll,
+  archives,
 }: TournamentsPageType) => {
-  const date = new Date(new Date().getFullYear(), 0, 1) // January 1st of the current year
-
   const payload = await getPayload({ config: configPromise })
   const { docs: fetchedTournaments } = await payload.find({
     collection: 'tournaments',
@@ -42,7 +41,7 @@ export const TournamentsPageBlock = async ({
           },
         },
         {
-          startDate: { greater_than_equal: date },
+          archived: { equals: archives },
         },
       ],
     },
@@ -81,7 +80,7 @@ export const TournamentsPageBlock = async ({
                       </span>
                       <span
                         className={cn('flex items-center gap-2', {
-                          'select-none opacity-0': !hasUnpaidTeams,
+                          'opacity-0 select-none': !hasUnpaidTeams,
                         })}
                       >
                         <CreditCardIcon className="size-4" />
