@@ -17,6 +17,7 @@ export async function generateStaticParams() {
     overrideAccess: true,
   })
 
+  console.log('update', update)
   return update.docs?.map(({ slug }) => ({ slug })) || []
 }
 

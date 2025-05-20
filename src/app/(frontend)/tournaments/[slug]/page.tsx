@@ -25,7 +25,7 @@ type Args = {
     slug?: string
   }>
 }
-export default async function UpdatePage({ params: paramsPromise }: Args) {
+export default async function TournamentPage({ params: paramsPromise }: Args) {
   const { slug = 'home' } = await paramsPromise
   const url = '/tournaments/' + slug
   const details = await queryUpdateBySlug({ slug })

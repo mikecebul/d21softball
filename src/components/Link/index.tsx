@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, type ButtonProps } from '@/components/ui/button'
+import { Button, buttonVariants, type ButtonProps } from '@/components/ui/button'
 import { cn } from 'src/utilities/cn'
 import Link from 'next/link'
 import React from 'react'
@@ -103,7 +103,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
       variant={appearance}
       onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
     >
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link
+        className={cn(className, buttonVariants({ variant: appearance ?? 'default' }))}
+        href={href || url || ''}
+        {...newTabProps}
+      >
         {label && label}
         {children && children}
       </Link>

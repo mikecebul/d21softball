@@ -71,7 +71,7 @@ export const UpdateCard = ({ description, content, title, updatedAt, slug, id }:
       <CardFooter>
         <Link
           href={`/updates/${slug}`}
-          className={cn('w-full', buttonVariants({ variant: 'outline' }))}
+          className={cn('w-full', buttonVariants({ variant: 'brandSecondaryOutline' }))}
         >
           Read Entire Update
         </Link>
