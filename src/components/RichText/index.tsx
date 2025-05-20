@@ -56,7 +56,7 @@ const jsxConverters = (paragraphClassName?: string): JSXConvertersFunction<NodeT
           h5: 'text-xl font-medium tracking-tight text-balance max-w-prose pb-4',
           h6: 'text-lg font-medium tracking-tight text-balance max-w-prose pb-4',
         }
-        const textSizeClass = textSizeMap[Tag] || 'text-lg'
+        const textSizeClass = textSizeMap[Tag] || 'text-lg text-left'
 
         return <Tag className={cn('prose text-pretty', textSizeClass)}>{children}</Tag>
       },

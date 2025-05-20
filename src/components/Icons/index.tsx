@@ -37,6 +37,7 @@ import {
   Info,
   Globe,
   History,
+  LoaderPinwheel,
 } from 'lucide-react'
 import { ReactNode } from 'react'
 import { cn } from '@/utilities/cn'
@@ -115,6 +116,7 @@ export const lucideIcons = [
   { component: Handshake, label: 'Handshake', value: 'Handshake' },
   { component: History, label: 'History', value: 'History' },
   { component: Info, label: 'Info', value: 'Info' },
+  { component: LoaderPinwheel, label: 'Loader Pinwheel', value: 'LoaderPinwheel' },
   { component: Tally4, label: 'Jail', value: 'Tally4' },
   { component: Mail, label: 'Mail', value: 'Mail' },
   { component: Menu, label: 'Menu', value: 'Menu' },
@@ -193,5 +195,6 @@ export const lucideIconArray = [
   Info,
   Globe,
   History,
+  LoaderPinwheel,
 ]
 export type LuicideIconArray = typeof lucideIconArray
