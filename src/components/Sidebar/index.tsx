@@ -14,6 +14,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { Home } from 'lucide-react'
+import React from 'react'
 
 export const Sidebar = ({
   children,
@@ -26,6 +30,10 @@ export const Sidebar = ({
   draft: boolean
   navItems: SidebarType['navItems']
 }) => {
+  const pathname = usePathname()
+  const pathSegments = pathname.split('/').filter((segment) => segment !== '')
+  console.log('path segments', pathSegments)
+
   return (
     <SidebarProvider>
       <AppSidebar contact={contact} navItems={navItems} />
@@ -42,13 +50,29 @@ export const Sidebar = ({
               <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
               <Breadcrumb>
                 <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                    <BreadcrumbLink asChild>
+                      <Link href="/" className="flex items-center">
+                        <Home className="h-4 w-4" />
+                      </Link>
+                    </BreadcrumbLink>
                   </BreadcrumbItem>
+                  {pathSegments.map((segment, index) => (
+                    <React.Fragment key={segment}>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        {index === pathSegments.length - 1 ? (
+                          <BreadcrumbPage className="capitalize">{segment}</BreadcrumbPage>
+                        ) : (
+                          <BreadcrumbLink asChild className="capitalize">
+                            <Link href={`/${pathSegments.slice(0, index + 1).join('/')}`}>
+                              {segment}
+                            </Link>
+                          </BreadcrumbLink>
+                        )}
+                      </BreadcrumbItem>
+                    </React.Fragment>
+                  ))}
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
