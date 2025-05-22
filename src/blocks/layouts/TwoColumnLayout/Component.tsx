@@ -4,7 +4,6 @@ import { cn } from '@/utilities/cn'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 
 export const TwoColumnLayoutBlock = ({
-  breakpoint = 'md',
   columns,
   direction = 'ltr',
   nested,

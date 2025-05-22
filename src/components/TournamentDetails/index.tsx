@@ -282,18 +282,25 @@ export default function TournamentDetails({ details }: { details: Tournament }) 
           <Carousel className="ml-12 w-full max-w-4xl">
             {/* Needs better type checking system */}
             <CarouselContent className="">
-              {images.map((image) => (
-                <CarouselItem key={image.id}>
-                  <Image
-                    className="max-h-96 rounded-lg object-cover shadow-lg ring-1 ring-gray-400/10"
-                    src={image.url ?? ''}
-                    alt={image.alt}
-                    width={image.width ?? 960}
-                    height={image.height ?? 640}
-                    priority={true}
-                  />
-                </CarouselItem>
-              ))}
+              {!!details.gallery?.media &&
+                typeof details.gallery?.media === 'object' &&
+                details.gallery.media.map((image) => {
+                  if (typeof image === 'string') return null
+                  return (
+                    <CarouselItem key={typeof image === 'object' ? image.id : ''}>
+                      <div className="h-96 w-full">
+                        <Image
+                          className="h-full w-full rounded-lg object-contain shadow-lg ring-1 ring-gray-400/10"
+                          src={image.url ?? ''}
+                          alt={image.alt}
+                          width={image.width ?? 960}
+                          height={image.height ?? 640}
+                          priority={true}
+                        />
+                      </div>
+                    </CarouselItem>
+                  )
+                })}
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />

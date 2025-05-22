@@ -30,6 +30,7 @@ export const Tournaments: CollectionConfig = {
     update: editorOrHigher,
   },
   admin: {
+    folders: true,
     group: 'Softball',
     hideAPIURL: !superAdmin,
     useAsTitle: 'title',
@@ -239,6 +240,17 @@ export const Tournaments: CollectionConfig = {
             {
               name: 'awards',
               type: 'richText',
+            },
+          ],
+        },
+        {
+          name: 'gallery',
+          fields: [
+            {
+              name: 'media',
+              type: 'relationship',
+              relationTo: 'media',
+              hasMany: true,
             },
           ],
         },
