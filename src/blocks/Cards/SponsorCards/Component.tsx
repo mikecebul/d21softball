@@ -6,7 +6,7 @@ import { CardGrid } from '@/components/Cards/CardGrid'
 
 export const SponsorCardsBlock = async ({ sponsors }: SponsorCardsType) => {
   return (
-    <CardGrid>
+    <CardGrid centered>
       {sponsors &&
         sponsors.map((card) => {
           if (typeof card === 'string') return null

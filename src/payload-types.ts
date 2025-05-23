@@ -513,7 +513,7 @@ export interface TwoColumnLayoutBlock {
    * The direction of the layout on desktop
    */
   direction?: ('ltr' | 'rtl') | null;
-  columns?: (CTABlock | RichTextBlock | MediaBlock | UpdateSectionType)[] | null;
+  columns?: (CTABlock | RichTextBlock | MediaBlock | UpdateSectionType | ResourceSectionType)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'twoColumnLayout';
@@ -566,6 +566,52 @@ export interface UpdateSectionType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'updateSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceSectionType".
+ */
+export interface ResourceSectionType {
+  resource: string | Resource;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resourceSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources".
+ */
+export interface Resource {
+  id: string;
+  title: string;
+  description?: string | null;
+  image?: (string | null) | Media;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: string | Media;
+        } | null)
+      | ({
+          relationTo: 'updates';
+          value: string | Update;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -709,42 +755,6 @@ export interface ResourceCardsType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'resourceCards';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "resources".
- */
-export interface Resource {
-  id: string;
-  title: string;
-  description?: string | null;
-  image?: (string | null) | Media;
-  link: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'media';
-          value: string | Media;
-        } | null)
-      | ({
-          relationTo: 'updates';
-          value: string | Update;
-        } | null);
-    url?: string | null;
-    label: string;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline' | 'brand' | 'brandOutline' | 'brandSecondary' | 'brandSecondaryOutline') | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1246,6 +1256,7 @@ export interface TwoColumnLayoutBlockSelect<T extends boolean = true> {
         richText?: T | RichTextBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         updateSection?: T | UpdateSectionTypeSelect<T>;
+        resourceSection?: T | ResourceSectionTypeSelect<T>;
       };
   id?: T;
   blockName?: T;
@@ -1276,6 +1287,15 @@ export interface MediaBlockSelect<T extends boolean = true> {
  */
 export interface UpdateSectionTypeSelect<T extends boolean = true> {
   update?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceSectionType_select".
+ */
+export interface ResourceSectionTypeSelect<T extends boolean = true> {
+  resource?: T;
   id?: T;
   blockName?: T;
 }

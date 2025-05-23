@@ -6,12 +6,16 @@ export const TitleBlock = ({ title, description, alignment, heading }: TitleBloc
   return (
     <div
       className={cn('flex flex-col gap-y-4', {
-        'items-center text-center': alignment === 'center',
+        'items-left mx-auto w-fit text-left': alignment === 'center',
         'items-start text-left': alignment === 'left',
         'items-end text-left': alignment === 'right',
       })}
     >
-      <Title text={title} heading={heading ?? 'h2'} />
+      <Title
+        text={title}
+        heading={heading ?? 'h2'}
+        className={cn('', { 'text-center': alignment === 'center' })}
+      />
       {description && <Description text={description} />}
     </div>
   )

@@ -24,6 +24,7 @@ import { ResourceCardsBlock } from './Cards/ResourceCards/Component'
 import { UpdateSectionBlock } from './UpdateSection/Component'
 import { FormComponent } from './Form/Component'
 import { PitcherTable } from './PitcherTable/Component'
+import { ResourceSectionBlock } from './ResourceSection/Component'
 
 const blockComponents = {
   richText: RichTextBlock,
@@ -40,6 +41,7 @@ const blockComponents = {
   updateCards: UpdateCardsBlock,
   sponsorCards: SponsorCardsBlock,
   updateSection: UpdateSectionBlock,
+  resourceSection: ResourceSectionBlock,
   form: FormComponent,
   pitcherTable: PitcherTable,
 }

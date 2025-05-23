@@ -3,6 +3,7 @@ import { CTA } from '@/blocks/CTA/config'
 import { RichText } from '@/blocks/RichText/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { UpdateSection } from '@/blocks/UpdateSection/config'
+import { ResourceSection } from '@/blocks/ResourceSection/config'
 
 export const TwoColumnLayout: Block = {
   slug: 'twoColumnLayout',
@@ -29,7 +30,7 @@ export const TwoColumnLayout: Block = {
     {
       name: 'columns',
       type: 'blocks',
-      blocks: [CTA, RichText, MediaBlock, UpdateSection],
+      blocks: [CTA, RichText, MediaBlock, UpdateSection, ResourceSection],
       maxRows: 2,
     },
   ],

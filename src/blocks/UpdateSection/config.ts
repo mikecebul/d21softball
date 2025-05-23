@@ -1,4 +1,4 @@
-import { Block } from "payload";
+import { Block } from 'payload'
 
 export const UpdateSection: Block = {
   slug: 'updateSection',
@@ -10,8 +10,8 @@ export const UpdateSection: Block = {
       relationTo: 'updates',
       required: true,
       admin: {
-        sortOptions: "-createdAt",
-      }
+        sortOptions: '-createdAt',
+      },
     },
   ],
 }

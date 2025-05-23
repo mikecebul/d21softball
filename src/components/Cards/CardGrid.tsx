@@ -1,5 +1,10 @@
+import { cn } from '@/utilities/cn'
 import type { ReactNode } from 'react'
 
-export const CardGrid = ({ children }: { children: ReactNode }) => {
-  return <div className="mx-auto flex flex-wrap gap-8">{children}</div>
+export const CardGrid = ({ centered, children }: { centered?: boolean; children: ReactNode }) => {
+  return (
+    <div className={cn('flex flex-wrap justify-start gap-8', { 'justify-center': centered })}>
+      {children}
+    </div>
+  )
 }
