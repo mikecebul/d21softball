@@ -7,6 +7,9 @@ import { Metadata } from 'next'
 import { getPayload } from 'payload'
 import { generateMeta } from '@/utilities/generateMeta'
 import { UpdateBlock } from '@/components/Update'
+import { Main } from '@/components/Main'
+import { PayloadAdminBar } from 'payload-admin-bar'
+import { baseUrl } from '@/utilities/baseUrl'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -17,7 +20,6 @@ export async function generateStaticParams() {
     overrideAccess: true,
   })
 
-  console.log('update', update)
   return update.docs?.map(({ slug }) => ({ slug })) || []
 }
 
@@ -34,11 +36,21 @@ export default async function UpdatePage({ params: paramsPromise }: Args) {
   if (!update) return <PayloadRedirects url={url} />
 
   return (
-    <main className="">
+    <Main>
+      <PayloadAdminBar
+        cmsURL={baseUrl}
+        collection="updates"
+        id={update.id}
+        style={{
+          position: 'relative',
+          paddingLeft: '2rem',
+          paddingRight: '2rem',
+        }}
+      />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       <UpdateBlock update={update} />
-    </main>
+    </Main>
   )
 }
 

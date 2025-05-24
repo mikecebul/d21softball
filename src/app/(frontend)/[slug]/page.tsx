@@ -11,6 +11,9 @@ import { generateMeta } from '@/utilities/generateMeta'
 
 import type { Page as PageType } from '@/payload-types'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { Main } from '@/components/Main'
+import { PayloadAdminBar } from 'payload-admin-bar'
+import { baseUrl } from '@/utilities/baseUrl'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -55,12 +58,21 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { layout } = page
 
   return (
-    <main className="@container">
-      {/* Allows redirects for valid pages too */}
+    <Main>
+      <PayloadAdminBar
+        cmsURL={baseUrl}
+        collection="pages"
+        id={page.id}
+        style={{
+          position: 'relative',
+          paddingLeft: '2rem',
+          paddingRight: '2rem',
+        }}
+      />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RenderBlocks blocks={layout} />
-    </main>
+    </Main>
   )
 }
 

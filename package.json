@@ -23,6 +23,7 @@
   "dependencies": {
     "@lucide/lab": "^0.1.2",
     "@payload-bites/image-search": "2.0.1",
+    "@payloadcms/admin-bar": "3.39.1",
     "@payloadcms/db-mongodb": "3.39.1",
     "@payloadcms/email-nodemailer": "3.39.1",
     "@payloadcms/live-preview-react": "3.39.1",

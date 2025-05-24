@@ -30,7 +30,6 @@ export const CompanyInfo: GlobalConfig = {
     {
       name: 'contact',
       type: 'group',
-      admin: {},
       fields: [
         {
           type: 'row',
@@ -59,85 +58,6 @@ export const CompanyInfo: GlobalConfig = {
               defaultValue: '(231) 547-1144',
               admin: { width: '50%' },
             },
-            {
-              name: 'fax',
-              label: 'Fax',
-              type: 'text',
-              defaultValue: '(231) 547-4970',
-              admin: { width: '50%' },
-            },
-          ],
-        },
-        {
-          name: 'physicalAddress',
-          type: 'group',
-          label: 'Physical Address',
-          fields: [
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'street',
-                  label: 'Street Address',
-                  type: 'text',
-                  required: true,
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'cityStateZip',
-                  label: 'City, State, Zip',
-                  type: 'text',
-                  required: true,
-                  admin: { width: '50%' },
-                },
-              ],
-            },
-            {
-              name: 'googleMapLink',
-              type: 'text',
-              admin: {
-                width: '50%',
-                description: 'Link for directions on Google Maps',
-              },
-            },
-          ],
-        },
-        {
-          name: 'mailingAddress',
-          type: 'group',
-          label: 'Mailing Address',
-          fields: [
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'street',
-                  label: 'Street Address',
-                  type: 'text',
-                  validate: (value, { siblingData }) => {
-                    if (siblingData?.cityStateZip && !value) {
-                      return 'Mailing address must have both street and city, state, zip.'
-                    }
-                    return true
-                  },
-                  admin: {
-                    width: '50%'
-                  },
-                },
-                {
-                  name: 'cityStateZip',
-                  label: 'City, State, Zip',
-                  type: 'text',
-                  validate: (value, { siblingData }) => {
-                    if (siblingData?.street && !value) {
-                      return 'Mailing address must have both street and city, state, zip.'
-                    }
-                    return true
-                  },
-                  admin: { width: '50%' },
-                },
-              ],
-            },
           ],
         },
       ],
@@ -153,71 +73,13 @@ export const CompanyInfo: GlobalConfig = {
       fields: [
         {
           name: 'platform',
-          type: 'text',
+          type: 'select',
+          options: [{ label: 'Facebook', value: 'Facebook' }],
+          defaultValue: 'Facebook',
         },
         link({
           appearances: false,
         }),
-      ],
-    },
-    {
-      name: 'hours',
-      type: 'array',
-      admin: {
-        components: {
-          RowLabel: '@/globals/CompanyInfo/HoursRowLabel',
-        },
-      },
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'type',
-              type: 'radio',
-              admin: {
-                layout: 'horizontal',
-                width: '50%',
-              },
-              defaultValue: 'default',
-              options: [
-                {
-                  label: 'Day/Hours',
-                  value: 'default',
-                },
-                {
-                  label: 'Custom Note',
-                  value: 'custom',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'row',
-          admin: {
-            condition: (_, siblingData) => siblingData?.type === 'default',
-          },
-          fields: [
-            {
-              name: 'day',
-              type: 'text',
-              admin: { width: '50%' },
-            },
-            {
-              name: 'hours',
-              type: 'text',
-              admin: { width: '50%' },
-            },
-          ],
-        },
-        {
-          name: 'note',
-          type: 'text',
-          admin: {
-            condition: (_, siblingData) => siblingData?.type === 'custom',
-          },
-        },
       ],
     },
   ],

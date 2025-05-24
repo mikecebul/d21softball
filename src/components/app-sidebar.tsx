@@ -22,13 +22,17 @@ import { usePathname } from 'next/navigation'
 import { isActiveRoute } from '@/utilities/isActiveRoute'
 import { CMSLink } from '@/components/Link'
 import { Icon } from './Icons/Icon'
+import { Separator } from './ui/separator'
+import Image from 'next/image'
+import { Icons } from './Icons'
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   contact?: CompanyInfo['contact']
+  social?: CompanyInfo['social']
   navItems: SidebarType['navItems']
 }
 
-export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
+export function AppSidebar({ contact, social, navItems, ...props }: AppSidebarProps) {
   const currentPathName = usePathname()
   const { state, isMobile, setOpenMobile } = useSidebar()
 
@@ -94,9 +98,10 @@ export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        <Separator />
         <SidebarMenu>
           <SidebarMenuItem>
-            <a href="mailto:scott@d21softball.org">
+            <a href={`mailto:${contact?.email}`}>
               <SidebarMenuButton
                 tooltip="Email"
                 size="lg"
@@ -108,13 +113,13 @@ export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
                     hidden: state === 'collapsed',
                   })}
                 >
-                  scott@d21softball.org
+                  {contact?.email}
                 </span>
               </SidebarMenuButton>
             </a>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <a href="tel:2315471144">
+            <a href={`tel:${contact?.phone?.replace(/\D/g, '')}`}>
               <SidebarMenuButton
                 tooltip="Phone"
                 size="lg"
@@ -125,8 +130,49 @@ export function AppSidebar({ contact, navItems, ...props }: AppSidebarProps) {
                   className={cn('text-lg', {
                     hidden: state === 'collapsed',
                   })}
-                >{`(231) 547-1144`}</span>
+                >
+                  {contact?.phone}
+                </span>
               </SidebarMenuButton>
+            </a>
+          </SidebarMenuItem>
+          {social &&
+            social.map((item) => (
+              <SidebarMenuItem key={item.id}>
+                <a href={item.link.url ?? ''} target="_blank">
+                  <SidebarMenuButton
+                    tooltip={item.link.label}
+                    size="lg"
+                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                  >
+                    <Icon name={item.platform ?? 'Globe'} />
+                    <span
+                      className={cn('text-lg', {
+                        hidden: state === 'collapsed',
+                      })}
+                    >
+                      {item.link.label}
+                    </span>
+                  </SidebarMenuButton>
+                </a>
+              </SidebarMenuItem>
+            ))}
+          <SidebarMenuItem>
+            <a
+              href="https://usasoftballmi.org/"
+              target="_blank"
+              className={cn(
+                'mx-auto block transition-all duration-300 ease-in-out',
+                state === 'collapsed' ? 'size-0 opacity-0' : 'w-[150px] opacity-100',
+              )}
+            >
+              <Image
+                src="/footer-usa-softball-logo.png"
+                alt="usa softball of michigan logo"
+                height="250"
+                width="250"
+                className="mx-auto size-[150px]"
+              />
             </a>
           </SidebarMenuItem>
         </SidebarMenu>

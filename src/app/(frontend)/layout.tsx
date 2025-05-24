@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import type { ReactNode } from 'react'
 
-import { Footer } from '@/globals/Footer/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import './globals.css'
 import { draftMode } from 'next/headers'
@@ -12,6 +11,7 @@ import { baseUrl } from '@/utilities/baseUrl'
 import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
 import { Sidebar } from '@/components/Sidebar'
+import { Footer } from '@/components/Footer'
 
 export const dynamic = 'force-static'
 
@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   const payload = await getPayload({ config: payloadConfig })
 
-  const { contact } = await payload.findGlobal({
+  const { contact, social } = await payload.findGlobal({
     slug: 'company-info',
     depth: 1,
   })
@@ -36,10 +36,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
       <body className="flex min-h-dvh flex-col">
         <ThemeProvider forcedTheme="light">
-          <Sidebar draft={isEnabled} contact={contact} navItems={navItems}>
+          <Sidebar draft={isEnabled} contact={contact} social={social} navItems={navItems}>
             <div className="grow">{children}</div>
-            <Footer />
           </Sidebar>
+          <Footer contact={contact} social={social} />
         </ThemeProvider>
       </body>
     </html>

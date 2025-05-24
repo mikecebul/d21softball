@@ -22,11 +22,13 @@ import React from 'react'
 export const Sidebar = ({
   children,
   contact,
+  social,
   draft,
   navItems,
 }: {
   children: ReactNode
   contact: CompanyInfo['contact']
+  social: CompanyInfo['social']
   draft: boolean
   navItems: SidebarType['navItems']
 }) => {
@@ -35,13 +37,8 @@ export const Sidebar = ({
 
   return (
     <SidebarProvider>
-      <AppSidebar contact={contact} navItems={navItems} />
+      <AppSidebar contact={contact} social={social} navItems={navItems} />
       <SidebarInset>
-        <AdminBar
-          adminBarProps={{
-            preview: draft,
-          }}
-        />
         <div className="animate-fadeIn max-w-full overflow-clip px-4 md:px-8 2xl:container">
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2">

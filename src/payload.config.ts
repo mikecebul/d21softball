@@ -14,7 +14,6 @@ import { fileURLToPath } from 'url'
 
 import { Pages } from './collections/Pages'
 import Users from './collections/Users'
-import { Footer } from './globals/Footer/config'
 import { Sidebar } from './globals/Sidebar/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL, GenerateImage } from '@payloadcms/plugin-seo/types'
@@ -120,7 +119,7 @@ export default buildConfig({
     },
   }),
   endpoints: [],
-  globals: [Sidebar, Footer, CompanyInfo],
+  globals: [Sidebar, CompanyInfo],
   plugins: [
     imageSearchPlugin(),
     stripePlugin({

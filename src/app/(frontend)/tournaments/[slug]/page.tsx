@@ -7,6 +7,9 @@ import { Metadata } from 'next'
 import { getPayload } from 'payload'
 import { generateMeta } from '@/utilities/generateMeta'
 import TournamentDetails from '@/components/TournamentDetails'
+import { Main } from '@/components/Main'
+import { PayloadAdminBar } from 'payload-admin-bar'
+import { baseUrl } from '@/utilities/baseUrl'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -32,11 +35,21 @@ export default async function TournamentPage({ params: paramsPromise }: Args) {
   if (!details) return <PayloadRedirects url={url} />
 
   return (
-    <main className="@container">
+    <Main>
+      <PayloadAdminBar
+        cmsURL={baseUrl}
+        collection="tournaments"
+        id={details.id}
+        style={{
+          position: 'relative',
+          paddingLeft: '2rem',
+          paddingRight: '2rem',
+        }}
+      />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       <TournamentDetails details={details} />
-    </main>
+    </Main>
   )
 }
 

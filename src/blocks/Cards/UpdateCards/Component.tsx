@@ -31,7 +31,7 @@ export const UpdateCardsBlock = async ({ showAll, updates, link }: UpdateCardsTy
         equals: 'published',
       },
     },
-    sort: '-createdAt',
+    sort: '-publishedAt',
   })
 
   const cards = showAll ? fetchedCards : updates
@@ -52,7 +52,15 @@ export const UpdateCardsBlock = async ({ showAll, updates, link }: UpdateCardsTy
   )
 }
 
-export const UpdateCard = ({ description, content, title, updatedAt, slug, id }: Update) => {
+export const UpdateCard = ({
+  description,
+  content,
+  title,
+  publishedAt,
+  updatedAt,
+  slug,
+  id,
+}: Update) => {
   return (
     <Card className="flex w-full max-w-xl flex-col shadow-lg 2xl:items-start" key={id}>
       <CardHeader className="">
@@ -61,7 +69,7 @@ export const UpdateCard = ({ description, content, title, updatedAt, slug, id }:
           <p>{description}</p>
           <div className="mt-1 flex items-center">
             <CalendarIcon className="mr-1 h-4 w-4" />
-            {format(updatedAt, 'MMMM d, yyyy')}
+            {format(publishedAt ?? updatedAt, 'MMMM d, yyyy')}
           </div>
         </CardDescriptionDiv>
       </CardHeader>

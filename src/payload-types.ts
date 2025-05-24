@@ -149,12 +149,10 @@ export interface Config {
   };
   globals: {
     sidebar: Sidebar;
-    footer: Footer;
     'company-info': CompanyInfo;
   };
   globalsSelect: {
     sidebar: SidebarSelect<false> | SidebarSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
     'company-info': CompanyInfoSelect<false> | CompanyInfoSelect<true>;
   };
   locale: null;
@@ -1838,66 +1836,18 @@ export interface Sidebar {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
- */
-export interface Footer {
-  id: string;
-  pageLinks?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'media';
-                value: string | Media;
-              } | null)
-            | ({
-                relationTo: 'updates';
-                value: string | Update;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  showContact?: boolean | null;
-  showDivisionLogo?: boolean | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "company-info".
  */
 export interface CompanyInfo {
   id: string;
-  contact: {
+  contact?: {
     name?: string | null;
     email?: string | null;
     phone?: string | null;
-    fax?: string | null;
-    physicalAddress: {
-      street: string;
-      cityStateZip: string;
-      /**
-       * Link for directions on Google Maps
-       */
-      googleMapLink?: string | null;
-    };
-    mailingAddress?: {
-      street?: string | null;
-      cityStateZip?: string | null;
-    };
   };
   social?:
     | {
-        platform?: string | null;
+        platform?: 'Facebook' | null;
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -1917,15 +1867,6 @@ export interface CompanyInfo {
           url?: string | null;
           label: string;
         };
-        id?: string | null;
-      }[]
-    | null;
-  hours?:
-    | {
-        type?: ('default' | 'custom') | null;
-        day?: string | null;
-        hours?: string | null;
-        note?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1958,31 +1899,6 @@ export interface SidebarSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  pageLinks?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
-  showContact?: T;
-  showDivisionLogo?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "company-info_select".
  */
 export interface CompanyInfoSelect<T extends boolean = true> {
@@ -1992,20 +1908,6 @@ export interface CompanyInfoSelect<T extends boolean = true> {
         name?: T;
         email?: T;
         phone?: T;
-        fax?: T;
-        physicalAddress?:
-          | T
-          | {
-              street?: T;
-              cityStateZip?: T;
-              googleMapLink?: T;
-            };
-        mailingAddress?:
-          | T
-          | {
-              street?: T;
-              cityStateZip?: T;
-            };
       };
   social?:
     | T
@@ -2020,15 +1922,6 @@ export interface CompanyInfoSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
-        id?: T;
-      };
-  hours?:
-    | T
-    | {
-        type?: T;
-        day?: T;
-        hours?: T;
-        note?: T;
         id?: T;
       };
   updatedAt?: T;

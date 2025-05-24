@@ -41,7 +41,7 @@ export const TournamentsPageBlock = async ({
           },
         },
         {
-          archived: { equals: archives },
+          archived: { equals: false },
         },
       ],
     },
@@ -52,11 +52,11 @@ export const TournamentsPageBlock = async ({
   return (
     <Container className="space-y-16">
       <div className="space-y-8">
-        <div className={cn('flex flex-col gap-y-4')}>
+        <div className={cn('flex flex-col gap-y-4 pb-8')}>
           <Title text={title} heading="h1" />
           {description && <Description text={description} />}
         </div>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 @5xl:grid-cols-2 @7xl:grid-cols-3">
           {Array.isArray(cards) &&
             cards.length > 0 &&
             cards.map((tournament) => {
