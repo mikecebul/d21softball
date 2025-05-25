@@ -7,13 +7,9 @@ export const AdminBarContext = ({ pageId, collection }: { pageId: string; collec
   const { setPageId, setCollection } = usePageContext()
 
   useEffect(() => {
-    if (pageId) {
-      setPageId(pageId)
-    }
-    if (collection) {
-      setCollection(collection)
-    }
-  }, [pageId, setPageId, collection, setCollection])
+    if (pageId) setPageId(pageId)
+    if (collection) setCollection(collection)
+  }, [pageId, collection])
 
   return null
 }
