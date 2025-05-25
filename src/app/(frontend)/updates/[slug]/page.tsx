@@ -10,6 +10,7 @@ import { UpdateBlock } from '@/components/Update'
 import { Main } from '@/components/Main'
 import { PayloadAdminBar } from 'payload-admin-bar'
 import { baseUrl } from '@/utilities/baseUrl'
+import { AdminBarContext } from '@/components/AdminBar/AdminBarContext'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -37,17 +38,8 @@ export default async function UpdatePage({ params: paramsPromise }: Args) {
 
   return (
     <Main>
-      <PayloadAdminBar
-        cmsURL={baseUrl}
-        collection="updates"
-        id={update.id}
-        style={{
-          position: 'relative',
-          paddingLeft: '2rem',
-          paddingRight: '2rem',
-        }}
-      />
       {/* Allows redirects for valid pages too */}
+      <AdminBarContext pageId={update.id} collection="updates" />
       <PayloadRedirects disableNotFound url={url} />
       <UpdateBlock update={update} />
     </Main>

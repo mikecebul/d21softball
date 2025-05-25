@@ -24,7 +24,6 @@ import { CMSLink } from '@/components/Link'
 import { Icon } from './Icons/Icon'
 import { Separator } from './ui/separator'
 import Image from 'next/image'
-import { Icons } from './Icons'
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   contact?: CompanyInfo['contact']

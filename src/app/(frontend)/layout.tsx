@@ -12,6 +12,8 @@ import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
 import { Sidebar } from '@/components/Sidebar'
 import { Footer } from '@/components/Footer'
+import { PageProvider } from '@/providers/PageProvider'
+import { AdminBar } from '@/components/AdminBar'
 
 export const dynamic = 'force-static'
 
@@ -36,10 +38,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
       <body className="flex min-h-dvh flex-col">
         <ThemeProvider forcedTheme="light">
-          <Sidebar draft={isEnabled} contact={contact} social={social} navItems={navItems}>
-            <div className="grow">{children}</div>
-          </Sidebar>
-          <Footer contact={contact} social={social} />
+          <PageProvider pageId={null} collection="pages">
+            <Sidebar draft={isEnabled} contact={contact} social={social} navItems={navItems}>
+              <div className="grow">{children}</div>
+              <Footer contact={contact} social={social} />
+            </Sidebar>
+          </PageProvider>
         </ThemeProvider>
       </body>
     </html>

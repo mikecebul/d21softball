@@ -4,7 +4,6 @@ import type { CompanyInfo, Sidebar as SidebarType } from '@/payload-types'
 import type { ReactNode } from 'react'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '../ui/sidebar'
 import { AppSidebar } from '../app-sidebar'
-import { AdminBar } from '../AdminBar'
 import { Separator } from '@radix-ui/react-separator'
 import {
   Breadcrumb,
@@ -18,6 +17,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Home } from 'lucide-react'
 import React from 'react'
+import { AdminBar } from '../AdminBar'
 
 export const Sidebar = ({
   children,
@@ -39,6 +39,7 @@ export const Sidebar = ({
     <SidebarProvider>
       <AppSidebar contact={contact} social={social} navItems={navItems} />
       <SidebarInset>
+        <AdminBar />
         <div className="animate-fadeIn max-w-full overflow-clip px-4 md:px-8 2xl:container">
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2">

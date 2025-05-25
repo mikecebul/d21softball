@@ -10,6 +10,7 @@ import TournamentDetails from '@/components/TournamentDetails'
 import { Main } from '@/components/Main'
 import { PayloadAdminBar } from 'payload-admin-bar'
 import { baseUrl } from '@/utilities/baseUrl'
+import { AdminBarContext } from '@/components/AdminBar/AdminBarContext'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -36,17 +37,8 @@ export default async function TournamentPage({ params: paramsPromise }: Args) {
 
   return (
     <Main>
-      <PayloadAdminBar
-        cmsURL={baseUrl}
-        collection="tournaments"
-        id={details.id}
-        style={{
-          position: 'relative',
-          paddingLeft: '2rem',
-          paddingRight: '2rem',
-        }}
-      />
       {/* Allows redirects for valid pages too */}
+      <AdminBarContext pageId={details.id} collection="tournaments" />
       <PayloadRedirects disableNotFound url={url} />
       <TournamentDetails details={details} />
     </Main>
