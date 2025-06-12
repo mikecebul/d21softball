@@ -35,8 +35,6 @@ import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 }
 import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from '@/fields/slug/SlugComponent'
 import { CustomUpload as CustomUpload_18763abdf72285ba4b0ce56755000778 } from '@payload-bites/image-search/client'
 import { default as default_d77f69f8f4b4395e097a6b04b089bee2 } from '@/collections/Tournaments/rowLabels/RowLabelForTeam'
-import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
-import { FolderEditField as FolderEditField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { default as default_f4047b1a8a90d344d3f09d570ca929c0 } from '@/collections/Users/RoleCell'
 import { RoleSelectClient as RoleSelectClient_1e331338c38abbd719becfa9518165eb } from '@/collections/Users/RoleSelect.client'
 import { default as default_f7e72fa773e9b4414610130d772b9a9e } from '@/plugins/form-builder/FormData'
@@ -88,8 +86,6 @@ export const importMap = {
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_92cc057d0a2abb4f6cf0307edf59f986,
   "@payload-bites/image-search/client#CustomUpload": CustomUpload_18763abdf72285ba4b0ce56755000778,
   "@/collections/Tournaments/rowLabels/RowLabelForTeam#default": default_d77f69f8f4b4395e097a6b04b089bee2,
-  "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
-  "@payloadcms/ui/rsc#FolderEditField": FolderEditField_ab83ff7e88da8d3530831f296ec4756a,
   "@/collections/Users/RoleCell#default": default_f4047b1a8a90d344d3f09d570ca929c0,
   "@/collections/Users/RoleSelect.client#RoleSelectClient": RoleSelectClient_1e331338c38abbd719becfa9518165eb,
   "@/plugins/form-builder/FormData#default": default_f7e72fa773e9b4414610130d772b9a9e,
